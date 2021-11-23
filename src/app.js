@@ -18,6 +18,9 @@ const customerRouter = require('./routes/api/customer');
 const staffRouter = require('./routes/api/staff');
 const accountRouter = require('./routes/api/account');
 
+const db = require('./config/database');
+
+db.connect();
 const app = express();
 
 // view engine setup

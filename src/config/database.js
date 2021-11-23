@@ -1,11 +1,9 @@
 require('dotenv').config()
-const { Sequelize } = require("sequelize");
-const sequelize = new Sequelize(process.env.DB_CONNECTION_STRING);
+const mongoose = require('mongoose');
 
-async function connectToDB() {
+async function connect() {
   try {
-    await sequelize.authenticate();
-    await sequelize.sync();
+    await mongoose.connect(process.env.DB_CONNECTION_STRING);
 
     console.log('Connection to the database has been established successfully.');
   }
@@ -15,6 +13,4 @@ async function connectToDB() {
   }
 }
 
-connectToDB();
-
-module.exports = sequelize;
+module.exports = { connect };
