@@ -1,9 +1,9 @@
-require('dotenv').config()
+// require('dotenv').config()
 const mongoose = require('mongoose');
 
 async function connect() {
   try {
-    await mongoose.connect(process.env.DB_CONNECTION_STRING);
+    await mongoose.connect("mongodb+srv://namworkmc:gosuandpeep12@eflyer-cluster.mp2iy.mongodb.net/elfyer_db?retryWrites=true&w=majority");
 
     console.log('Connection to the database has been established successfully.');
   }
