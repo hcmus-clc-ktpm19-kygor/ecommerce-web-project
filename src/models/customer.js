@@ -1,25 +1,12 @@
-const db = require('../config/database');
-const { DataTypes } = require("sequelize");
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const customer = db.define('customer', {
-  // Model attributes are defined here
-  id: {
-    primaryKey: true,
-    type: DataTypes.UUID,
-    defaultValue: DataTypes.UUIDV4
-  },
+const customerSchema = new Schema( {
+  // Schema attributes are defined here
+  fullName: String,
+  phoneNumber: { alias: 'phone_number', type: String },
+  email: String
+}, { timestamps: true, versionKey: false });
 
-  fullName: { type: DataTypes.STRING },
-
-  phoneNumber: {
-    filed: 'phone_number',
-    type: DataTypes.STRING
-  },
-
-  email: { type: DataTypes.STRING },
-
-}, {
-  tableName: 'customer'
-});
-
-module.exports = customer;
+// Create customer model in db
+module.exports = mongoose.model('customer', customerSchema);

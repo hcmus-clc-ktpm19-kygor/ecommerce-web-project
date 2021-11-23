@@ -2,7 +2,7 @@ const model = require('../models/customer');
 
 exports.get = async (req, res) => {
   try {
-    const customer = await model.findByPk(req.params.id);
+    const customer = await model.findById(req.params.id);
     if (customer === null) {
       return res.status(404).json({mess: `Customer id '${req.params.id}' not found`});
     }
@@ -15,7 +15,7 @@ exports.get = async (req, res) => {
 
 exports.getAll = async (req, res) => {
   try {
-    const customer = await model.findAll();
+    const customer = await model.find();
     res.json(customer);
   } catch (e) {
     res.status(400).json({ mess: e.message });

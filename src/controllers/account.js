@@ -2,7 +2,7 @@ const model = require('../models/account');
 
 exports.get = async (req, res) => {
   try {
-    const account = await model.findByPk(req.params.id);
+    const account = await model.findById(req.params.id);
     if (account === null) {
       return res.status(404).json({mess: `Account id '${req.params.id}' not found`});
     }
@@ -15,7 +15,7 @@ exports.get = async (req, res) => {
 
 exports.getAll = async (req, res) => {
   try {
-    const account = await model.findAll();
+    const account = await model.find();
     res.json(account);
   } catch (e) {
     res.status(400).json({ mess: e.message });

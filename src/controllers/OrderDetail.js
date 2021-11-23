@@ -2,7 +2,7 @@ const model = require('../models/OrderDetail');
 
 exports.get = async (req, res) => {
   try {
-    const orderDetail = await model.findByPk(req.params.id);
+    const orderDetail = await model.findById(req.params.id);
     if (orderDetail === null) {
       return res.status(404).json({mess: `Product id '${req.params.id}' not found`});
     }
@@ -15,7 +15,7 @@ exports.get = async (req, res) => {
 
 exports.getAll = async (req, res) => {
   try {
-    const orderDetail = await model.findAll();
+    const orderDetail = await model.find();
     res.json(orderDetail);
   } catch (e) {
     res.status(400).json({ mess: e.message });

@@ -1,24 +1,15 @@
-const db = require('../config/database');
-const { DataTypes } = require("sequelize");
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-const OrderDetail = db.define('OrderDetail', {
-  // Model attributes are defined here
-  orderId: {
-    field: 'order_id',
-    primaryKey: true,
-    type: DataTypes.STRING
-  },
+/**
+ * OrderDetailSchema đại diện cho collection OrderDetailSchema trong db
+ */
+const OrderDetailSchema = new Schema( {
+  // Schema attributes are defined here
+  quantity: Number
+}, { timestamps: true, versionKey: false });
 
-  productId: {
-    filed: 'product_id',
-    primaryKey: true,
-    type: DataTypes.STRING
-  },
-
-  quantity: { type: DataTypes.INTEGER }
-
-}, {
-  tableName: 'order_detail'
-});
-
-module.exports = OrderDetail;
+/**
+ * Tạo model OrderDetailSchema và export thành module
+ */
+module.exports = mongoose.model('order_detail', OrderDetailSchema);
