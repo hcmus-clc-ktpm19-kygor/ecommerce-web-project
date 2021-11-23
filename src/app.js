@@ -11,6 +11,12 @@ const registerRouter = require('./routes/register');
 const asusRouter = require('./routes/asus');
 const dellRouter = require('./routes/dell');
 const detailRouter = require('./routes/detail');
+const productRouter = require('./routes/api/product');
+const orderRouter = require('./routes/api/order');
+const orderDetailRouter = require('./routes/api/OrderDetail');
+const customerRouter = require('./routes/api/customer');
+const staffRouter = require('./routes/api/staff');
+const accountRouter = require('./routes/api/account');
 
 const app = express();
 
@@ -31,6 +37,15 @@ app.use('/asus', asusRouter);
 app.use('/dell', dellRouter);
 app.use('/detail', detailRouter);
 app.use('/users', usersRouter);
+
+app.use('/api/product', productRouter);
+app.use('/api/order', orderRouter);
+app.use('/api/order_detail', orderDetailRouter);
+app.use('/api/customer', customerRouter);
+app.use('/api/staff', staffRouter);
+app.use('/api/account', accountRouter);
+
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
