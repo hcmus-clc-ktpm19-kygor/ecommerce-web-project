@@ -23,7 +23,7 @@ const staffRouter = require('./routes/api/staff');
 
 // try to connect to database
 const db = require('./config/database');
-db.connect().catch(process.exit(-1));
+db.connect();
 
 const app = express();
 
