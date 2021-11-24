@@ -3,10 +3,11 @@ const Schema = mongoose.Schema;
 
 const customerSchema = new Schema( {
   // Schema attributes are defined here
-  fullName: String,
-  phoneNumber: { alias: 'phone_number', type: String },
+  fullName: { alias: 'name', type: String },
+  phoneNumber: { alias: 'phone', type: String },
+  address: String,
   email: String
 }, { timestamps: true, versionKey: false });
 
 // Create customer model in db
-module.exports = mongoose.model('customer', customerSchema);
+module.exports = mongoose.model('customer', customerSchema, 'customer');

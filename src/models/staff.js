@@ -3,11 +3,11 @@ const Schema = mongoose.Schema;
 
 const staffSchema = new Schema({
   // Model attributes are defined here
-  fullName: String,
-  phoneNumber: { alias: 'phone_number', type: String },
+  fullName: { alias: 'name', type: String },
+  phoneNumber: { alias: 'phone', type: String },
   address: String,
   email: String,
 }, { timestamps: true, versionKey: false });
 
 // Create staff model in db
-module.exports = mongoose.model('staff', staffSchema);
+module.exports = mongoose.model('staff', staffSchema, 'staff');

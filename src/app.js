@@ -11,16 +11,20 @@ const registerRouter = require('./routes/register');
 const asusRouter = require('./routes/asus');
 const dellRouter = require('./routes/dell');
 const detailRouter = require('./routes/detail');
-const productRouter = require('./routes/api/product');
+
+const accountRouter = require('./routes/api/account');
+const customerRouter = require('./routes/api/customer');
+const discountRouter = require('./routes/api/discount');
+const offerRouter = require('./routes/api/offer');
 const orderRouter = require('./routes/api/order');
 const orderDetailRouter = require('./routes/api/OrderDetail');
-const customerRouter = require('./routes/api/customer');
+const productRouter = require('./routes/api/product');
 const staffRouter = require('./routes/api/staff');
-const accountRouter = require('./routes/api/account');
 
+// try to connect to database
 const db = require('./config/database');
-
 db.connect();
+
 const app = express();
 
 // view engine setup
@@ -41,12 +45,14 @@ app.use('/dell', dellRouter);
 app.use('/detail', detailRouter);
 app.use('/users', usersRouter);
 
-app.use('/api/product', productRouter);
+app.use('/api/account', accountRouter);
+app.use('/api/customer', customerRouter);
+app.use('/api/discount', discountRouter);
+app.use('/api/offer', offerRouter);
 app.use('/api/order', orderRouter);
 app.use('/api/order_detail', orderDetailRouter);
-app.use('/api/customer', customerRouter);
+app.use('/api/product', productRouter);
 app.use('/api/staff', staffRouter);
-app.use('/api/account', accountRouter);
 
 
 

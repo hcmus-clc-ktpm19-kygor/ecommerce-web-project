@@ -6,17 +6,17 @@ const Schema = mongoose.Schema;
  */
 const productSchema = new Schema({
   // Schema attributes are defined here
-  productName: { type: String, alias: 'product_name' },
+  productName: { alias: 'name', type: String },
   CPU: String,
   RAM: String,
   disk: String,
-  graphicCard: String,
+  graphicCard: { alias: 'graphic_card', type: String },
   screen: String,
   port: String,
-  opticalDisk: String,
+  opticalDisk: { alias: 'optical_disk', type: String },
   audio: String,
   keyboard: String,
-  readMemCard: String,
+  readMemCard: { alias: 'read_mem_card', type: String },
   LAN: String,
   WIFI: String,
   bluetooth: String,
@@ -26,12 +26,13 @@ const productSchema = new Schema({
   weight: Number,
   color: String,
   size: String,
-  review: mongoose.Types.ObjectId,
   origin: String,
   price: Number,
   producer: String,
   stock: Number,
+  discount: mongoose.Types.ObjectId,
+  offer: mongoose.Types.ObjectId
 }, { timestamps: true, versionKey: false });
 
 
-module.exports = mongoose.model('product', productSchema);
+module.exports = mongoose.model('product', productSchema, 'product');

@@ -1,13 +1,13 @@
-const model = require('../models/order');
+const model = require('../models/offer');
 
 exports.get = async (req, res) => {
   try {
-    const order = await model.findById(req.params.id);
-    if (order === null) {
-      return res.status(404).json({mess: `Order id '${req.params.id}' not found`});
+    const offer = await model.findById(req.params.id);
+    if (offer === null) {
+      return res.status(404).json({mess: `Offer id '${req.params.id}' not found`});
     }
 
-    res.json(order);
+    res.json(offer);
   } catch (e) {
     res.status(400).json({ mess: e.message });
   }
@@ -15,17 +15,17 @@ exports.get = async (req, res) => {
 
 exports.getAll = async (req, res) => {
   try {
-    const orders = await model.find();
-    res.json(orders);
+    const offers = await model.find();
+    res.json(offers);
   } catch (e) {
     res.status(400).json({ mess: e.message });
   }
 };
 
 exports.insert = async (req, res) => {
-  const order = new model(req.body);
+  const offer = new model(req.body);
   try {
-    const newOrder = await order.save();
+    const newOrder = await offer.save();
     res.status(201).json(newOrder);
   } catch (err) {
     res.status(400).json({ mess: err.message });
