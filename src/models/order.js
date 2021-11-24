@@ -3,8 +3,8 @@ const Schema = mongoose.Schema;
 
 const orderSchema = new Schema( {
   // Schema attributes are defined here
-  orderName: { alias: 'order_name', type: String },
-  orderStatus: { alias: 'order_status', type: String },
+  orderName: { alias: 'name', type: String },
+  orderStatus: { alias: 'status', type: String },
   shippingFee: { alias: 'shipping_fee', type: Number },
   price: Number,
   address: String,
@@ -13,4 +13,4 @@ const orderSchema = new Schema( {
 }, { timestamps: true, versionKey: false });
 
 // Create order model in db
-module.exports = mongoose.model('order', orderSchema);
+module.exports = mongoose.model('order', orderSchema, 'order');

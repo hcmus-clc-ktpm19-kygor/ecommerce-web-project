@@ -15,8 +15,8 @@ exports.get = async (req, res) => {
 
 exports.getAll = async (req, res) => {
   try {
-    const orderDetail = await model.find();
-    res.json(orderDetail);
+    const ordersDetail = await model.find();
+    res.json(ordersDetail);
   } catch (e) {
     res.status(400).json({ mess: e.message });
   }

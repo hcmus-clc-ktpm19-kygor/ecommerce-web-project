@@ -1,13 +1,13 @@
-const model = require('../models/order');
+const model = require('../models/discount');
 
 exports.get = async (req, res) => {
   try {
-    const order = await model.findById(req.params.id);
-    if (order === null) {
-      return res.status(404).json({mess: `Order id '${req.params.id}' not found`});
+    const discount = await model.findById(req.params.id);
+    if (discount === null) {
+      return res.status(404).json({mess: `Discount id '${req.params.id}' not found`});
     }
 
-    res.json(order);
+    res.json(discount);
   } catch (e) {
     res.status(400).json({ mess: e.message });
   }
@@ -15,17 +15,17 @@ exports.get = async (req, res) => {
 
 exports.getAll = async (req, res) => {
   try {
-    const orders = await model.find();
-    res.json(orders);
+    const discounts = await model.find();
+    res.json(discounts);
   } catch (e) {
     res.status(400).json({ mess: e.message });
   }
 };
 
 exports.insert = async (req, res) => {
-  const order = new model(req.body);
+  const discount = new model(req.body);
   try {
-    const newOrder = await order.save();
+    const newOrder = await discount.save();
     res.status(201).json(newOrder);
   } catch (err) {
     res.status(400).json({ mess: err.message });

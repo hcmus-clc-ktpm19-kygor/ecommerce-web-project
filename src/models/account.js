@@ -5,8 +5,8 @@ const accountSchema = new Schema({
   // Schema attributes are defined here
   username: String,
   password: String,
-  accountStatus: { alias: 'account_status', type: Boolean },
+  accountStatus: { alias: 'status', type: Boolean },
 }, { timestamps: true, versionKey: false });
 
 // Create account model in db
-module.exports = mongoose.model('account', accountSchema);
+module.exports = mongoose.model('account', accountSchema, 'account');
