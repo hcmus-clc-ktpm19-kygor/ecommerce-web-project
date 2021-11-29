@@ -1,5 +1,4 @@
 const model = require('./productModel');
-const mongoose = require('mongoose');
 
 /**
  * Lay 1 product bang id <br>
@@ -10,7 +9,7 @@ const mongoose = require('mongoose');
  */
 exports.get = async (id) => {
   try {
-    const product = await model.findById(mongoose.Types.ObjectId.createFromHexString(id));
+    const product = await model.findById(id);
     if (product === null) {
       return {mess: `Product id '${id}' not found`};
     }
@@ -50,10 +49,31 @@ exports.insert = async (newProduct) => {
   }
 }
 
+/**
+ * Tim san pham bang id, update thong tin san pham ton tai trong database
+ *
+ * @param id
+ * @param updateProduct
+ * @returns {Promise<{product: model}>}
+ */
 exports.update = async (id, updateProduct) => {
   try {
-    return await model.findByIdAndUpdate(mongoose.Types.ObjectId.createFromHexString(id), updateProduct,
+    return await model.findByIdAndUpdate(id, updateProduct,
         { new: true });
+  } catch (err) {
+    throw err;
+  }
+}
+
+/**
+ * Xoa san pham dang co trong database bang id
+ *
+ * @param id
+ * @returns {Promise<{product: model}>}
+ */
+exports.delete = async (id) => {
+  try {
+    return await model.findByIdAndDelete(id);
   } catch (err) {
     throw err;
   }

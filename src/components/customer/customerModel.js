@@ -3,8 +3,8 @@ const Schema = mongoose.Schema;
 
 const customerSchema = new Schema( {
   // Schema attributes are defined here
-  fullName: { alias: 'name', type: String },
-  phoneNumber: { alias: 'phone', type: String },
+  name: { type: String },
+  phone: { type: String },
   address: String,
   email: String
 }, { timestamps: true, versionKey: false });

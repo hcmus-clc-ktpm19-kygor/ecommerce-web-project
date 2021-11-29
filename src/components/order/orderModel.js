@@ -3,12 +3,12 @@ const Schema = mongoose.Schema;
 
 const orderSchema = new Schema( {
   // Schema attributes are defined here
-  orderName: { alias: 'name', type: String },
-  orderStatus: { alias: 'status', type: String },
-  shippingFee: { alias: 'shipping_fee', type: Number },
+  name: { type: String },
+  order_status: { type: String },
+  shipping_fee: { type: Number },
   price: Number,
   address: String,
-  customerId: { alias: 'customer_id', type: mongoose.Types.ObjectId },
+  customer_id: { type: mongoose.Types.ObjectId },
   payment: String
 }, { timestamps: true, versionKey: false });
 

@@ -4,8 +4,8 @@ const Schema = mongoose.Schema;
 const discountSchema = new Schema( {
   // Schema attributes are defined here
   rate: Number,
-  dateStart: { alias: 'date_start', type: Date },
-  dateEnd: { alias: 'date_end', type: Date }
+  date_start: { type: Date },
+  date_end: { type: Date }
 }, { timestamps: true, versionKey: false });
 
 // Create customer model in db
