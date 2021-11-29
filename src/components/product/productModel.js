@@ -6,17 +6,17 @@ const Schema = mongoose.Schema;
  */
 const productSchema = new Schema({
   // Schema attributes are defined here
-  productName: { alias: 'name', type: String },
+  name: { type: String },
   CPU: String,
   RAM: String,
   disk: String,
-  graphicCard: { alias: 'graphic_card', type: String },
+  graphic_card: { type: String },
   screen: String,
   port: String,
-  opticalDisk: { alias: 'optical_disk', type: String },
+  optical_disk: { type: String },
   audio: String,
   keyboard: String,
-  readMemCard: { alias: 'read_mem_card', type: String },
+  read_mem_card: { type: String },
   LAN: String,
   WIFI: String,
   bluetooth: String,
