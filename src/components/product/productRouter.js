@@ -9,4 +9,7 @@ router.get('/', controller.getAll);
 
 // POST Method
 router.post('/', controller.insert);
+
+// PUT Method
+router.put('/:id', controller.update);
 module.exports = router;
