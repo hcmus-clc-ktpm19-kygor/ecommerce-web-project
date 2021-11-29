@@ -1,8 +1,9 @@
 const model = require('./staffModel');
+const mongoose = require("mongoose");
 
 exports.get = async (id) => {
   try {
-    const staff = await model.findById(id);
+    const staff = await model.findById(mongoose.Types.ObjectId.createFromHexString(id));
     if (staff === null) {
       return {mess: `Staff id '${id}' not found`};
     }
