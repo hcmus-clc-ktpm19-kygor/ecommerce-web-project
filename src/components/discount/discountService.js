@@ -29,3 +29,32 @@ exports.insert = async (newDiscount) => {
     throw err;
   }
 }
+
+/**
+ * Cap nhat thong tin discount co trong database
+ *
+ * @param id
+ * @param updateDiscount
+ * @returns {Promise<{discount: model}>}
+ */
+exports.update = async (id, updateDiscount) => {
+  try {
+    return await model.findByIdAndUpdate(id, updateDiscount,
+        { new: true });
+  } catch (err) {
+    throw err;
+  }
+}
+
+/**
+ * Tim discount bang id xoa khoi database
+ * @param id
+ * @returns {Promise<*>}
+ */
+exports.delete = async (id) => {
+  try {
+    return await model.findByIdAndDelete(id);
+  } catch (err) {
+    throw err;
+  }
+}

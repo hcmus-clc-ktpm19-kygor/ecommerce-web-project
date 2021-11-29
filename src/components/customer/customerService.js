@@ -29,3 +29,32 @@ exports.insert = async (newCustomer) => {
     throw err;
   }
 }
+
+/**
+ * Cap nhat thong tin khach hang co trong database
+ *
+ * @param id
+ * @param updateCustomer
+ * @returns {Promise<{customer: model}>}
+ */
+exports.update = async (id, updateCustomer) => {
+  try {
+    return await model.findByIdAndUpdate(id, updateCustomer,
+        { new: true });
+  } catch (err) {
+    throw err;
+  }
+}
+
+/**
+ * Tim khach hang bang id xoa khoi database
+ * @param id
+ * @returns {Promise<*>}
+ */
+exports.delete = async (id) => {
+  try {
+    return await model.findByIdAndDelete(id);
+  } catch (err) {
+    throw err;
+  }
+}
