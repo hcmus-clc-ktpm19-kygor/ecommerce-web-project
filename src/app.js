@@ -12,14 +12,14 @@ const asusRouter = require('./routes/asus');
 const dellRouter = require('./routes/dell');
 const detailRouter = require('./routes/detail');
 
-const accountRouter = require('./routes/api/account');
-const customerRouter = require('./routes/api/customer');
-const discountRouter = require('./routes/api/discount');
-const offerRouter = require('./routes/api/offer');
-const orderRouter = require('./routes/api/order');
-const orderDetailRouter = require('./routes/api/OrderDetail');
-const productRouter = require('./routes/api/product');
-const staffRouter = require('./routes/api/staff');
+const accountRouter = require('./components/account/accountRouter');
+const customerRouter = require('./components/customer/customerRouter');
+const discountRouter = require('./components/discount/discountRouter');
+const offerRouter = require('./components/offer/offerRouter');
+const orderRouter = require('./components/order/orderRouter');
+const orderDetailRouter = require('./components/OrderDetail/OrderDetailRouter');
+const productRouter = require('./components/product/productRouter');
+const staffRouter = require('./components/staff/staffRouter');
 
 // try to connect to database
 const db = require('./config/database');
