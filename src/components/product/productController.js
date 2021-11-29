@@ -9,7 +9,8 @@ exports.get = async (req, res) => {
 // Lay list cac san pham
 exports.getAll = async (req, res) => {
   const products = await service.getAll();
-  res.json(products);
+  res.render('category', { products });
+  // res.json(products);
 };
 
 // Them san pham moi vao database tra ket qua neu thanh cong
