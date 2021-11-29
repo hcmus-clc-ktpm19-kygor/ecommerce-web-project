@@ -5,7 +5,7 @@ const accountSchema = new Schema({
   // Schema attributes are defined here
   username: String,
   password: String,
-  accountStatus: { alias: 'status', type: Boolean },
+  account_status: { type: Boolean },
 }, { timestamps: true, versionKey: false });
 
 // Create account model in db

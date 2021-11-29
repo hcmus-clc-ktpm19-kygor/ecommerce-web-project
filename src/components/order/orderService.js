@@ -29,3 +29,33 @@ exports.insert = async (newOrder) => {
     throw err;
   }
 }
+
+/**
+ * Tim order bang id, update thong tin san pham ton tai trong database
+ *
+ * @param id
+ * @param updateOrder
+ * @returns {Promise<{order: model}>}
+ */
+exports.update = async (id, updateOrder) => {
+  try {
+    return await model.findByIdAndUpdate(id, updateOrder,
+        { new: true });
+  } catch (err) {
+    throw err;
+  }
+}
+
+/**
+ * Xoa san pham dang co trong database bang id
+ *
+ * @param id
+ * @returns {Promise<{order: model}>}
+ */
+exports.delete = async (id) => {
+  try {
+    return await model.findByIdAndDelete(id);
+  } catch (err) {
+    throw err;
+  }
+}
