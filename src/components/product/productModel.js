@@ -29,6 +29,7 @@ const productSchema = new Schema({
   origin: String,
   price: Number,
   producer: String,
+  category: String,
   stock: Number,
   discount: mongoose.Types.ObjectId,
   offer: mongoose.Types.ObjectId
