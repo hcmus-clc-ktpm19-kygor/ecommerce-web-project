@@ -1,5 +1,6 @@
 const model = require('./accountModel');
 const service = require('./accountService');
+const dataFaker = require('../FakeGenerator/FakeAccountGenerator');
 
 /**
  * Lay 1 tai khoan len bang id
@@ -16,6 +17,15 @@ exports.get = async (req, res) => {
     res.status(500).json({ message: err.message });
   }
 };
+
+exports.paging = async (req, res) => {
+  try {
+    const accounts = await service.paging(req.query.page);
+    res.json(accounts);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+}
 
 /**
  * Lay list tat ca tai khoan
@@ -46,6 +56,15 @@ exports.insert = async (req, res) => {
     res.status(201).json(newAccount);
   } catch (err) {
     res.status(400).json({ message: err.message });
+  }
+}
+
+exports.generateFakeData = async (req, res) => {
+  try {
+    const accounts = await dataFaker.generateFakeAccount();
+    res.status(201).json(accounts);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 }
 

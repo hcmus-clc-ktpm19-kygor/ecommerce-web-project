@@ -1,5 +1,6 @@
 const model = require('./accountModel');
 const mongoose = require('mongoose');
+const faker = require('faker');
 
 /**
  * Lay 1 san pham len tu database bang id
@@ -13,6 +14,25 @@ module.exports.get = async (id) => {
       return { mess: `Account id '${id}' not found` };
     }
     return account;
+  } catch (err) {
+    throw err;
+  }
+};
+
+/**
+ * Phan trang cac account, moi trang 5 account
+ * @param page
+ * @returns {Promise<void>}
+ */
+exports.paging = async (page) => {
+  try {
+    let perPage = 5; // số lượng sản phẩm xuất hiện trên 1 page
+    page = page || 1;
+
+    return await model
+    .find() // find tất cả các data
+    .skip((perPage * page) - perPage) // Trong page đầu tiên sẽ bỏ qua giá trị là 0
+    .limit(perPage);
   } catch (err) {
     throw err;
   }

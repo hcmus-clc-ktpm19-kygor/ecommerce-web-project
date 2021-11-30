@@ -16,6 +16,15 @@ exports.get = async (req, res) => {
   }
 };
 
+exports.paging = async (req, res) => {
+  try {
+    const products = await service.paging(req.query.page);
+    res.json(products);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+}
+
 /**
  * Lay list cac san pham
  *
