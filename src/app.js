@@ -41,7 +41,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/login', loginRouter);
 app.use('/register', registerRouter);
-app.use('/category', productRouter);
+app.use('/products', productRouter);
 app.use('/confirmation', confirmationRouter);
 app.use('/asus', asusRouter);
 app.use('/dell', dellRouter);
