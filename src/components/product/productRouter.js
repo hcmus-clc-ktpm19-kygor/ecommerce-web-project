@@ -6,7 +6,7 @@ const fakeDataGenerator = require('../FakeGenerator/FakeAccountGenerator');
 // GET Method
 // Paging
 router.get('/', controller.paging);
-router.get('/page', controller.paging);
+// router.get('/page', controller.paging);
 // Get 1 product
 router.get('/:id', controller.get);
 
