@@ -20,6 +20,25 @@ exports.get = async (id) => {
 };
 
 /**
+ * Phan trang cac product, moi trang co toi da 5 product
+ * @param page
+ * @returns {Promise<void>}
+ */
+exports.paging = async (page) => {
+  try {
+    let perPage = 6; // số lượng sản phẩm xuất hiện trên 1 page
+    page = page || 1;
+
+    return await model
+    .find() // find tất cả các data
+    .skip((perPage * page) - perPage) // Trong page đầu tiên sẽ bỏ qua giá trị là 0
+    .limit(perPage);
+  } catch (err) {
+    throw err;
+  }
+};
+
+/**
  * Lay list cac san pham <br>
  * Nho them await vao truoc ham tra ve neu khong ham tra ve Promise
  *
