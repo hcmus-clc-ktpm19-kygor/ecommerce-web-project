@@ -19,7 +19,8 @@ exports.get = async (req, res) => {
 exports.paging = async (req, res) => {
   try {
     const products = await service.paging(req.query.page);
-    res.json(products);
+    // res.json(products);
+    res.render('category', { products });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -38,7 +39,7 @@ exports.getAll = async (req, res) => {
     // res.json(products);
     res.render('category', { products });
   } catch (err) {
-    res.status(500).json({ message: err.message })
+    res.status(500).json({ message: err.message });
   }
 };
 
