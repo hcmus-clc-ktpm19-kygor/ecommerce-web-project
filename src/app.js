@@ -9,9 +9,6 @@ const usersRouter = require('./routes/users');
 const loginRouter = require('./routes/login');
 const registerRouter = require('./routes/register');
 const confirmationRouter = require('./routes/confirmation');
-const asusRouter = require('./routes/asus');
-const dellRouter = require('./routes/dell');
-const detailRouter = require('./routes/detail');
 
 const accountRouter = require('./components/account/accountRouter');
 const customerRouter = require('./components/customer/customerRouter');
@@ -41,11 +38,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/login', loginRouter);
 app.use('/register', registerRouter);
-app.use('/category', productRouter);
+app.use('/products', productRouter);
 app.use('/confirmation', confirmationRouter);
-app.use('/asus', asusRouter);
-app.use('/dell', dellRouter);
-app.use('/detail', detailRouter);
 app.use('/users', usersRouter);
 
 app.use('/api/account', accountRouter);

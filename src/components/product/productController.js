@@ -10,7 +10,8 @@ const service = require('./productService');
 exports.get = async (req, res) => {
   try {
     const product = await service.get(req.params.id);
-    res.json(product);
+    // res.json(product);
+    res.render('detail', { product });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -20,7 +21,7 @@ exports.paging = async (req, res) => {
   try {
     const products = await service.paging(req.query.page);
     // res.json(products);
-    res.render('category', { products });
+    res.render('products', { products });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -37,7 +38,7 @@ exports.getAll = async (req, res) => {
   try {
     const products = await service.getAll();
     // res.json(products);
-    res.render('category', { products });
+    res.render('products', { products });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
