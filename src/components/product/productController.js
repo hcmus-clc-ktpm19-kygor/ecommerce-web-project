@@ -2,15 +2,6 @@ const productService = require('./productService');
 const offerService = require('../offer/offerService');
 const discountService = require('../discount/discountService');
 
-exports.renderAddProductPage = async (req, res) => {
-  try {
-    const offers = await offerService.getAll();
-    const discounts = await discountService.getAll();
-    res.json({ offers, discounts });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-}
 /**
  * Lay 1 san pham len bang id
  *
