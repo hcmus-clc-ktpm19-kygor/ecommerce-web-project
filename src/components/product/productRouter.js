@@ -1,12 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const controller = require('./productController');
-const fakeDataGenerator = require('../FakeGenerator/FakeAccountGenerator');
 
 // GET Method
 // Paging
 router.get('/', controller.paging);
-// router.get('/page', controller.paging);
 // Get 1 product
 router.get('/:id', controller.get);
 
