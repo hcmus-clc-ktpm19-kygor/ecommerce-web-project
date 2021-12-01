@@ -4,7 +4,7 @@
 	padding-top: 50px;
 	
 	@media(min-width: 1000px){
-		padding-top: 100px;
+		padding-top: 20px;
 	}
 }
 .s_product_inner{
@@ -55,13 +55,13 @@
 	.list{
 		li{
 			margin-bottom: 5px;
-			a{
+			div{
 				font-size: 15px;
 				// font-family: $primary-font;
 				font-weight: normal;
 				color: #777777;
 				span{
-					width: 90px;
+					width: 130px;
           display: inline-block;
           color: #555555;
 					&:hover{
@@ -81,13 +81,14 @@
 			}
 		}
 	}
-	p{
+	.list1{
 		padding-top: 20px;
 		border-top: 1px dotted #eeeeee;
 		border-bottom: 1px dotted #eeeeee;
 		margin-top: 20px;
     padding-bottom: 26px;
     margin-bottom: 0;
+
 	}
 	.card_area{
     margin-top: 25px;
