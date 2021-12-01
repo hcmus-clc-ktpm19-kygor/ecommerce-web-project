@@ -154,7 +154,12 @@
 
   &__img{
     position: relative;
-    
+
+    .card-img{
+      max-height: 160px;
+      overflow: hidden;
+    }
+
 
     &Overlay{
       background: rgba(255, 255, 255, .5);
@@ -167,6 +172,7 @@
       opacity: 0;
       z-index: -1;
       transition: all .48s ease;
+      height: 20%;
 
       li{
         display: inline-block;
@@ -224,7 +230,7 @@
 
 /*=================== offer section start  ====================*/
 .offer{
-  background: url('../img/home/parallax-bg.png') right center no-repeat;
+  background: url('/img/home/parallax-bg.png') right center no-repeat;
   background-size: cover;
 
   @media(min-width: 1200px){

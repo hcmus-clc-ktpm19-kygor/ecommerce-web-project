@@ -3,11 +3,11 @@
 		<div class="container h-100">
 			<div class="blog-banner">
 				<div class="text-center">
-					<h1>Shop Category</h1>
+					<h1>Danh mục sản phẩm</h1>
 					<nav aria-label="breadcrumb" class="banner-breadcrumb">
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="/">Home</a></li>
-              <li class="breadcrumb-item active" aria-current="page">Shop Category</li>
+              <li class="breadcrumb-item active" aria-current="page">Category</li>
             </ol>
           </nav>
 				</div>
@@ -99,7 +99,7 @@
               <div class="col-md-6 col-lg-4">
                 <div class="card text-center card-product">
                   <div class="card-product__img">
-                    <img class="card-img" src="img/product/product1.png" alt="">
+                     <a href="products/{{this._id}}"> <img class="card-img" src="{{this.image_url}}" alt=""></a>
                     <ul class="card-product__imgOverlay">
                       <li><button><i class="ti-search"></i></button></li>
                       <li><button><i class="ti-shopping-cart"></i></button></li>
