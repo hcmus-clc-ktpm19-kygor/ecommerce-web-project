@@ -32,8 +32,8 @@ const productSchema = new Schema({
   category: String,
   stock: Number,
   image_url: String,
-  discount: mongoose.Types.ObjectId,
-  offer: mongoose.Types.ObjectId
+  discount: Object,
+  offer: Object
 }, { timestamps: true, versionKey: false });
 
 
