@@ -1,5 +1,16 @@
-const service = require('./productService');
+const productService = require('./productService');
+const offerService = require('../offer/offerService');
+const discountService = require('../discount/discountService');
 
+exports.renderAddProductPage = async (req, res) => {
+  try {
+    const offers = await offerService.getAll();
+    const discounts = await discountService.getAll();
+    res.json({ offers, discounts });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+}
 /**
  * Lay 1 san pham len bang id
  *
@@ -9,7 +20,7 @@ const service = require('./productService');
  */
 exports.get = async (req, res) => {
   try {
-    const product = await service.get(req.params.id);
+    const product = await productService.get(req.params.id);
     // res.json(product);
     res.render('detail', { product });
   } catch (err) {
@@ -19,7 +30,7 @@ exports.get = async (req, res) => {
 
 exports.paging = async (req, res) => {
   try {
-    const products = await service.paging(req.query.page);
+    const products = await productService.paging(req.query.page);
     // res.json(products);
     res.render('products', { products });
   } catch (err) {
@@ -36,7 +47,7 @@ exports.paging = async (req, res) => {
  */
 exports.getAll = async (req, res) => {
   try {
-    const products = await service.getAll();
+    const products = await productService.getAll();
     // res.json(products);
     res.render('products', { products });
   } catch (err) {
@@ -53,7 +64,7 @@ exports.getAll = async (req, res) => {
  */
 exports.insert = async (req, res) => {
   try {
-    const newProduct = await service.insert(req.body);
+    const newProduct = await productService.insert(req.body);
     res.status(201).json(newProduct);
   } catch (err) {
     res.status(400).json({ message: err.message });
@@ -69,7 +80,7 @@ exports.insert = async (req, res) => {
  */
 exports.update = async (req, res) => {
   try {
-    const updatedProduct = await service.update(req.params.id, req.body);
+    const updatedProduct = await productService.update(req.params.id, req.body);
     res.json(updatedProduct);
   } catch (err) {
     res.status(400).json({ message: err.message });
@@ -85,7 +96,7 @@ exports.update = async (req, res) => {
  */
 exports.delete = async (req, res) => {
   try {
-    await service.delete(req.params.id);
+    await productService.delete(req.params.id);
     res.json({message: `Product ${req.params.id} has been deleted`});
   } catch (err) {
     res.status(500).json({ message: err.message });
