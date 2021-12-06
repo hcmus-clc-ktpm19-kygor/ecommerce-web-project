@@ -1,12 +1,13 @@
 const model = require('./accountModel');
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 /**
- * Lay 1 san pham len tu database bang id
+ * Lay 1 account len tu database bang id
  * @param id {@link mongoose.Types.ObjectId}
  * @returns {Promise<*|{mess: string}>}
  */
-module.exports.get = async (id) => {
+module.exports.getById = async (id) => {
   try {
     const account = await model.findById(id);
     if (account === null) {
@@ -17,6 +18,23 @@ module.exports.get = async (id) => {
     throw err;
   }
 };
+
+/**
+ * Lay 1 account len tu database bang username
+ * @param username
+ * @returns {Promise<*|{mess: string}>}
+ */
+module.exports.getByUsername = async (username) => {
+  try {
+    return await model.findOne({username});
+  } catch (err) {
+    throw err;
+  }
+};
+
+module.exports.validatePassword = async (user, password) => {
+  return await bcrypt.compare(password, user.password);
+}
 
 /**
  * Phan trang cac account, moi trang 5 account
@@ -52,12 +70,19 @@ module.exports.getAll = async () => {
 /**
  * Them san pham moi vao database
  * @param newAccount
- * @returns {Promise<{account: model}>}
+ * @returns {Promise<string>}
  */
-module.exports.insert = async (newAccount) => {
-  const account = new model(newAccount);
+module.exports.insert = async ({ username, password, email }) => {
   try {
-    return await account.save();
+    const isExisted = await model.exists({ username });
+    if (isExisted) {
+      return null;
+    } else {
+      const hashedPassword = await bcrypt.hash(password, 10);
+
+      const account = new model({ username, password: hashedPassword, email });
+      return await account.save();
+    }
   } catch (err) {
     throw err;
   }
