@@ -1,23 +1,18 @@
+require('dotenv').config();
+
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+const session = require('express-session');
+const passport = require("./config/passport");
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
-const loginRouter = require('./routes/login');
-const registerRouter = require('./routes/register');
 const confirmationRouter = require('./routes/confirmation');
-
-const accountRouter = require('./components/account/accountRouter');
-const customerRouter = require('./components/customer/customerRouter');
-const discountRouter = require('./components/discount/discountRouter');
-const offerRouter = require('./components/offer/offerRouter');
-const orderRouter = require('./components/order/orderRouter');
-const orderDetailRouter = require('./components/OrderDetail/OrderDetailRouter');
 const productRouter = require('./components/product/productRouter');
-const staffRouter = require('./components/staff/staffRouter');
+const authRouter = require('./components/auth/authRouter');
 
 // try to connect to database
 const db = require('./config/database');
@@ -35,23 +30,17 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// Passport middleware
+app.use(session({ secret: process.env.SESSION_SECRET_KEY }));
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Router middleware
 app.use('/', indexRouter);
-app.use('/login', loginRouter);
-app.use('/register', registerRouter);
+app.use('/', authRouter);
 app.use('/products', productRouter);
 app.use('/confirmation', confirmationRouter);
 app.use('/users', usersRouter);
-
-app.use('/api/account', accountRouter);
-app.use('/api/customer', customerRouter);
-app.use('/api/discount', discountRouter);
-app.use('/api/offer', offerRouter);
-app.use('/api/order', orderRouter);
-app.use('/api/order_detail', orderDetailRouter);
-app.use('/api/product', productRouter);
-app.use('/api/staff', staffRouter);
-
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
