@@ -4,14 +4,14 @@ const accountService = require('../components/account/accountService');
 
 passport.use(new LocalStrategy(
     async (username, password, done) => {
-      const account = await accountService.getByUsername(username);
-      if (!account) {
+      const user = await accountService.getByUsername(username);
+      if (!user) {
         return done(null, false, { message: 'Incorrect username' })
       }
-      if (!await accountService.validatePassword(account, password)) {
+      if (!await accountService.validatePassword(user, password)) {
         return done(null, false, { message: 'Incorrect password.' });
       }
-      return done(null, account);
+      return done(null, user);
     }
 ));
 
