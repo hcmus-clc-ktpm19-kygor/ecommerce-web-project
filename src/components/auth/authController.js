@@ -1,5 +1,5 @@
-const accountService = require('../account/accountService');
 const passport = require("../../config/passport");
+const accountService = require('../account/accountService');
 
 /**
  * Render trang Login
