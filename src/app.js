@@ -13,6 +13,8 @@ const usersRouter = require('./routes/users');
 const confirmationRouter = require('./routes/confirmation');
 const productRouter = require('./components/product/productRouter');
 const authRouter = require('./components/auth/authRouter');
+const loggedInUserGuard = require('./middlewares/loggedInUserGuard');
+const accountRouter = require('./components/account/accountRouter');
 
 // try to connect to database
 const db = require('./config/database');
@@ -21,7 +23,7 @@ db.connect();
 const app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', [path.join(__dirname, 'views'), path.join(__dirname, "components")]);
 app.set('view engine', 'hbs');
 
 app.use(logger('dev'));
@@ -35,11 +37,17 @@ app.use(session({ secret: process.env.SESSION_SECRET_KEY }));
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use(function (req, res, next) {
+  res.locals.user = req.user;
+  next()
+})
+
 // Router middleware
 app.use('/', indexRouter);
 app.use('/', authRouter);
+app.use('/', accountRouter);
 app.use('/products', productRouter);
-app.use('/confirmation', confirmationRouter);
+app.use('/confirmation', loggedInUserGuard, confirmationRouter);
 app.use('/users', usersRouter);
 
 // catch 404 and forward to error handler

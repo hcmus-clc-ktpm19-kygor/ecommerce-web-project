@@ -88,6 +88,21 @@
     border-color: #EEEEEE;
   }
 
+  &-login-header{
+    padding: 10px 45px;
+    background: transparent;
+    color: $title-color;
+    border-color: #EEEEEE;
+    margin-left: 40px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+  }
+  &-login-header:hover {
+    overflow: visible;
+  }
+
   &-hero{
     padding: 12px 41px;
   }
