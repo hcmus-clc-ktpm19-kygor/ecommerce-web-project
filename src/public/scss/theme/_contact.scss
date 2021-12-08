@@ -23,7 +23,7 @@
 
   &-area{
     height: 280px;
-    background: url('../../assets/images/contact-bg.png') center center no-repeat;
+    //background: url('/assets/images/contact-bg.png') center center no-repeat;
     background-size: cover;
     position: relative;
     z-index: 1;
@@ -128,5 +128,20 @@
     border: 0;
   }
 }
+
+.avata {
+  vertical-align: middle;
+  border-style: none;
+  width: 4rem;
+  border-radius: 50%!important;
+}
+
+.avata_right {
+  vertical-align: middle;
+  border-style: none;
+  width: 6rem;
+  border-radius: 50%!important;
+}
+
 
 /*=================== contact form end ====================*/
