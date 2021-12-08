@@ -58,8 +58,14 @@
             <ul class="nav-shop">
               <li class="nav-item"><button><i class="ti-search"></i></button></li>
               <li class="nav-item"><button><i class="ti-shopping-cart"></i><span class="nav-shop__circle">3</span></button> </li>
-              <li class="nav-item"><a class="button button-header" href="#">Buy Now</a></li>
+{{!--               <li class="nav-item"><a class="button button-header" href="#">Buy Now</a></li> --}}
             </ul>
+            {{#if user}}
+            <a class="button button-login-header" href="/{{user._id}}">Hello, {{user.username}}</a>
+            <a class="button button-login-header" href="/logout">Log Out</a>
+            {{else}}
+            <a class="button button-login-header" href="/login">Log In</a>
+            {{/if}}
           </div>
         </div>
       </nav>

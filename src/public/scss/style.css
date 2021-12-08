@@ -1245,6 +1245,20 @@ a {
   color: #222222;
   border-color: #EEEEEE;
 }
+.button-login-header {
+  padding: 10px 45px;
+  background: transparent;
+  color: #222222;
+  border-color: #EEEEEE;
+  margin-left: 40px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
+}
+.button-login-header:hover {
+  overflow: visible;
+}
 .button-hero {
   padding: 12px 41px;
 }

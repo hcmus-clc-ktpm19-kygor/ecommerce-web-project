@@ -8,7 +8,7 @@ const accountService = require('../account/accountService');
  */
 exports.renderLogin = (req, res) => {
   const invalidAccount = req.query['invalid-account'] !== undefined;
-  res.render('login', { invalidAccount });
+  res.render('auth/views/login', { invalidAccount });
 }
 
 exports.logout = (req, res) => {
@@ -23,7 +23,7 @@ exports.logout = (req, res) => {
  */
 exports.renderRegister = (req, res) => {
   console.log(req.body);
-  res.render('register');
+  res.render('auth/views/register');
 }
 
 /**
@@ -40,19 +40,20 @@ exports.register = async (req, res) => {
     const { email } = req.body;
 
     if (!newAccount) {
-      res.redirect('/register');
+      //res.redirect('auth/views/register');
 
       /* NOTE: chỗ này để lại thông báo tài khoản đã tồn tại nhưng chưa biết làm sao
       * tạm để đây
       * */
-      res.render('register', {
+      res.render('auth/views/register', {
         email,
         message: 'Username already existed'
       });
     } else {
-      res.redirect('/login');
+      res.redirect('auth/views/login');
     }
   } catch (e) {
     res.status(400).json({ message: e.message });
   }
 }
+

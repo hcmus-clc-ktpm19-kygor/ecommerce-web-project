@@ -12,7 +12,7 @@ const dataFaker = require('../../data_generator/FakeGenerator/FakeAccountGenerat
 exports.get = async (req, res) => {
   try {
     const account = await service.getById(req.params.id);
-    res.json(account);
+    res.render('account/views/account_detail', {account});
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
