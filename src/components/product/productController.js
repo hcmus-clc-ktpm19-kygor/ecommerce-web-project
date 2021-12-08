@@ -13,7 +13,7 @@ exports.get = async (req, res) => {
   try {
     const product = await productService.get(req.params.id);
     // res.json(product);
-    res.render('detail', { product });
+    res.render('product/views/detail', { product });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -23,7 +23,7 @@ exports.paging = async (req, res) => {
   try {
     const products = await productService.paging(req.query.page);
     // res.json(products);
-    res.render('products', { products });
+    res.render('product/views/products', { products });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -40,7 +40,7 @@ exports.getAll = async (req, res) => {
   try {
     const products = await productService.getAll();
     // res.json(products);
-    res.render('products', { products });
+    res.render('product/views/products', { products });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
