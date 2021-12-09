@@ -93,24 +93,30 @@ module.exports.insert = async ({ username, email, password }) => {
  * Cap nhat thong tin tai khoan co trong database
  *
  * @param id user's id
- * @param req request
+ * @param updateUser
+ * @param filePath
  * @returns {Promise<{account: model}>}
  */
-exports.update = async (id, req) => {
+exports.update = async (id, updateUser, file) => {
   try {
-    // Upload avatar to cloudinary
-    const result = await cloudinary.uploader.upload(
-        req.file.path,
-        {
-          public_id: id,
-          folder: 'user_avatar',
-          use_filename: true
-        });
+    // Upload avatar len cloudinary
+    let result;
+    if (file) {
+      result = await cloudinary.uploader.upload(
+          file.path,
+          {
+            public_id: id,
+            folder: 'user_avatar',
+            use_filename: true
+          });
+    }
 
-    // Get cloudinary avatar url
-    const { url } = result;
+    /*
+     Lay avatar url
+     Neu khong co avatar duoc up len, url bo trong
+    */
+    const { url } = result ?? "";
     // Update user's info
-    const updateUser = req.body;
     updateUser.avatar_url = url;
     return await model.findByIdAndUpdate(id, updateUser,
         { new: true });
