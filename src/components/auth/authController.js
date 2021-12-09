@@ -50,7 +50,7 @@ exports.register = async (req, res) => {
         message: 'Username already existed'
       });
     } else {
-      res.redirect('auth/views/login');
+      res.redirect('/login');
     }
   } catch (e) {
     res.status(400).json({ message: e.message });
