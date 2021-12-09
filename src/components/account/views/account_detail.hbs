@@ -27,9 +27,9 @@
 					<div class="col-lg-3  col-md-3">
 						<div class="blog_info text-right">
 						  {{#if user.avatar_url}}
-						    <img class="avata" src="{{user.avatar_url}}" alt="">
+						    <img class="avatar" src="{{user.avatar_url}}" alt="">
               {{else}}
-                <img class="avata" src="/img/male_avata.svg" alt="">
+                <img class="avatar" src="/img/male_avatar.svg" alt="">
               {{/if}}
 							<ul class="blog_meta list">
 								<li>
@@ -131,9 +131,9 @@
 				<div class="blog_right_sidebar">
 					<aside class="single_sidebar_widget author_widget">
 					  {{#if user.avatar_url}}
-						  <img class="avata_right" id="avatar" src="{{user.avatar_url}}" alt="">
+						  <img class="avatar_right" id="avatar" src="{{user.avatar_url}}" alt="">
 						{{else}}
-              <img class="avata_right" id="avatar" src="/img/male_avata.svg" alt="">
+              <img class="avatar_right" id="avatar" src="/img/male_avatar.svg" alt="">
             {{/if}}
 						<h4>{{user.username}}</h4>
 						<input class="btn-light" type="button" id="loadFileXml" value="Chọn ảnh" onclick="document.getElementById('image_url').click();"/>
