@@ -2321,14 +2321,14 @@ a {
   border: 0;
 }
 
-.avata {
+.avatar {
   vertical-align: middle;
   border-style: none;
   width: 4rem;
   border-radius: 50% !important;
 }
 
-.avata_right {
+.avatar_right {
   vertical-align: middle;
   border-style: none;
   width: 6rem;
