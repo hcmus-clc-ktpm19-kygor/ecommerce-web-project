@@ -1,6 +1,4 @@
-const model = require('./accountModel');
 const service = require('./accountService');
-const dataFaker = require('../../data_generator/FakeGenerator/FakeAccountGenerator');
 
 /**
  * Lay 1 tai khoan len bang id
@@ -60,15 +58,6 @@ exports.insert = async (req, res) => {
   }
 }
 
-exports.generateFakeData = async (req, res) => {
-  try {
-    const accounts = await dataFaker.generateFakeAccount();
-    res.status(201).json(accounts);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-}
-
 /**
  * Tim va Update account da co trong database tra ket qua neu thanh cong
  *
@@ -78,7 +67,7 @@ exports.generateFakeData = async (req, res) => {
  */
 exports.update = async (req, res) => {
   try {
-    const updatedAccount = await service.update(req.params.id, req);
+    const updatedAccount = await service.update(req.params.id, req.body, req.file);
     res.redirect(`/account/${updatedAccount._id}`);
   } catch (err) {
     res.status(400).json({ message: err.message });
