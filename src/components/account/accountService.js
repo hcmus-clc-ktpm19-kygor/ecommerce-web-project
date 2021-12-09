@@ -1,6 +1,7 @@
 const model = require('./accountModel');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const uploadAvatar = require('../../config/cloudinary');
 
 /**
  * Lay 1 account len tu database bang id
@@ -97,6 +98,7 @@ module.exports.insert = async ({ username, password, email }) => {
  */
 exports.update = async (id, updateAccount) => {
   try {
+    const account = await model.findById(id);
     return await model.findByIdAndUpdate(id, updateAccount,
         { new: true });
   } catch (err) {

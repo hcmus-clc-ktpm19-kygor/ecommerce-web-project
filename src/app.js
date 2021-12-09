@@ -7,6 +7,7 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const session = require('express-session');
 const passport = require("./config/passport");
+const methodOverride = require('method-override');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
@@ -31,6 +32,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(methodOverride('_method', { methods: ['POST', 'GET'] }));
 
 // Passport middlewares
 app.use(session({ secret: process.env.SESSION_SECRET_KEY }));
@@ -45,7 +47,8 @@ app.use(function (req, res, next) {
 // Router middleware
 app.use('/', indexRouter);
 app.use('/', authRouter);
-app.use('/account', loggedInUserGuard ,accountRouter);
+app.use('/account' ,accountRouter);
+// app.use('/account', loggedInUserGuard ,accountRouter);
 app.use('/products', productRouter);
 app.use('/confirmation', loggedInUserGuard, confirmationRouter);
 app.use('/users', usersRouter);
