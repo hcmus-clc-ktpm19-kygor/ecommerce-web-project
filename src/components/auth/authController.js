@@ -34,26 +34,31 @@ exports.renderRegister = (req, res) => {
  */
 exports.register = async (req, res) => {
   try {
-    // Thêm account mới vào database
-    const newAccount = await accountService.insert(req.body);
-
-    const { email } = req.body;
-
-    if (!newAccount) {
-      //res.redirect('auth/views/register');
-
-      /* NOTE: chỗ này để lại thông báo tài khoản đã tồn tại nhưng chưa biết làm sao
-      * tạm để đây
-      * */
+    const { password } = req.body;
+    const { confirmPassword } = req.body;
+    if(password != confirmPassword){
       res.render('auth/views/register', {
-        email,
-        message: 'Username already existed'
+        message: 'Xác nhận mật khẩu không đúng'
       });
-    } else {
-      res.redirect('/login');
+    }
+    else {
+      try {
+        const newAccount = await accountService.insert(req.body);
+        if (!newAccount) {
+          res.render('auth/views/register', {
+            message: 'Username hoặc Email đã tồn tại'
+          });
+        } else {
+          res.redirect('/login');
+        }
+      } catch (e) {
+        res.status(400).json({ message: e.message });
+      }
     }
   } catch (e) {
     res.status(400).json({ message: e.message });
   }
+
+
 }
 
