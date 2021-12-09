@@ -72,10 +72,11 @@ module.exports.getAll = async () => {
  * @param newAccount
  * @returns {Promise<string>}
  */
-module.exports.insert = async ({ username, password, email }) => {
+module.exports.insert = async ({ username, email, password }) => {
   try {
-    const isExisted = await model.exists({ username });
-    if (isExisted) {
+    const isExisted_username = await model.exists({ username });
+    const isExisted_email = await model.exists({ email });
+    if (isExisted_username || isExisted_email ) {
       return null;
     } else {
       const hashedPassword = await bcrypt.hash(password, 10);
