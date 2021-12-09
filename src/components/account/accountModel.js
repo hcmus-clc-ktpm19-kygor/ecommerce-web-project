@@ -7,12 +7,12 @@ const accountSchema = new Schema({
   password: String,
   email: String,
   account_status: { type: Boolean, default: true },
-  name: { type: String },
-  phone: { type: String },
+  name: String,
+  phone: String,
   address: String,
   sex: String,
-  dob: { type: Date },
-  image_url: String
+  dob: String,
+  avatar_url: String
 }, { timestamps: true, versionKey: false });
 
 // Create account model in db

@@ -1,141 +1,157 @@
 <!-- ================ start banner area ================= -->
-	<section class="blog-banner-area" id="blog">
-		<div class="container h-100">
-			<div class="blog-banner">
-				<div class="text-center">
-					<h1>Profie</h1>
-					<nav aria-label="breadcrumb" class="banner-breadcrumb">
-            <ol class="breadcrumb">
-              <li class="breadcrumb-item"><a href="/">Home</a></li>
-              <li class="breadcrumb-item active" aria-current="page">My Profie</li>
-            </ol>
-          </nav>
+<section class="blog-banner-area" id="blog">
+	<div class="container h-100">
+		<div class="blog-banner">
+			<div class="text-center">
+				<h1>Profie</h1>
+				<nav aria-label="breadcrumb" class="banner-breadcrumb">
+					<ol class="breadcrumb">
+						<li class="breadcrumb-item"><a href="/">Home</a></li>
+						<li class="breadcrumb-item active" aria-current="page">My Profie</li>
+					</ol>
+				</nav>
+			</div>
+		</div>
+	</div>
+</section>
+<!-- ================ end banner area ================= -->
+
+
+
+<!--================Blog Area =================-->
+<section class="blog_area single-post-area py-80px section-margin--small">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 posts-list">
+				<div class="single-post row">
+					<div class="col-lg-3  col-md-3">
+						<div class="blog_info text-right">
+							<img class="avata" src="/img/male_avata.svg" alt="">
+							<ul class="blog_meta list">
+								<li>
+									<a href="/account/{{user._id}}">{{user.username}}
+										<i class="bi bi-person"></i>
+									</a>
+								</li>
+								<li>
+									<a href="#">Quản lý đơn hàng
+										<i class="bi bi-clipboard-check"></i>
+									</a>
+								</li>
+								<li>
+									<a href="#">Thay đổi mật khẩu
+										<i class="bi bi-key"></i>
+									</a>
+								</li>
+								<li>
+									<a href="#">Giỏ hàng
+										<i class="bi bi-cart-check"></i>
+									</a>
+								</li>
+							</ul>
+							<ul class="social-links">
+								<li>
+									<a href="#">
+										<i class="fab fa-facebook-f"></i>
+									</a>
+								</li>
+								<li>
+									<a href="#">
+										<i class="fab fa-twitter"></i>
+									</a>
+								</li>
+								<li>
+									<a href="#">
+										<i class="fab fa-github"></i>
+									</a>
+								</li>
+								<li>
+									<a href="#">
+										<i class="fab fa-behance"></i>
+									</a>
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-lg-9 col-md-9 blog_details">
+						<h2>Thông tin tài khoản</h2>
+						<div class="comment-form">
+							<form action="/account/{{user._id}}?_method=PUT" method="POST">
+								<div class="form-group form-inline">
+									<div class="form-group col-lg-6 col-md-6 name">
+										<label style="display: flex">Họ tên</label>
+										<input value="{{user.name}}" type="text" class="form-control" name="name"
+											id="name" placeholder="Họ và Tên" onfocus="this.placeholder = ''"
+											onblur="this.placeholder = 'Nhập Họ và Tên'">
+									</div>
+									<div class="form-group col-lg-6 col-md-6 email">
+										<label style="display: flex">Số điện thoại</label>
+										<input value="{{user.phone}}" type="text" class="form-control" name="phone"
+											id="phone" placeholder="Số điện thoại" onfocus="this.placeholder = ''"
+											onblur="this.placeholder = 'Nhập sđt'">
+									</div>
+								</div>
+								<div class="form-group">
+									<label style="display: flex">Email</label>
+									<input value="{{user.email}}" type="email" class="form-control" name="email"
+										id="email" placeholder="Email" onfocus="this.placeholder = ''"
+										onblur="this.placeholder = 'Nhập Email'">
+								</div>
+								<div class="form-group">
+									<label style="display: flex">Địa chỉ</label>
+									<input value="{{user.address}}" type="text" class="form-control" name="address"
+										id="address" placeholder="Địa chỉ" onfocus="this.placeholder = ''"
+										onblur="this.placeholder = 'Nhập Địa chỉ'">
+								</div>
+								<div class="form-group">
+									<label style="display: flex">Ngày sinh</label>
+									<input value="{{user.dob}}" type="date" class="form-control" name="dob" id="dob"
+										placeholder="Ngày sinh" onfocus="this.placeholder = ''"
+										onblur="this.placeholder = 'Nhập ngày sinh'">
+								</div>
+								<div class="form-group">
+									<label style="display: flex">Giới tính</label>
+									<input value="{{user.sex}}" type="text" class="form-control" name="sex" id="sex"
+										placeholder="Giới tính" onfocus="this.placeholder = ''"
+										onblur="this.placeholder = 'Nhập giới tính'">
+								</div>
+                <input id="image_url" name="avatar" type="file" accept=".jpg,.jpeg,.png">
+								<input type="submit" value="Cập nhật" class="button button-postComment button--active"
+									id="submit-button">
+							</form>
+						</div>
+					</div>
 				</div>
 			</div>
-    </div>
-	</section>
-	<!-- ================ end banner area ================= -->
-
-
-
-  <!--================Blog Area =================-->
-	<section class="blog_area single-post-area py-80px section-margin--small">
-			<div class="container">
-					<div class="row">
-							<div class="col-lg-8 posts-list">
-									<div class="single-post row">
-											<div class="col-lg-3  col-md-3">
-													<div class="blog_info text-right">
-														 <img class="avata" src="/img/male_avata.svg" alt="">
-															<ul class="blog_meta list">
-																	<li>
-																			<a href="/account/{{user._id}}">{{user.username}}
-																					<i class="bi bi-person"></i>
-																			</a>
-																	</li>
-																	<li>
-																			<a href="#">Quản lý đơn hàng
-																					<i class="bi bi-clipboard-check"></i>
-																			</a>
-																	</li>
-																	<li>
-																			<a href="#">Thay đổi mật khẩu
-																					<i class="bi bi-key"></i>
-																			</a>
-																	</li>
-																	<li>
-																			<a href="#">Giỏ hàng
-																					<i class="bi bi-cart-check"></i>
-																			</a>
-																	</li>
-															</ul>
-															<ul class="social-links">
-																	<li>
-																			<a href="#">
-																					<i class="fab fa-facebook-f"></i>
-																			</a>
-																	</li>
-																	<li>
-																			<a href="#">
-																				<i class="fab fa-twitter"></i>
-																			</a>
-																	</li>
-																	<li>
-																			<a href="#">
-																				<i class="fab fa-github"></i>
-																			</a>
-																	</li>
-																	<li>
-																			<a href="#">
-																				<i class="fab fa-behance"></i>
-																			</a>
-																	</li>
-															</ul>
-													</div>
-											</div>
-											<div class="col-lg-9 col-md-9 blog_details">
-													<h2>Thông tin tài khoản</h2>
-													<div class="comment-form">
-                              <form>
-                                  <div class="form-group form-inline">
-                                      <div class="form-group col-lg-6 col-md-6 name">
-                                          <label style="display: flex"  >Họ tên</label>
-                                          <input value = "{{user.name}}" type="text" class="form-control" id="name" placeholder="Nhập Họ và Tên" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Nhập Họ và Tên'">
-                                      </div>
-                                      <div class="form-group col-lg-6 col-md-6 email">
-                                          <label style="display: flex">Số điện thoại</label>
-                                          <input value = "{{user.phone}}" type="text" class="form-control" id="phone" placeholder="Nhập sđt" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Nhập sđt'">
-                                      </div>
-                                  </div>
-                                  <div class="form-group">
-                                      <label style="display: flex">Email</label>
-                                      <input value = "{{user.email}}" type="email" class="form-control" id="email" placeholder="Nhập Email" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Nhập Email'">
-                                  </div>
-                                  <div class="form-group">
-                                      <label style="display: flex">Địa chỉ</label>
-                                      <input value = "{{user.address}}" type="text" class="form-control" id="address" placeholder="Nhập Địa chỉ" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Nhập Địa chỉ'">
-                                  </div>
-                                  <div class="form-group">
-                                      <label style="display: flex">Ngày sinh</label>
-                                      <input value = "{{user.dob}}" type="date" class="form-control" id="dob" placeholder="Nhập ngày sinh" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Nhập ngày sinh'">
-                                  </div>
-                                  <div class="form-group">
-                                      <label style="display: flex">Giới tính</label>
-                                      <input value = "{{user.sex}}" type="text" class="form-control" id="sex" placeholder="Nhập giới tính" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Nhập giới tính'">
-                                  </div>
-                                  <input type="submit" value="Cập nhật" class="button button-postComment button--active">
-                              </form>
-                          </div>
-											</div>
-									</div>
-							</div>
-							<div class="col-lg-4">
-									<div class="blog_right_sidebar">
-											<aside class="single_sidebar_widget author_widget">
-													<img class="avata_right" src="/img/male_avata.svg" alt="">
-													<h4>{{user.username}}</h4>
-													<input class="btn-light" type="button" id="loadFileXml" value="Chọn ảnh" onclick="document.getElementById('image_url').click();" />
-{{!--                           <input for="image_url" type="button" class="btn-light">Chọn ảnh</label> --}}
-                          <input id="image_url" style="display: none;" type="file" accept=".jpg,.jpeg,.png">
-													<div class="social_icon">
-                              <a href="#">
-                                  <i class="fab fa-facebook-f"></i>
-                              </a>
-                              <a href="#">
-                                  <i class="fab fa-twitter"></i>
-                              </a>
-                              <a href="#">
-                                  <i class="fab fa-github"></i>
-                              </a>
-                              <a href="#">
-                                <i class="fab fa-behance"></i>
-                              </a>
-                          </div>
-													<div class="br"></div>
-											</aside>
-									</div>
-							</div>
-					</div>
+			<div class="col-lg-4">
+				<div class="blog_right_sidebar">
+					<aside class="single_sidebar_widget author_widget">
+						<img class="avata_right" id="avatar" src="/img/male_avata.svg" alt="">
+						<h4>{{user.username}}</h4>
+						<input class="btn-light" type="button" id="loadFileXml" value="Chọn ảnh"
+							onclick="document.getElementById('image_url').click();" />
+						{{!-- <input for="image_url" type="button" class="btn-light">Chọn ảnh</label> --}}
+						<input id="image_url" style="display: none;" type="file" accept=".jpg,.jpeg,.png">
+						<div class="social_icon">
+							<a href="#">
+								<i class="fab fa-facebook-f"></i>
+							</a>
+							<a href="#">
+								<i class="fab fa-twitter"></i>
+							</a>
+							<a href="#">
+								<i class="fab fa-github"></i>
+							</a>
+							<a href="#">
+								<i class="fab fa-behance"></i>
+							</a>
+						</div>
+						<div class="br"></div>
+					</aside>
+				</div>
 			</div>
-	</section>
-	<!--================Blog Area =================-->
+		</div>
+	</div>
+</section>
+<!--================ Script Area =================-->
+<script src="../js/handleChooseImgOnchange.js"></script>
