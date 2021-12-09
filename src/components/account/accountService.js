@@ -1,7 +1,6 @@
 const model = require('./accountModel');
-const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
-const uploadAvatar = require('../../config/cloudinary');
+const cloudinary = require('../../config/cloudinary');
 
 /**
  * Lay 1 account len tu database bang id
@@ -93,14 +92,27 @@ module.exports.insert = async ({ username, email, password }) => {
 /**
  * Cap nhat thong tin tai khoan co trong database
  *
- * @param id
- * @param updateAccount
+ * @param id user's id
+ * @param req request
  * @returns {Promise<{account: model}>}
  */
-exports.update = async (id, updateAccount) => {
+exports.update = async (id, req) => {
   try {
-    const account = await model.findById(id);
-    return await model.findByIdAndUpdate(id, updateAccount,
+    // Upload avatar to cloudinary
+    const result = await cloudinary.uploader.upload(
+        req.file.path,
+        {
+          public_id: id,
+          folder: 'user_avatar',
+          use_filename: true
+        });
+
+    // Get cloudinary avatar url
+    const { url } = result;
+    // Update user's info
+    const updateUser = req.body;
+    updateUser.avatar_url = url;
+    return await model.findByIdAndUpdate(id, updateUser,
         { new: true });
   } catch (err) {
     throw err;

@@ -78,7 +78,7 @@ exports.generateFakeData = async (req, res) => {
  */
 exports.update = async (req, res) => {
   try {
-    const updatedAccount = await service.update(req.params.id, req.body);
+    const updatedAccount = await service.update(req.params.id, req);
     res.redirect(`/account/${updatedAccount._id}`);
   } catch (err) {
     res.status(400).json({ message: err.message });
