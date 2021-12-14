@@ -32,7 +32,7 @@ exports.paging = async (page) => {
     return await model
     .find() // find tất cả các data
     .skip((perPage * page) - perPage) // Trong page đầu tiên sẽ bỏ qua giá trị là 0
-    .limit(perPage);
+    .limit(perPage).lean();
   } catch (err) {
     throw err;
   }

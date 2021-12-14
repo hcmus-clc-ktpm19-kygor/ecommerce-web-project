@@ -1,20 +1,21 @@
 const express = require('express');
 const router = express.Router();
-const controller = require('./productController');
+
+const productController = require('./productController');
 
 // GET Method
 // Paging
-router.get('/', controller.paging);
+router.get('/', productController.paging);
 // Get 1 product
-router.get('/:id', controller.get);
+router.get('/:id', productController.get);
 
 // POST Method
-router.post('/', controller.insert);
+router.post('/', productController.insert);
 
 // PUT Method
-router.put('/:id', controller.update);
+router.put('/:id', productController.update);
 
 // DELETE Method
-router.delete('/:id', controller.delete);
+router.delete('/:id', productController.delete);
 
 module.exports = router;
