@@ -1,13 +1,15 @@
 require('dotenv').config();
-require('./hbsHelper/helper');
+require('./helpers/helper');
+
+const express = require('express');
+
+const path = require('path');
+const passport = require("./config/passport.config");
 
 const createError = require('http-errors');
-const express = require('express');
-const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const session = require('express-session');
-const passport = require("./config/passport");
 const methodOverride = require('method-override');
 
 const indexRouter = require('./routes/index');
@@ -15,11 +17,13 @@ const usersRouter = require('./routes/users');
 const confirmationRouter = require('./routes/confirmation');
 const productRouter = require('./components/product/productRouter');
 const authRouter = require('./components/auth/authRouter');
-const loggedInUserGuard = require('./middlewares/loggedInUserGuard');
 const accountRouter = require('./components/account/accountRouter');
+const apiRouter = require('./api/apiRouter');
+
+const loggedInUserGuard = require('./middlewares/loggedInUserGuard');
 
 // try to connect to database
-const db = require('./config/database');
+const db = require('./config/database.config');
 db.connect();
 
 const app = express();
@@ -42,17 +46,17 @@ app.use(passport.session());
 
 app.use(function (req, res, next) {
   res.locals.user = req.user;
-  next()
+  next();
 })
 
 // Router middleware
 app.use('/', indexRouter);
 app.use('/', authRouter);
-// app.use('/account' ,accountRouter);
 app.use('/account', loggedInUserGuard ,accountRouter);
 app.use('/products', productRouter);
 app.use('/confirmation', loggedInUserGuard, confirmationRouter);
 app.use('/users', usersRouter);
+app.use('/api', apiRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

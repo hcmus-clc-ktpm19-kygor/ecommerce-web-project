@@ -28566,7 +28566,7 @@ var GZIP_HEADER_ID1 = 0x1f;
 var GZIP_HEADER_ID2 = 0x8b;
 
 /**
- * Emulate Node's zlib C++ layer for use by the JS layer in index.js
+ * Emulate Node's zlib C++ layer for use by the JS layer in commentApiRouter.js
  */
 function Zlib(mode) {
   if (typeof mode !== 'number' || mode < exports.DEFLATE || mode > exports.UNZIP) {
@@ -48707,7 +48707,7 @@ var bomHandling = __webpack_require__(5395),
     iconv = module.exports;
 
 // All codecs and aliases are kept here, keyed by encoding name/alias.
-// They are lazy loaded in `iconv.getCodec` from `encodings/index.js`.
+// They are lazy loaded in `iconv.getCodec` from `encodings/commentApiRouter.js`.
 iconv.encodings = null;
 
 // Characters emitted in case of error.

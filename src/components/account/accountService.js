@@ -1,6 +1,6 @@
 const model = require('./accountModel');
 const bcrypt = require('bcrypt');
-const cloudinary = require('../../config/cloudinary');
+const cloudinary = require('../../config/cloudinary.config');
 
 /**
  * Lay 1 account len tu database bang id
@@ -9,7 +9,7 @@ const cloudinary = require('../../config/cloudinary');
  */
 module.exports.getById = async (id) => {
   try {
-    const account = await model.findById(id);
+    const account = await model.findById(id).lean();
     if (account === null) {
       return { mess: `Account id '${id}' not found` };
     }
@@ -68,7 +68,7 @@ module.exports.getAll = async () => {
 };
 
 /**
- * Them san pham moi vao database
+ * Them account moi vao database
  * @param newAccount
  * @returns {Promise<string>}
  */
@@ -94,7 +94,7 @@ module.exports.insert = async ({ username, email, password }) => {
  *
  * @param id user's id
  * @param updateUser
- * @param filePath
+ * @param file
  * @returns {Promise<{account: model}>}
  */
 exports.update = async (id, updateUser, file) => {
@@ -119,7 +119,7 @@ exports.update = async (id, updateUser, file) => {
     // Update user's info
     updateUser.avatar_url = url;
     return await model.findByIdAndUpdate(id, updateUser,
-        { new: true });
+        { new: true }).lean();
   } catch (err) {
     throw err;
   }

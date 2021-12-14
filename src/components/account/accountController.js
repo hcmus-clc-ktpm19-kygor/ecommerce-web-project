@@ -68,6 +68,7 @@ exports.insert = async (req, res) => {
 exports.update = async (req, res) => {
   try {
     const updatedAccount = await service.update(req.params.id, req.body, req.file);
+    req.session.passport.user = updatedAccount;
     res.redirect(`/account/${updatedAccount._id}`);
   } catch (err) {
     res.status(400).json({ message: err.message });
