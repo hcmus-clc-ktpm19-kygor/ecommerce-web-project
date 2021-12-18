@@ -37,37 +37,6 @@ module.exports.validatePassword = async (user, password) => {
 }
 
 /**
- * Phan trang cac account, moi trang 5 account
- * @param page
- * @returns {Promise<void>}
- */
-exports.paging = async (page) => {
-  try {
-    let perPage = 5; // số lượng sản phẩm xuất hiện trên 1 page
-    page = page || 1;
-
-    return await model
-    .find() // find tất cả các data
-    .skip((perPage * page) - perPage) // Trong page đầu tiên sẽ bỏ qua giá trị là 0
-    .limit(perPage);
-  } catch (err) {
-    throw err;
-  }
-};
-
-/**
- * Lay 1 list cac san pham tu database
- * @returns {Promise<[account: model]>}
- */
-module.exports.getAll = async () => {
-  try {
-    return await model.find();
-  } catch (err) {
-    throw err;
-  }
-};
-
-/**
  * Them account moi vao database
  * @param newAccount
  * @returns {Promise<string>}
@@ -120,19 +89,6 @@ exports.update = async (id, updateUser, file) => {
     updateUser.avatar_url = url;
     return await model.findByIdAndUpdate(id, updateUser,
         { new: true }).lean();
-  } catch (err) {
-    throw err;
-  }
-}
-
-/**
- * Tim tai khoan bang id xoa khoi database
- * @param id
- * @returns {Promise<*>}
- */
-exports.delete = async (id) => {
-  try {
-    return await model.findByIdAndDelete(id);
   } catch (err) {
     throw err;
   }

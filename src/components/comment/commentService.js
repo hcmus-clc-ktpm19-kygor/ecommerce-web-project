@@ -1,20 +1,20 @@
 const commentModel = require("./commentModel");
-const mongoose = require('mongoose');
 
 /**
  * Phan trang comment, moi trang 5 comment
  * @param page
  * @returns {Promise<void>}
  */
-exports.getComment = async (page) => {
+exports.getComment = async (page, product_id) => {
     try {
         let perPage = 5; // so luong comment xuat hien trong 1 trang
         page = page || 1;
-
-        return await commentModel
-            .find() // find tất cả các data
+        const comments = await commentModel
+            .find({product_id})
+            .sort( [['createdAt', 'descending']])
             .skip((perPage * page) - perPage)
             .limit(perPage).lean();
+        return comments;
     } catch (err) {
         throw err;
     }
@@ -25,10 +25,15 @@ exports.getComment = async (page) => {
  * @param newComment
  * @returns {Promise<>}
  */
-module.exports.postComment = async ({ name, email, phone, content, product_id }) => {
+module.exports.postComment = async (user_id, user_avatar_url, user_name, product_id, content) => {
     try {
-        product_id = mongoose.Types.ObjectId.createFromHexString(product_id);
-        const comment = new commentModel({ name, email, phone, content, product_id });
+        const comment = new commentModel({
+            user_id: user_id,
+            user_avatar_url:user_avatar_url,
+            user_name: user_name,
+            product_id: product_id,
+            content: content,
+        });
         return await comment.save();
     } catch (err) {
         throw err;
