@@ -116,10 +116,7 @@
 								</div>
 								<div class="form-group">
 									<label style="display: flex">Giới tính</label>
-									{{!-- <input value="{{user.sex}}" type="text" class="form-control" name="sex"
-										id="sex" placeholder="Giới tính" onfocus="this.placeholder = ''"
-										onblur="this.placeholder = 'Nhập giới tính'"> --}}
-									<select class="form-select" name="sex" aria-label="Default select example">
+									<select class="form-control" name="sex" aria-label="Default select example">
 										{{#if (is_equals user.sex "Nam")}}
 										<option selected value="Nam">Nam</option>
 										<option value="Nữ">Nữ</option>
@@ -135,7 +132,7 @@
 								</div>
 								<input id="image_url" name="avatar" style="display: none;" type="file"
 									accept=".jpg,.jpeg,.png">
-								<input type="submit" value="Cập nhật" class="button button-postComment button--active"
+								<input style="margin-top: 20px" type="submit" value="Cập nhật" class="button button-postComment button--active"
 									id="submit-button">
 							</form>
 						</div>
