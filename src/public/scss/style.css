@@ -2325,13 +2325,15 @@ a {
   vertical-align: middle;
   border-style: none;
   width: 4rem;
+  height: 4rem;
   border-radius: 50% !important;
 }
 
 .avatar_right {
   vertical-align: middle;
   border-style: none;
-  width: 6rem;
+  width: 7rem;
+  height: 7rem;
   border-radius: 50% !important;
 }
 
