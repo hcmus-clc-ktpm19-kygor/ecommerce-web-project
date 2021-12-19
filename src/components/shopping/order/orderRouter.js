@@ -1,17 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const controller = require('./accountController');
-const upload = require('../../config/multer.config');
+const controller = require('./orderController');
 
 // GET Method
 router.get('/:id', controller.get);
-router.get('activate/:id', controller.get);
+router.get('/', controller.getAll);
 
 // POST Method
 router.post('/', controller.insert);
 
 // PUT Method
-router.put('/:id', upload.single('avatar'), controller.update);
+router.put('/:id', controller.update);
 
 // DELETE Method
 router.delete('/:id', controller.delete);

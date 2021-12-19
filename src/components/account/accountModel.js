@@ -6,13 +6,14 @@ const accountSchema = new Schema({
   username: String,
   password: String,
   email: String,
-  account_status: { type: Boolean, default: true },
   name: String,
   phone: String,
   address: String,
   sex: String,
   dob: String,
-  avatar_url: String
+  avatar_url: String,
+  activation_string: String,
+  status: { type: Boolean, default: false },
 }, { timestamps: true, versionKey: false });
 
 // Create account model in db

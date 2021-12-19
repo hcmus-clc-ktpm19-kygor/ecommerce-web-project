@@ -57,9 +57,9 @@
             </ul>
             {{#if user}}
             <a class="button button-login-header" href="/account/{{user._id}}">Hello, {{user.username}}</a>
-            <a class="button button-login-header" href="/logout">Đăng xuất</a>
+            <a class="button button-login-header" href="/logout"><i style="font-size: 1.1rem; margin-right: 10px;" class="bi bi-box-arrow-right"></i>Đăng xuất</a>
             {{else}}
-            <a class="button button-login-header" href="/login">Đăng nhập</a>
+            <a class="button button-login-header" href="/login"><i style="font-size: 1.1rem; margin-right: 10px;" class="bi bi-person-circle"></i>Đăng nhập</a>
             {{/if}}
           </div>
         </div>
@@ -166,5 +166,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
   <script src="/vendors/jquery.ajaxchimp.min.js"></script>
   <script src="/vendors/mail-script.js"></script>
   <script src="/js/main.js"></script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js" integrity="sha512-RNLkV3d+aLtfcpEyFG8jRbnWHxUqVZozacROI4J2F1sTaDqo1dPQYs01OMi1t1w9Y2FdbSCDSQ2ZVdAC8bzgAg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </body>
 </html>
