@@ -1,6 +1,14 @@
+require('dotenv').config();
+
 const model = require('./accountModel');
-const bcrypt = require('bcrypt');
 const cloudinary = require('../../config/cloudinary.config');
+const sgMail = require('../../config/email.config');
+
+const bcrypt = require('bcrypt');
+const fs = require("fs");
+const faker = require('faker');
+const hbs = require('hbs');
+const path = require('path');
 
 /**
  * Lay 1 account len tu database bang id
@@ -32,6 +40,43 @@ module.exports.getByUsername = async (username) => {
   }
 };
 
+module.exports.getByEmail = async (email) => {
+  try {
+    return await model.findOne({ email }).lean();
+  } catch (err) {
+    throw err;
+  }
+}
+
+/**
+ * Activate account thông qua mail
+ * @param email
+ * @param activationString
+ * @returns {Promise<boolean>}
+ */
+module.exports.activateAccount = async (email, activationString) => {
+  try {
+    const account = await model
+        .findOne({email, activation_string: activationString})
+        .lean();
+
+    if (!account) {
+      return false;
+    }
+    await model.findOneAndUpdate(
+      {
+        email,
+        activation_string: activationString,
+      },
+      { status: true }
+    );
+
+    return true;
+  } catch (err) {
+    throw err;
+  }
+}
+
 module.exports.validatePassword = async (user, password) => {
   return await bcrypt.compare(password, user.password);
 }
@@ -49,8 +94,25 @@ module.exports.insert = async ({ username, email, password }) => {
       return null;
     } else {
       const hashedPassword = await bcrypt.hash(password, 10);
+      const activation_string = faker.internet.password();
+      const account = new model({
+        username,
+        password: hashedPassword,
+        email,
+        activation_string,
+      });
 
-      const account = new model({ username, password: hashedPassword, email });
+      // Send email template
+      const template = fs.readFileSync(path.resolve(__dirname, './views/email_template.hbs'), "utf8");
+      const compiledTemplate = hbs.compile(template);
+      const msg = {
+        to: email, // Change to your recipient
+        from: process.env.EMAIL_SENDER, // Change to your verified sender
+        subject: "Aroma account activation",
+        html: compiledTemplate({ domain_name: process.env.DOMAIN_NAME, email, activation_string }),
+      };
+      await sgMail.send(msg);
+
       return await account.save();
     }
   } catch (err) {

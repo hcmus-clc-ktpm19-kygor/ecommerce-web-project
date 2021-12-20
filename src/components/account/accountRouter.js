@@ -12,7 +12,4 @@ router.post('/', controller.insert);
 // PUT Method
 router.put('/:id', upload.single('avatar'), controller.update);
 
-// DELETE Method
-router.delete('/:id', controller.delete);
-
 module.exports = router;

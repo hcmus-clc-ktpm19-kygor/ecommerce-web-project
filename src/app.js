@@ -5,6 +5,7 @@ const express = require('express');
 
 const path = require('path');
 const passport = require("./config/passport.config");
+const flash = require('connect-flash');
 
 const createError = require('http-errors');
 const cookieParser = require('cookie-parser');
@@ -43,6 +44,7 @@ app.use(methodOverride('_method', { methods: ['POST', 'GET'] }));
 app.use(session({ secret: process.env.SESSION_SECRET_KEY }));
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
 
 app.use(function (req, res, next) {
   res.locals.user = req.user;

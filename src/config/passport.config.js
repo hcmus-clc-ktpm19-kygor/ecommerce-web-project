@@ -6,10 +6,13 @@ passport.use(new LocalStrategy(
     async (username, password, done) => {
       const user = await accountService.getByUsername(username);
       if (!user) {
-        return done(null, false, { message: 'Incorrect username' })
+        return done(null, false, { message: 'Tài khoản không tồn tại.' })
       }
-      if (!await accountService.validatePassword(user, password)) {
-        return done(null, false, { message: 'Incorrect password.' });
+      if (!(await accountService.validatePassword(user, password))) {
+        return done(null, false, { message: "Password không hợp lệ." });
+      }
+      if (!user.status) {
+        return done(null, false, { message: "Tài khoản chưa kích hoạt, vui lòng kiểm tra mail." });
       }
       return done(null, user);
     }
