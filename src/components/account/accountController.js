@@ -17,30 +17,27 @@ exports.get = async (req, res) => {
   }
 };
 
-exports.paging = async (req, res) => {
+exports.activateAccount = async (req, res) => {
   try {
-    const accounts = await service.paging(req.query.page);
-    res.json(accounts);
+    const { email } = req.query;
+    const activationString = req.query['activation-string'];
+
+    const activated = await service.activateAccount(email, activationString);
+    const account = await service.getByEmail(email);
+    if (activated) {
+      req.login(account, function (err) {
+        if (err) {
+          return next(err);
+        }
+        return res.redirect(`/account/${req.user._id}`);
+      });
+    } else {
+      res.redirect('/login');
+    }
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 }
-
-/**
- * Lay list tat ca tai khoan
- *
- * @param req request
- * @param res response
- * @returns {Promise<void>}
- */
-exports.getAll = async (req, res) => {
-  try {
-    const accounts = await service.getAll();
-    res.json(accounts);
-  } catch (err) {
-    res.status(500).json({ message: err.message });
-  }
-};
 
 /**
  * Them account moi vao database tra ket qua neu thanh cong
@@ -72,21 +69,5 @@ exports.update = async (req, res) => {
     res.redirect(`/account/${updatedAccount._id}`);
   } catch (err) {
     res.status(400).json({ message: err.message });
-  }
-}
-
-/**
- * Tim va xoa tai khoan trong database
- *
- * @param req request
- * @param res response
- * @returns {Promise<void>}
- */
-exports.delete = async (req, res) => {
-  try {
-    await service.delete(req.params.id);
-    res.json({message: `Account ${req.params.id} has been deleted`});
-  } catch (err) {
-    res.status(500).json({ message: err.message });
   }
 }

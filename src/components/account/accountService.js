@@ -40,6 +40,43 @@ module.exports.getByUsername = async (username) => {
   }
 };
 
+module.exports.getByEmail = async (email) => {
+  try {
+    return await model.findOne({ email }).lean();
+  } catch (err) {
+    throw err;
+  }
+}
+
+/**
+ * Activate account thông qua mail
+ * @param email
+ * @param activationString
+ * @returns {Promise<boolean>}
+ */
+module.exports.activateAccount = async (email, activationString) => {
+  try {
+    const account = await model
+        .findOne({email, activation_string: activationString})
+        .lean();
+
+    if (!account) {
+      return false;
+    }
+    await model.findOneAndUpdate(
+      {
+        email,
+        activation_string: activationString,
+      },
+      { status: true }
+    );
+
+    return true;
+  } catch (err) {
+    throw err;
+  }
+}
+
 module.exports.validatePassword = async (user, password) => {
   return await bcrypt.compare(password, user.password);
 }
@@ -65,13 +102,14 @@ module.exports.insert = async ({ username, email, password }) => {
         activation_string,
       });
 
+      // Send email template
       const template = fs.readFileSync(path.resolve(__dirname, './views/email_template.hbs'), "utf8");
       const compiledTemplate = hbs.compile(template);
       const msg = {
         to: email, // Change to your recipient
         from: process.env.EMAIL_SENDER, // Change to your verified sender
         subject: "Aroma account activation",
-        html: compiledTemplate({ email, activation_string }),
+        html: compiledTemplate({ domain_name: process.env.DOMAIN_NAME, email, activation_string }),
       };
       await sgMail.send(msg);
 

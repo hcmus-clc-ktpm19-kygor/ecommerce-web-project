@@ -1,4 +1,5 @@
 const accountService = require('../account/accountService');
+const passport = require('../../config/passport.config');
 
 /**
  * Render trang Login
@@ -6,8 +7,8 @@ const accountService = require('../account/accountService');
  * @param res response
  */
 exports.renderLogin = (req, res) => {
-  const invalidAccount = req.query['invalid-account'] !== undefined;
-  res.render('auth/views/login', { invalidAccount });
+  const message  = req.flash("failure_message");
+  res.render('auth/views/login', message[0]);
 }
 
 exports.logout = (req, res) => {
@@ -23,6 +24,24 @@ exports.logout = (req, res) => {
 exports.renderRegister = (req, res) => {
   console.log(req.body);
   res.render('auth/views/register');
+}
+
+exports.login = (req, res, next) => {
+  passport.authenticate('local', function(err, user, info) {
+    if (err) {
+      return next(err);
+    }
+    if (!user) {
+      req.flash('failure_message', info);
+      return res.redirect("/login");
+    }
+    req.logIn(user, function(err) {
+      if (err) {
+        return next(err);
+      }
+      return res.redirect('/');
+    });
+  })(req, res, next);
 }
 
 /**
@@ -48,7 +67,7 @@ exports.register = async (req, res) => {
             message: 'Username hoặc Email đã tồn tại'
           });
         } else {
-          res.redirect('/login');
+          res.redirect('/login?activate-account');
         }
       } catch (e) {
         res.status(400).json({ message: e.message });
