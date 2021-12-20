@@ -38,8 +38,8 @@
 							</div>
 							<div class="col-md-12 form-group">
 								<input type="password" required class="form-control" id="name" name="password" placeholder="Password" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Password'">
-								{{#if invalidAccount}}
-								  Username or Password is incorrect!
+								{{#if message}}
+                                <div style="color: red">{{message}}</div>
 								{{/if}}
 							</div>
 							<div class="col-md-12 form-group">
