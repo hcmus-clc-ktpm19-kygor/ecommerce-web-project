@@ -15,7 +15,18 @@ router.get('/logout', authController.logout);
 router.post('/login', passport.authenticate('local', {
   successRedirect: '/',
   failureRedirect: '/login?invalid-account'
-}))
+}));
+
+// router.post('/login',
+//     passport.authenticate('local'),
+//     function(req, res) {
+//       const page = req.query.page;
+//       console.log(page);
+//       if(page){
+//         res.redirect(page);
+//       }
+//       res.redirect("/");
+//     });
 router.post('/register', authController.register);
 
 
