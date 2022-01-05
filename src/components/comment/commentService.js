@@ -1,13 +1,13 @@
 const commentModel = require("./commentModel");
 
 /**
- * Phan trang comment, moi trang 10 comment
+ * Phan trang comment, moi trang 5 comment
  * @param page
  * @returns {Promise<void>}
  */
 exports.getComment = async (page, product_id) => {
     try {
-        let perPage = 10; // so luong comment xuat hien trong 1 trang
+        let perPage = 5; // so luong comment xuat hien trong 1 trang
         page = page || 1;
         const comments = await commentModel
             .find({product_id})

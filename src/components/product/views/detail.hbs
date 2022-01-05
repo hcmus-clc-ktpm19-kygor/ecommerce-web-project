@@ -256,7 +256,7 @@
 					<div class="row">
 						<div class="col-lg-6">
 							<div id="comment-list" class="comment_list">
-							 {{#each results.comments}}
+							 {{#each comments}}
 								<div class="review_item">
 									<div class="media">
 										<div class="d-flex">
@@ -275,25 +275,6 @@
 								</div>
 								{{/each}}
 							</div>
-							<nav id="nav-paging" style="margin-top: 20px;" aria-label="Page navigation example">
-                <ul class="pagination">
-                  <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Previous">
-                      <span aria-hidden="true">&laquo;</span>
-                      <span class="sr-only">Previous</span>
-                    </a>
-                  </li>
-                  <li class="page-item"><a class="page-link" href="?page={{results.prev}}">{{results.prev}}</a></li>
-                  <li class="page-item"><a class="page-link" href="?page={{results.curr}}">{{results.curr}}</a></li>
-                  <li class="page-item"><a class="page-link" href="?page={{results.next}}">{{results.next}}</a></li>
-                  <li class="page-item">
-                    <a class="page-link" href="#" aria-label="Next">
-                      <span aria-hidden="true">&raquo;</span>
-                      <span class="sr-only">Next</span>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
 						</div>
 						<div class="col-lg-6">
 							<div class="review_box">
