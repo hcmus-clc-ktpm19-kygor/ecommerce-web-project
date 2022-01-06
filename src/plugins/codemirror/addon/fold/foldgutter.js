@@ -6,7 +6,7 @@
     mod(require("../../lib/codemirror"), require("./foldcode"));
   else if (typeof define == "function" && define.amd) // AMD
     define(["../../lib/codemirror", "./foldcode"], mod);
-  else // Plain browser env
+  else // Plain browser .env
     mod(CodeMirror);
 })(function(CodeMirror) {
   "use strict";
