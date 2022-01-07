@@ -6,7 +6,7 @@
     mod(require("../../lib/codemirror"), require("../markdown/markdown"), require("../../addon/mode/overlay"));
   else if (typeof define == "function" && define.amd) // AMD
     define(["../../lib/codemirror", "../markdown/markdown", "../../addon/mode/overlay"], mod);
-  else // Plain browser env
+  else // Plain browser .env
     mod(CodeMirror);
 })(function(CodeMirror) {
 "use strict";

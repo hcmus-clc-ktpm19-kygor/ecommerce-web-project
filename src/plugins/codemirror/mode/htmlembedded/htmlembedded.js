@@ -8,7 +8,7 @@
   else if (typeof define == "function" && define.amd) // AMD
     define(["../../lib/codemirror", "../htmlmixed/htmlmixed",
             "../../addon/mode/multiplex"], mod);
-  else // Plain browser env
+  else // Plain browser .env
     mod(CodeMirror);
 })(function(CodeMirror) {
   "use strict";

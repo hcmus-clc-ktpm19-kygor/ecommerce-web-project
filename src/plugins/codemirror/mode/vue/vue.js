@@ -25,7 +25,7 @@
             "../stylus/stylus",
             "../pug/pug",
             "../handlebars/handlebars"], mod);
-  } else { // Plain browser env
+  } else { // Plain browser .env
     mod(CodeMirror);
   }
 })(function (CodeMirror) {
