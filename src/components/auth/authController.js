@@ -1,5 +1,6 @@
 const accountService = require('../account/accountService');
 const passport = require('../../config/passport.config');
+const authService = require("../auth/authService");
 
 /**
  * Render trang Login
@@ -9,6 +10,10 @@ const passport = require('../../config/passport.config');
 exports.renderLogin = (req, res) => {
   const message  = req.flash("failure_message");
   res.render('auth/views/login', message[0]);
+}
+
+exports.renderForgetPasswordForm = (req, res) => {
+  res.render("auth/views/forget_password");
 }
 
 exports.logout = (req, res) => {
@@ -22,7 +27,6 @@ exports.logout = (req, res) => {
  * @param res response
  */
 exports.renderRegister = (req, res) => {
-  console.log(req.body);
   res.render('auth/views/register');
 }
 
@@ -42,6 +46,14 @@ exports.login = (req, res, next) => {
       return res.redirect('/');
     });
   })(req, res, next);
+}
+
+exports.forgetPassword = async (req, res) => {
+  try {
+    await authService.forgetPassword(req.body);
+  } catch (err) {
+    res.status(400).json({ message: err.message });
+  }
 }
 
 /**

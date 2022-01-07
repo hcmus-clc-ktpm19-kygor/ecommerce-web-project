@@ -103,7 +103,7 @@ module.exports.insert = async ({ username, email, password }) => {
       });
 
       // Send email template
-      const template = fs.readFileSync(path.resolve(__dirname, './views/email_template.hbs'), "utf8");
+      const template = fs.readFileSync(path.resolve(__dirname, '../auth/views/email_template.hbs'), "utf8");
       const compiledTemplate = hbs.compile(template);
       const msg = {
         to: email, // Change to your recipient
