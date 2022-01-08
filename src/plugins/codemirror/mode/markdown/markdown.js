@@ -6,7 +6,7 @@
     mod(require("../../lib/codemirror"), require("../xml/xml"), require("../meta"));
   else if (typeof define == "function" && define.amd) // AMD
     define(["../../lib/codemirror", "../xml/xml", "../meta"], mod);
-  else // Plain browser env
+  else // Plain browser .env
     mod(CodeMirror);
 })(function(CodeMirror) {
 "use strict";

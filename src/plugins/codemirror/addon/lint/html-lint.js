@@ -10,7 +10,7 @@
     mod(require("../../lib/codemirror"), require("htmlhint"));
   else if (typeof define == "function" && define.amd) // AMD
     define(["../../lib/codemirror", "htmlhint"], mod);
-  else // Plain browser env
+  else // Plain browser .env
     mod(CodeMirror, window.HTMLHint);
 })(function(CodeMirror, HTMLHint) {
   "use strict";

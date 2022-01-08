@@ -8,7 +8,7 @@
     mod(require("../../lib/codemirror"), require("../htmlmixed/htmlmixed"), require("../ruby/ruby"));
   else if (typeof define == "function" && define.amd) // AMD
     define(["../../lib/codemirror", "../htmlmixed/htmlmixed", "../ruby/ruby"], mod);
-  else // Plain browser env
+  else // Plain browser .env
     mod(CodeMirror);
 })(function(CodeMirror) {
 "use strict";

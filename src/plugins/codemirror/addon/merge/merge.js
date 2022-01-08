@@ -8,7 +8,7 @@
     mod(require("../../lib/codemirror")); // Note non-packaged dependency diff_match_patch
   else if (typeof define == "function" && define.amd) // AMD
     define(["../../lib/codemirror", "diff_match_patch"], mod);
-  else // Plain browser env
+  else // Plain browser .env
     mod(CodeMirror);
 })(function(CodeMirror) {
   "use strict";
