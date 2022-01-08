@@ -1,8 +1,5 @@
-const productService = require('./productService');
-const offerService = require('../offer/offerService');
-const discountService = require('../discount/discountService');
-const commentService = require('../comment/commentService')
-
+const productService = require("./productService");
+const commentService = require("../comment/commentService");
 
 /**
  * Lay 1 san pham len bang id
@@ -11,14 +8,19 @@ const commentService = require('../comment/commentService')
  * @param res respone
  * @returns {Promise<void>}
  */
-exports.get = async (req, res) => {
+exports.getProductById = async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1; // trang thu n
     const product = await productService.get(req.params.id);
-    const comments = await commentService.getComment(page,req.params.id);
+    const comments = await commentService.getComment(page, req.params.id);
+    const relatedProduct = await productService.getRelatedProducts(
+      product._id,
+      product.producer,
+      4
+    );
 
     // res.json(product);
-    res.render('product/views/detail', { product, comments });
+    res.render("product/views/detail", { product, comments, relatedProduct });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -35,8 +37,7 @@ exports.paging = async (req, res) => {
     const startIdx = (page - 1) * 9;
     if (products.length >= 9) {
       results.next = page + 1;
-    }
-    else {
+    } else {
       results.curr = page;
       results.next = results.curr + 1;
       results.prev = results.curr - 1;
@@ -44,8 +45,7 @@ exports.paging = async (req, res) => {
 
     if (startIdx > 0) {
       results.prev = page - 1;
-    }
-    else {
+    } else {
       results.prev = 1;
       results.curr = 2;
       results.next = 3;
@@ -53,12 +53,12 @@ exports.paging = async (req, res) => {
     results.products = products;
 
     // results.products = products;
-    res.render('product/views/products', { results });
+    res.render("product/views/products", { results });
     // res.status(200).json(results);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
-}
+};
 
 /**
  * Lay list cac san pham
@@ -69,9 +69,23 @@ exports.paging = async (req, res) => {
  */
 exports.getAll = async (req, res) => {
   try {
-    const products = await productService.getAll();
-    // res.json(products);
-    res.render('product/views/products', { products });
+    const limit = parseInt(req.query.limit) || 0;
+    const products = await productService.getAll(limit);
+    res.json(products);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+exports.getRelatedProducts = async (req, res) => {
+  try {
+    const relatedProduct = await productService.getRelatedProducts(
+      req.query._id,
+      req.query.producer,
+      4
+    );
+
+    res.json(relatedProduct);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
