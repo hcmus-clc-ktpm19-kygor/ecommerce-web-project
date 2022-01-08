@@ -20,7 +20,7 @@ exports.renderChangePasswordForm = (req, res) => {
 
 exports.renderResetPasswordForm = (req, res) => {
   // Kiểm tra thời gian còn hiệu lực của email lấy lại mật khẩu
-  // Nếu quá 1 phút thì từ chối
+  // Nếu quá 1 phút thì huỷ bỏ
   if (Date.now() - req.query.curr_time > 60000) {
     req.flash(
       "failure_message",
@@ -29,6 +29,8 @@ exports.renderResetPasswordForm = (req, res) => {
     res.redirect("/forget-password");
     return;
   }
+
+  const message = req.flash("failure_message");
   res.render("auth/views/reset_password", { message: message[0] });
 };
 
