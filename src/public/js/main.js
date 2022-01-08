@@ -135,7 +135,7 @@ $("#contactForm input[type=submit]").on("click", function (event) {
       console.log(commentHtml);
     }
   ).fail(function (data) {
-    if (data.status === 401)
-      window.location.href = `/login?redirect=${window.location.href}`;
+    if(data.status === 401)
+      window.location.href = `/login?page=/products/${$('#product_id').val()}`;
   });
 });
