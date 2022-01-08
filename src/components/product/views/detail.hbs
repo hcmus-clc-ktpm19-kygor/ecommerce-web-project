@@ -506,26 +506,5 @@
     	<p>\{{content}}</p>
     </div>
 
-</script>
 
-<script>
-    const relatedProduct = document.getElementById("related-product-price");
-    const number = relatedProduct.value;
-    new Intl.NumberFormat('vn-VN', {style: 'currency', currency: 'VND'}).format(number)
-    jQuery(document).ready(function () {
-        $.ajax({
-            url: 'localhost:8080/products/api/related-product?_id=61a62ad0f6f1e6008baab99f&producer=MSI',
-            method: 'get',
-            dataType: 'json',
-            success: function (data) {
-                /* console.log(data); */
-                $(data).each(function (i, hero) {
-                    $('#heroesBody').append($("<tr>")
-                            .append($("<td>").append(hero.name))
-                            .append($("<td>").append(hero.superheroName))
-                            .append($("<td>").append(hero.city)));
-                });
-            }
-        })
-    };
 </script>

@@ -150,7 +150,9 @@ exports.resetPassword = async (req, res) => {
       res.redirect("/login");
     } else {
       req.flash("failure_message", "Xác nhận mật khẩu mới không hợp lệ");
-      res.redirect(`/reset-password?email=${req.body.email}`);
+      res.redirect(
+        `/reset-password?email=${req.body.email}&curr_time=${req.body.curr_time}`
+      );
     }
   } catch (err) {
     res.status(400).json({ message: err.message });
