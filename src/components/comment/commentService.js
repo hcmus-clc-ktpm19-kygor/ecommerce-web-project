@@ -7,7 +7,7 @@ const commentModel = require("./commentModel");
  */
 exports.getComment = async (page, product_id) => {
     try {
-        let perPage = 5; // so luong comment xuat hien trong 1 trang
+        let perPage = 15; // so luong comment xuat hien trong 1 trang
         page = page || 1;
         const comments = await commentModel
             .find({product_id})

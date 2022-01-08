@@ -21,7 +21,9 @@ const authRouter = require('./components/auth/authRouter');
 const accountRouter = require('./components/account/accountRouter');
 const apiRouter = require('./api/apiRouter');
 
+
 const loggedInUserGuard = require('./middlewares/loggedInUserGuard');
+const userIdMiddleware = require('./middlewares/userIdMiddleware');
 
 // try to connect to database
 const db = require('./config/database.config');
@@ -32,6 +34,7 @@ const app = express();
 // view engine setup
 app.set('views', [path.join(__dirname, 'views'), path.join(__dirname, "components")]);
 app.set('view engine', 'hbs');
+
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -50,6 +53,8 @@ app.use(function (req, res, next) {
   res.locals.user = req.user;
   next();
 })
+
+app.use(userIdMiddleware);
 
 // Router middleware
 app.use('/', indexRouter);
