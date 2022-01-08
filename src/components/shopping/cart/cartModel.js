@@ -7,7 +7,7 @@ const cartSchema = new Schema(
     // Schema attributes are defined here
     guest_id: String,
     user_id: ObjectId,
-    product: Object,
+    products: Array,
   },
   { timestamps: true, versionKey: false }
 );

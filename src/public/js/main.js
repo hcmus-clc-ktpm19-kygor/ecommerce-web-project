@@ -139,3 +139,10 @@ $("#contactForm input[type=submit]").on("click", function (event) {
       window.location.href = `/login?page=/products/${$('#product_id').val()}`;
   });
 });
+
+$("#addToCartForm button[type=submit]").on("click", function (event) {
+  event.preventDefault();
+  $.post(
+      `/api/cart/${$("#product_id").val()}`
+  );
+});
