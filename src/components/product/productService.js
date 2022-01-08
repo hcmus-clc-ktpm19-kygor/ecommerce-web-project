@@ -1,4 +1,4 @@
-const model = require('./productModel');
+const model = require("./productModel");
 
 /**
  * Lay 1 product bang id <br>
@@ -9,9 +9,9 @@ const model = require('./productModel');
  */
 exports.get = async (id) => {
   try {
-    const product = await model.findById(id);
+    const product = await model.findById(id).lean();
     if (product === null) {
-      return {mess: `Product id '${id}' not found`};
+      return { mess: `Product id '${id}' not found` };
     }
     return product;
   } catch (err) {
@@ -30,9 +30,10 @@ exports.paging = async (page) => {
     page = page || 1;
 
     return await model
-    .find() // find tất cả các data
-    .skip((perPage * page) - perPage) // Trong page đầu tiên sẽ bỏ qua giá trị là 0
-    .limit(perPage).lean();
+      .find() // find tất cả các data
+      .skip(perPage * page - perPage) // Trong page đầu tiên sẽ bỏ qua giá trị là 0
+      .limit(perPage)
+      .lean();
   } catch (err) {
     throw err;
   }
@@ -44,9 +45,40 @@ exports.paging = async (page) => {
  *
  * @returns {Promise<[{product: model}]>}
  */
-exports.getAll = async () => {
+exports.getAll = async (limit) => {
   try {
-    return await model.find();
+    return await model
+      .find({}, { name: true, price: true, image_url: true })
+      .limit(limit)
+      .lean();
+  } catch (err) {
+    throw err;
+  }
+};
+
+/**
+ * Lay list cac san pham <br>
+ * Nho them await vao truoc ham tra ve neu khong ham tra ve Promise
+ *
+ * @returns {Promise<[{product: model}]>}
+ */
+exports.getRelatedProducts = async (exceptProduct, producer, limit) => {
+  try {
+    const relatedProducts = await model
+      .find(
+        { $and: [{ producer }, { _id: { $ne: exceptProduct } }] },
+        { name: true, price: true, image_url: true }
+      )
+      .limit(limit)
+      .lean();
+
+    relatedProducts.forEach((e) => {
+      e.price = new Intl.NumberFormat("vn-VN", {
+        currency: "VND",
+      }).format(e.price);
+    });
+
+    return relatedProducts;
   } catch (err) {
     throw err;
   }

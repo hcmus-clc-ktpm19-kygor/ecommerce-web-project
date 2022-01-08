@@ -1,14 +1,15 @@
-require('dotenv').config();
+require("dotenv").config();
 
-const model = require('./accountModel');
-const cloudinary = require('../../config/cloudinary.config');
-const sgMail = require('../../config/email.config');
+const model = require("./accountModel");
+const cloudinary = require("../../config/cloudinary.config");
+const sgMail = require("../../config/email.config");
+const authService = require("../auth/authService");
 
-const bcrypt = require('bcrypt');
+const bcrypt = require("bcrypt");
 const fs = require("fs");
-const faker = require('faker');
-const hbs = require('hbs');
-const path = require('path');
+const faker = require("faker");
+const hbs = require("hbs");
+const path = require("path");
 
 /**
  * Lay 1 account len tu database bang id
@@ -34,7 +35,7 @@ module.exports.getById = async (id) => {
  */
 module.exports.getByUsername = async (username) => {
   try {
-    return await model.findOne({username});
+    return await model.findOne({ username });
   } catch (err) {
     throw err;
   }
@@ -46,7 +47,7 @@ module.exports.getByEmail = async (email) => {
   } catch (err) {
     throw err;
   }
-}
+};
 
 /**
  * Activate account thông qua mail
@@ -57,8 +58,8 @@ module.exports.getByEmail = async (email) => {
 module.exports.activateAccount = async (email, activationString) => {
   try {
     const account = await model
-        .findOne({email, activation_string: activationString})
-        .lean();
+      .findOne({ email, activation_string: activationString })
+      .lean();
 
     if (!account) {
       return false;
@@ -75,11 +76,11 @@ module.exports.activateAccount = async (email, activationString) => {
   } catch (err) {
     throw err;
   }
-}
+};
 
 module.exports.validatePassword = async (user, password) => {
   return await bcrypt.compare(password, user.password);
-}
+};
 
 /**
  * Them account moi vao database
@@ -90,7 +91,7 @@ module.exports.insert = async ({ username, email, password }) => {
   try {
     const isExisted_username = await model.exists({ username });
     const isExisted_email = await model.exists({ email });
-    if (isExisted_username || isExisted_email ) {
+    if (isExisted_username || isExisted_email) {
       return null;
     } else {
       const hashedPassword = await bcrypt.hash(password, 10);
@@ -103,13 +104,20 @@ module.exports.insert = async ({ username, email, password }) => {
       });
 
       // Send email template
-      const template = fs.readFileSync(path.resolve(__dirname, '../auth/views/email_template.hbs'), "utf8");
+      const template = fs.readFileSync(
+        path.resolve(__dirname, "../auth/views/email_template.hbs"),
+        "utf8"
+      );
       const compiledTemplate = hbs.compile(template);
       const msg = {
         to: email, // Change to your recipient
         from: process.env.EMAIL_SENDER, // Change to your verified sender
         subject: "Aroma account activation",
-        html: compiledTemplate({ domain_name: process.env.DOMAIN_NAME, email, activation_string }),
+        html: compiledTemplate({
+          domain_name: process.env.DOMAIN_NAME,
+          email,
+          activation_string,
+        }),
       };
       await sgMail.send(msg);
 
@@ -118,7 +126,7 @@ module.exports.insert = async ({ username, email, password }) => {
   } catch (err) {
     throw err;
   }
-}
+};
 
 /**
  * Cap nhat thong tin tai khoan co trong database
@@ -133,25 +141,22 @@ exports.update = async (id, updateUser, file) => {
     // Upload avatar len cloudinary
     let result;
     if (file) {
-      result = await cloudinary.uploader.upload(
-          file.path,
-          {
-            public_id: id,
-            folder: 'user_avatar',
-            use_filename: true
-          });
+      result = await cloudinary.uploader.upload(file.path, {
+        public_id: id,
+        folder: "user_avatar",
+        use_filename: true,
+      });
     }
 
     /*
-     Lay avatar url
-     Neu khong co avatar duoc up len, url bo trong
-    */
+         Lay avatar url
+         Neu khong co avatar duoc up len, url bo trong
+        */
     const { url } = result ?? "";
     // Update user's info
     updateUser.avatar_url = url;
-    return await model.findByIdAndUpdate(id, updateUser,
-        { new: true }).lean();
+    return await model.findByIdAndUpdate(id, updateUser, { new: true }).lean();
   } catch (err) {
     throw err;
   }
-}
+};
