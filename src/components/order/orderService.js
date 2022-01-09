@@ -12,6 +12,10 @@ exports.get = async (id) => {
     if (order === null) {
       return {mess: `Order id '${id}' not found`};
     }
+    else {
+      order.total_price = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(order.total_price);
+      order.shipping_fee = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(order.shipping_fee);
+    }
     return order;
   } catch (err) {
     throw err;
