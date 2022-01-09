@@ -1,0 +1,114 @@
+<!-- ================ start banner area ================= -->
+<section class="blog-banner-area" id="blog">
+    <div class="container h-100">
+        <div class="blog-banner">
+            <div class="text-center">
+                <h1>Profie</h1>
+                <nav aria-label="breadcrumb" class="banner-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">My Profie</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- ================ end banner area ================= -->
+
+
+<!--================Blog Area =================-->
+<section class="blog_area single-post-area py-80px section-margin--small">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 posts-list">
+                <div class="single-post row">
+                    <div class="col-lg-3">
+                        <div class="blog_info text-right">
+                            {{#if user.avatar_url}}
+                                <img class="avatar" src="{{user.avatar_url}}" alt="">
+                            {{else}}
+                                <img class="avatar" src="/img/male_avatar.svg" alt="">
+                            {{/if}}
+                            <ul class="blog_meta list">
+                                <li>
+                                    <a href="/account/{{user._id}}">{{user.username}}
+                                        <i class="bi bi-person"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/order/user/{{user._id}}">Quản lý đơn hàng
+                                        <i class="bi bi-clipboard-check"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/change-password">Thay đổi mật khẩu
+                                        <i class="bi bi-key"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">Giỏ hàng
+                                        <i class="bi bi-cart-check"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                            <ul class="social-links">
+                                <li>
+                                    <a href="#">
+                                        <i class="fab fa-facebook-f"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fab fa-twitter"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fab fa-github"></i>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fab fa-behance"></i>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-9 blog_details">
+                        <h2>Danh sách đơn hàng</h2>
+                        <div class="comment-form">
+                            <table id="table" class="table table-bordered table-striped">
+                                <thead class="table-info">
+                                <tr>
+                                    <th>Trạng thái</th>
+                                    <th>Giá</th>
+                                    <th>Phí vận chuyển</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {{#each orders}}
+                                    <tr>
+                                        <td>{{this.status}}</td>
+                                        <td>{{this.total_price}}</td>
+                                        <td>{{this.shipping_fee}}</td>
+                                        <td class="project-actions text-md-center">
+                                                <a class="btn btn-info btn-sm" href="/order/{{this._id}}">
+                                                    Chi tiết
+                                                </a>
+                                        </td>
+                                    </tr>
+                                {{/each}}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================Blog Area =================-->
+<script src="../js/handleChooseImgOnchange.js"></script>

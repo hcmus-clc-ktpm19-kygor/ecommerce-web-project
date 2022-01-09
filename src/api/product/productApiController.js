@@ -1,0 +1,1 @@
+exports.filterProducts = function (req, res) {};
