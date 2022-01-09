@@ -41,7 +41,6 @@
                   <li class="nav-item"><a class="nav-link" href="/products">Sản phẩm</a></li>
                   <li class="nav-item"><a class="nav-link" href="/cart">Giỏ hàng</a></li>
                   {{#if user}}
-                    <li class="nav-item"><a class="nav-link" href="checkout.html">Thanh toán</a></li>
                     <li class="nav-item"><a class="nav-link" href="/confirmation">Xác nhận đơn hàng</a></li>
                     <li class="nav-item"><a class="nav-link" href="tracking-order.html">Theo dõi đơn hàng</a></li>
                   {{/if}}
@@ -52,7 +51,7 @@
 
             <ul class="nav-shop">
               <li class="nav-item"><button><i class="ti-search"></i></button></li>
-              <a href="/cart"><li class="nav-item"><button><i class="ti-shopping-cart"></i><span class="nav-shop__circle">3</span></button> </li></a>
+              <a href="/cart"><li id="top-ti-shopping-cart" class="nav-item"><button><i class="ti-shopping-cart"></i><span class="nav-shop__circle">0</span></button> </li></a>
 {{!--               <li class="nav-item"><a class="button button-header" href="#">Buy Now</a></li> --}}
             </ul>
             {{#if user}}
@@ -168,5 +167,6 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
   <script src="/js/main.js"></script>
 <!--  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>-->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.7/handlebars.min.js" integrity="sha512-RNLkV3d+aLtfcpEyFG8jRbnWHxUqVZozacROI4J2F1sTaDqo1dPQYs01OMi1t1w9Y2FdbSCDSQ2ZVdAC8bzgAg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js'></script>
 </body>
 </html>

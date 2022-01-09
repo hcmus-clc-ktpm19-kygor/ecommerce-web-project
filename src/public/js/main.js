@@ -78,7 +78,7 @@ $(function () {
 
   //------- fixed navbar --------//
   $(window).scroll(function () {
-    var sticky = $(".header_area"),
+    const sticky = $(".header_area"),
       scroll = $(window).scrollTop();
 
     if (scroll >= 100) sticky.addClass("fixed");
@@ -87,7 +87,7 @@ $(function () {
 
   //------- Price Range slider -------//
   if (document.getElementById("price-range")) {
-    var nonLinearSlider = document.getElementById("price-range");
+    const nonLinearSlider = document.getElementById("price-range");
 
     noUiSlider.create(nonLinearSlider, {
       connect: true,
@@ -102,7 +102,7 @@ $(function () {
       },
     });
 
-    var nodes = [
+    const nodes = [
       document.getElementById("lower-value"), // 0
       document.getElementById("upper-value"), // 1
     ];
@@ -140,9 +140,42 @@ $("#contactForm input[type=submit]").on("click", function (event) {
   });
 });
 
-$("#addToCartForm button[type=submit]").on("click", function (event) {
-  event.preventDefault();
-  $.post(
-      `/api/cart/${$("#product_id").val()}`
-  );
+
+$(".add-To-Cart-button").on('click', function () {
+  const cart = $('#top-ti-shopping-cart');
+  const imgtodrag = $(this).parent(".card-product__imgOverlay").parent(".card-product__img").find("img").eq(0);
+  if (imgtodrag) {
+    const imgclone = imgtodrag.clone()
+    .offset({
+      top: imgtodrag.offset().top,
+      left: imgtodrag.offset().left
+    })
+    .css({
+      'opacity': '0.8',
+      'position': 'absolute',
+      'height': '150px',
+      'width': '150px',
+      'z-index': '100'
+    })
+    .appendTo($('body'))
+    .animate({
+      'top': cart.offset().top,
+      'left': cart.offset().left,
+      'width': 60,
+      'height': 60
+    }, 1000, 'easeInOutExpo');
+
+    setTimeout(function () {
+      cart.effect("shake", {
+        times: 1.5
+      }, 100);
+    }, 1000);
+
+    imgclone.animate({
+      'width': 0,
+      'height': 0
+    }, function () {
+      $(this).detach()
+    });
+  }
 });

@@ -96,15 +96,15 @@
         <section class="lattest-product-area pb-40 category-list">
           <div class="row">
             {{#each results.products}}
-              <div class="col-md-6 col-lg-4">
+              <div class="col-md-6 col-lg-4" id="product_cart">
                 <div class="card text-center card-product">
                   <div class="card-product__img">
                     <a href="products/{{this._id}}"> <img class="card-img" src="{{this.image_url}}" alt=""></a>
                     <ul class="card-product__imgOverlay">
+                      <iframe name="temp" style="display:none;"></iframe>
                       <li><button><i class="ti-search"></i></button></li>
-                      <li><form id="addToCartForm">
-                        <input type="hidden" value="{{this._id}}" id="product_id" name="productId">
-                        <button type="submit" id="addToCart-button"><i class="ti-shopping-cart"></i></button>
+                      <li class="add-To-Cart-button"><form id="add-to-card" action="/api/cart/{{this._id}}" method="POST" enctype="multipart/form-data" target="temp">
+                        <button type="submit" ><i class="ti-shopping-cart"></i></button>
                       </form>
                       </li>
                       <li><button><i class="ti-heart"></i></button></li>

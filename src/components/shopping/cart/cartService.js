@@ -1,5 +1,4 @@
 const cartModel = require("./cartModel");
-const model = require("../../product/productModel");
 const { ObjectId } = require("mongoose").Types;
 
 /**
@@ -11,10 +10,10 @@ const { ObjectId } = require("mongoose").Types;
 exports.getCartByGuestId = async function (id) {
   try {
     return await cartModel
-      .findOne({
-        guest_id: id,
-      })
-      .lean();
+    .findOne({
+      guest_id: id,
+    })
+    .lean();
   } catch (err) {
     throw err;
   }
@@ -29,24 +28,29 @@ exports.getCartByGuestId = async function (id) {
 exports.getCartByUserId = async function (id) {
   try {
     return await cartModel
-      .findOne({
-        customer_id: ObjectId.createFromHexString(id),
-      })
-      .lean();
+    .findOne({
+      customer_id: ObjectId.createFromHexString(id),
+    })
+    .lean();
   } catch (err) {
     throw err;
   }
 };
 
 /**
- * Thêm cart mới vào database
- * @param cart
+ * Thêm cart của guest mới vào database
+ * @param guest_id
  * @returns {Promise<Document<any, any, unknown> & Require_id<unknown>>}
  */
-exports.insertCart = async function (cart) {
+exports.insertCartGuest = async function (guest_id) {
   try {
-    const newCart = new cartModel(cart);
-
+    const newCart = new cartModel({
+      guest_id: guest_id,
+      user_id: null,
+      products: Array,
+      quantity_total: null,
+      cost_total: null
+    });
     return await newCart.save();
   } catch (err) {
     throw err;
@@ -54,14 +58,68 @@ exports.insertCart = async function (cart) {
 };
 
 /**
+ * Thêm cart của user mới vào database
+ * @param user_id
+ * @returns {Promise<Document<any, any, unknown> & Require_id<unknown>>}
+ */
+exports.insertCartUser = async function (user_id) {
+  try {
+    const newCart = new cartModel({
+      guest_id: user_id,
+      user_id: ObjectId.createFromHexString(user_id),
+      products: Array,
+      quantity_total: null,
+      cost_total: null
+    });
+    return await newCart.save();
+  } catch (err) {
+    throw err;
+  }
+};
+
+/**
+ * Đồng bộ cart của user và guest mới vào database
+ * @param user_id
+ * @param cart
+ * @returns {Promise<Document<any, any, unknown> & Require_id<unknown>>}
+ */
+exports.synchronizeCart = async function (user_id, cart) {
+  try {
+    await cartModel.findOneAndUpdate(
+        { _id: cart._id },
+        { $set: {guest_id: user_id, user_id: ObjectId.createFromHexString(user_id)} }
+    );
+  } catch (err) {
+    throw err;
+  }
+};
+
+/**
+ * xóa cart của user
+ * @param cart
+ * @returns {Promise<Document<any, any, unknown> & Require_id<unknown>>}
+ */
+exports.removeCart = async function (cart) {
+  try {
+    await cartModel.deleteOne(
+        { _id: cart._id }
+    );
+  } catch (err) {
+    throw err;
+  }
+};
+
+
+
+/**
  * Thêm sp mới vào cart
  * @param product_id
  * @param user_id
  * @returns {Promise<{mess: string}|Query<any, any, {}, any>>}
  */
-exports.insertProductToCart = async function (product_id, user_id) {
+exports.addProductToCart = async function (product, cart) {
   try {
-    const product = await model.findById(product_id).lean();
+
     const small_product = {
       id: product._id,
       name: product.name,
@@ -70,17 +128,48 @@ exports.insertProductToCart = async function (product_id, user_id) {
       image_url: product.image_url,
     };
 
-    console.log(small_product);
-    // const cart = await cartModel.findOne({guest_id: guest_id,}).lean();
-    const cart = await cartModel
-      .findOne({
-        customer_id: ObjectId.createFromHexString(user_id),
-      })
-      .lean();
-    await cartModel.findOneAndUpdate(
-      { _id: cart._id },
-      { $push: { products: small_product } }
-    );
+    const exists_product = await cartModel.findOne({
+      _id: cart._id,
+      products: {$elemMatch :
+            {id : small_product.id}
+      }
+    })
+
+    if(exists_product){
+      await cartModel.findOneAndUpdate(
+          { _id: cart._id},
+          { $inc: { "products.$[p].quantity": 1 } },
+          {
+            arrayFilters: [{ "p.id": small_product.id }]
+          }
+      );
+    } else {
+      await cartModel.findOneAndUpdate(
+          { _id: cart._id },
+          { $push: { products: small_product } }
+      );
+    }
+  } catch (err) {
+    throw err;
+  }
+};
+
+/**
+ * lấy số lượng giỏ hàng
+ * @param cart
+ * @returns {Promise<Document<any, any, unknown> & Require_id<unknown>>}
+ */
+exports.getCartSize = async function (cart) {
+  try {
+    return await cartModel.aggregate(
+        [
+          {
+            $project: {
+              cartSize: { $size: "$products" }
+            }
+          }
+        ]
+    )
   } catch (err) {
     throw err;
   }
