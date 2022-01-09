@@ -29,7 +29,7 @@ exports.getProductById = async (req, res) => {
 exports.paging = async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1; // trang thu n
-    const products = await productService.paging(page);
+    const products = await productService.paging(page, req.query.sort_by);
 
     const results = {};
     results.curr = page;
@@ -52,9 +52,7 @@ exports.paging = async (req, res) => {
     }
     results.products = products;
 
-    // results.products = products;
     res.render("product/views/products", { results });
-    // res.status(200).json(results);
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
