@@ -1,4 +1,5 @@
 const service = require("./orderService");
+const checkoutService = require("../shopping/checkout/checkoutService");
 
 exports.get = async (req, res) => {
   try {
@@ -30,8 +31,15 @@ exports.getTop10BestSeller = async (req, res) => {
 
 exports.insert = async (req, res) => {
   try {
-    const newOrder = service.insert(req.body);
-    res.status(201).json(newOrder);
+    if(req.user) {
+      // const checkout = await checkoutService.getByUserId(req.user._id);
+      // await service.insert(checkout, req.body.address, req.body.payment, req.body.message);
+      // const path = '/order/user/' + req.user._id;
+      // res.redirect(path);
+      res.json(req.body);
+    } else {
+      res.redirect('login')
+    }
   } catch (err) {
     res.stats(400).json({ message: err.message });
   }

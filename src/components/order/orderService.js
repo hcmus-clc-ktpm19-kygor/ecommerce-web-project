@@ -24,7 +24,7 @@ exports.get = async (id) => {
 
 exports.getAll = async (id) => {
   try {
-    const orders = await orderModel.find({"customer.id":mongoose.Types.ObjectId.createFromHexString(id)}).lean();
+    const orders = await orderModel.find({"customer.id":mongoose.Types.ObjectId.createFromHexString(id)}).sort( [['createdAt', 'descending']]).lean();
     orders.forEach(e => {
       e.total_price = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(e.total_price);
       e.shipping_fee = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(e.shipping_fee);
@@ -56,7 +56,7 @@ exports.getSalesInLast10Days = async () => {
 
 
     const orders = await orderModel
-      .find(
+    .find(
         {
           createdAt: {
             $gte: dateFns.startOfDay(new Date(d)),
@@ -64,8 +64,8 @@ exports.getSalesInLast10Days = async () => {
           },
         },
         { _id: true }
-      )
-      .lean();
+    )
+    .lean();
 
     result.push({
       sales: orders.length,
@@ -82,40 +82,20 @@ exports.getTop10BestSeller = async () => {
   return soldProducts.slice(0, 10);
 }
 
-exports.insert = async (newOrder) => {
+exports.insert = async (checkout, address, payment, message) => {
   try {
-    const { products } = newOrder;
+    const newOrder = new orderModel ({
+      products: checkout.cart.products,
+      total_price: checkout.subtotal_price + checkout.shipping_fee,
+      status: "Đang chờ",
+      shipping_fee: checkout.shipping_fee,
+      address: address,
+      customer: checkout.customer,
+      payment: payment,
+      note: message
+    });
 
-    const calculateTotalPrice = (prev, curr) => prev.price * prev.quantity + curr.price * curr.quantity;
-    newOrder.total_price = products.length === 1 ? products[0].price : products.reduce(calculateTotalPrice);
-    const order = new orderModel(newOrder);
-
-    for (let i = 0; i < products.length; i++) {
-      const product = products[i];
-      const soldProduct = await soldProductModel
-          .findOne({ product_id: product._id })
-          .lean();
-
-      // Sản phẩm chưa được bán lần nào
-      if (!soldProduct) {
-        await soldProductModel.create({
-          product_id: product._id,
-          name: product.name,
-          producer: product.producer,
-          quantity: product.quantity,
-          total_price: product.price,
-        });
-      } else { // Sản phẩm đã từng bán
-        soldProduct.total_price += product.price * product.quantity;
-        soldProduct.quantity += product.quantity;
-        await soldProductModel.findOneAndUpdate(
-            { product_id: product._id },
-            soldProduct
-        );
-      }
-    }
-
-    return await order.save();
+    await newOrder.save();
   } catch (err) {
     throw err;
   }

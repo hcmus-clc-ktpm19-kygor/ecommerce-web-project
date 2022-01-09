@@ -31,26 +31,33 @@
       <div class="row">
         <div class="col-lg-6">
           <h3>Chi tiết đơn hàng</h3>
-          <form class="row contact_form" action="#" method="post" novalidate="novalidate">
-            <div class="col-md-12 form-group">
+          <form class="row contact_form" action="/order" method="POST" enctype="multipart/form-data">
+            <div class="col-md-12 form-group p_star">
               <label>Họ tên</label>
-              <input required value="{{user.name}}" type="text" class="form-control" name="name"
-              id="name" placeholder="Họ và Tên" onfocus="this.placeholder = ''"
-              onblur="this.placeholder = 'Nhập Họ và Tên'">
+              <input value="{{user.name}}" type="text" class="form-control" name="name"
+                     id="name" placeholder="Họ và Tên" onfocus="this.placeholder = ''"
+                     onblur="this.placeholder = 'Nhập Họ và Tên'">
             </div>
-            <div class="col-md-12 form-group">
+            <div class="col-md-12 form-group p_star">
               <label>Số điện thoại</label>
-              <input required value="{{user.phone}}" type="text" class="form-control" name="phone"
+              <input value="{{user.phone}}" type="text" class="form-control" name="phone"
                      id="phone" placeholder="Số điện thoại" onfocus="this.placeholder = ''"
                      onblur="this.placeholder = 'Nhập Số Điện Thoại'">
             </div>
-            <div class="col-md-12 form-group">
+            <div class="col-md-12 form-group p_star">
               <label>Email</label>
               <input value="{{user.email}}" type="email" class="form-control" name="email"
                      id="email" placeholder="Email" onfocus="this.placeholder = ''"
                      onblur="this.placeholder = 'Nhập Email'">
             </div>
-            <div required class="col-md-12 form-group">
+            <div class="col-md-12 form-group p_star">
+              <label>Phương thức thanh toán</label>
+              <select class="country_select" name="payment" id="payment">
+                <option value="COD">COD</option>
+                <option value="Internet Banking">Internet Banking</option>
+              </select>
+            </div>
+            <div class="col-md-12 form-group p_star">
               <label>Địa chỉ giao hàng</label>
               <input value="{{user.address}}" type="text" class="form-control" name="address"
                      id="address" placeholder="Địa chỉ giao hàng" onfocus="this.placeholder = ''"
@@ -60,7 +67,10 @@
               <div class="creat_account">
                 <h3>Ghi chú</h3>
               </div>
-              <textarea style="height: 256px" class="form-control" name="message" id="message" rows="1" placeholder="Thêm ghi chú"></textarea>
+              <textarea class="form-control" name="message" id="message" rows="1" placeholder="Thêm ghi chú"></textarea>
+            </div>
+            <div style="margin-top: 20px" class="col-md-12 form-group text-center" >
+              <button type="submit" class="button button-coupon" >Thanh toán </button>
             </div>
           </form>
         </div>
@@ -70,7 +80,7 @@
             <ul class="list">
               <li><a href="#"><h4>Product <span>Total</span></h4></a></li>
               {{#each checkout.cart.products}}
-              <li><a href="/products/{{this.id}}">{{this.name}}<span class="last"> (x {{this.quantity}})</span> <span class="last">{{this.price}}</span></a></li>
+                <li><a href="/products/{{this.id}}">{{this.name}}<span class="last"> (x {{this.quantity}})</span> <span class="last">{{this.price}}</span></a></li>
               {{/each}}
             </ul>
             <ul class="list list_2">
@@ -78,33 +88,6 @@
               <li><a href="#">Shipping <span>Flat rate: $50.00</span></a></li>
               <li><a href="#">Total <span>$2210.00</span></a></li>
             </ul>
-            <div class="payment_item">
-              <div class="radion_btn">
-                <input type="radio" id="f-option5" name="selector">
-                <label for="f-option5">Check payments</label>
-                <div class="check"></div>
-              </div>
-              <p>Please send a check to Store Name, Store Street, Store Town, Store State / County,
-                Store Postcode.</p>
-            </div>
-            <div class="payment_item active">
-              <div class="radion_btn">
-                <input type="radio" id="f-option6" name="selector">
-                <label for="f-option6">Paypal </label>
-                <img src="img/product/card.jpg" alt="">
-                <div class="check"></div>
-              </div>
-              <p>Pay via PayPal; you can pay with your credit card if you don’t have a PayPal
-                account.</p>
-            </div>
-            <div class="creat_account">
-              <input type="checkbox" id="f-option4" name="selector">
-              <label for="f-option4">I’ve read and accept the </label>
-              <a href="#">terms & conditions*</a>
-            </div>
-            <div class="text-center">
-              <a class="button button-paypal" href="#">Proceed to Paypal</a>
-            </div>
           </div>
         </div>
       </div>

@@ -12,7 +12,7 @@ const { ObjectId } = require("mongoose").Types;
 exports.getByUserId = async (user_id) => {
   try {
     const checkout = await checkoutModel.findOne({
-      'account._id': ObjectId.createFromHexString(user_id),
+      'customer._id': ObjectId.createFromHexString(user_id),
     })
     .lean();
     return checkout;
@@ -31,14 +31,15 @@ exports.insert = async (user_id, cart, customer) => {
   try {
     const newCheckout = new checkoutModel({
       cart: cart,
-      account: customer,
+      customer: customer,
       shipping_fee: null,
       subtotal_price: null,
       payment: null,
       discount: null,
       note: null
     });
-    return await newCheckout.save();
+    await newCheckout.save();
+    return newCheckout;
   } catch (err) {
     throw err;
   }
@@ -53,9 +54,12 @@ exports.insert = async (user_id, cart, customer) => {
  */
 exports.updateCart = async (cart, checkout) => {
   try {
-    return await checkoutModel.findOneAndUpdate(
+    await checkoutModel.findOneAndUpdate(
         { _id: checkout._id },
         { $set: {cart: cart} }
+    );
+    return await checkoutModel.findOne(
+        { _id: checkout._id }
     );
   } catch (err) {
     throw err;

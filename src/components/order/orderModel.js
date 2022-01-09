@@ -9,7 +9,8 @@ const orderSchema = new Schema( {
   shipping_fee: Number,
   address: String,
   customer: Object,
-  payment: String
+  payment: String,
+  note: String
 }, { timestamps: true, versionKey: false });
 
 // Create order model in db
