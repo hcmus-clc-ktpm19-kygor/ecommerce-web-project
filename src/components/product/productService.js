@@ -1,4 +1,5 @@
 const model = require("./productModel");
+const { paging } = require("./productService");
 
 /**
  * Lay 1 product bang id <br>
@@ -14,6 +15,20 @@ exports.get = async (id) => {
       return { mess: `Product id '${id}' not found` };
     }
     return product;
+  } catch (err) {
+    throw err;
+  }
+};
+
+exports.getByName = async function (searchStr, page) {
+  try {
+    let perPage = 9; // số lượng sản phẩm xuất hiện trên 1 page
+    page = page || 1;
+
+    const products = await model.find().lean();
+    return products
+      .filter((product) => product.name.toLowerCase().includes(searchStr))
+      .slice(perPage * page - perPage, perPage);
   } catch (err) {
     throw err;
   }
@@ -79,6 +94,62 @@ exports.getRelatedProducts = async (exceptProduct, producer, limit) => {
     });
 
     return relatedProducts;
+  } catch (err) {
+    throw err;
+  }
+};
+
+exports.filterProducts = async function (category, producer) {
+  try {
+    if (category && producer) {
+      return await model.find({
+        $and: [{ category: category }, { producer: producer }],
+      });
+    } else if (producer) {
+      return await model.find({ producer });
+    }
+    return await model.find({ category });
+  } catch (err) {
+    throw err;
+  }
+};
+
+exports.sortingProducts = async function (page, sortBy) {
+  try {
+    let perPage = 9; // số lượng sản phẩm xuất hiện trên 1 page
+    page = page || 1;
+
+    if (sortBy) {
+      switch (sortBy) {
+        case "price": {
+          return await model
+            .find() // find tất cả các data
+            .skip(perPage * page - perPage) // Trong page đầu tiên sẽ bỏ qua giá trị là 0
+            .limit(perPage)
+            .sort({ price: "asc" })
+            .lean();
+        }
+        case "name": {
+          return await model
+            .find() // find tất cả các data
+            .skip(perPage * page - perPage) // Trong page đầu tiên sẽ bỏ qua giá trị là 0
+            .limit(perPage)
+            .sort({ name: "asc" })
+            .lean();
+        }
+
+        case "category": {
+          return await model
+            .find() // find tất cả các data
+            .skip(perPage * page - perPage) // Trong page đầu tiên sẽ bỏ qua giá trị là 0
+            .limit(perPage)
+            .sort({ category: "asc" })
+            .lean();
+        }
+      }
+    }
+
+    return await paging(page);
   } catch (err) {
     throw err;
   }
