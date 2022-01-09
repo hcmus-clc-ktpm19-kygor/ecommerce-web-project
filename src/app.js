@@ -21,6 +21,7 @@ const authRouter = require('./components/auth/authRouter');
 const accountRouter = require('./components/account/accountRouter');
 const cartRouter = require('./components/shopping/cart/cartRouter')
 const apiRouter = require('./api/apiRouter');
+const orderRouter = require('./components/order/orderRouter');
 
 
 const loggedInUserGuard = require('./middlewares/loggedInUserGuard');
@@ -66,6 +67,7 @@ app.use('/confirmation', loggedInUserGuard, confirmationRouter);
 app.use('/users', usersRouter);
 app.use('/cart', cartRouter);
 app.use('/api', apiRouter);
+app.use('/order',orderRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
