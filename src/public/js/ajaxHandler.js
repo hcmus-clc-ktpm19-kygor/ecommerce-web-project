@@ -8,7 +8,7 @@ document.querySelectorAll(".products-filter").forEach((e) => {
     }
 
     $.ajax({
-      url: "http://localhost:8080/api/products",
+      url: "https://obscure-spire-28614.herokuapp.com/api/products",
       type: "GET",
       data: filter,
       dateType: "JSON",
@@ -56,7 +56,7 @@ document.querySelectorAll(".products-filter").forEach((e) => {
 function searchProductsHandler() {
   const searchValue = document.getElementById("search-text-bar").value;
   $.ajax({
-    url: "http://localhost:8080/api/products/search-by-name",
+    url: "https://obscure-spire-28614.herokuapp.com/api/products/search-by-name",
     type: "GET",
     data: { name: searchValue },
     dateType: "JSON",
@@ -103,7 +103,7 @@ function searchProductsHandler() {
 function selectedOption() {
   const selectedValue = document.getElementById("sorting-selected").value;
   $.ajax({
-    url: "http://localhost:8080/api/products/sorting",
+    url: "https://obscure-spire-28614.herokuapp.com/api/products/sorting",
     type: "GET",
     data: { ["sort-by"]: selectedValue },
     dateType: "JSON",
@@ -151,7 +151,7 @@ document.querySelector(".pagination").addEventListener("click", (event) => {
   const id = document.getElementById("product_id").value;
   console.log(event.target.innerText);
   $.ajax({
-    url: `http://localhost:8080/api/products/${id}/comments?page=${event.target.innerText}`,
+    url: `https://obscure-spire-28614.herokuapp.com/api/products/${id}/comments?page=${event.target.innerText}`,
     type: "GET",
     dateType: "JSON",
     success: function (data) {
