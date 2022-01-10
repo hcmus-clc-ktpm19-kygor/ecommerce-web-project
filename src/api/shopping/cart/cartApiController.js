@@ -40,7 +40,7 @@ exports.insertProductToCart = async function (req, res) {
         }
       }
     }
-    await cartService.addProductToCart(product, cart);
+    await cartService.addProductToCart(product, cart, req.body);
     res.status(201);
   } catch (err) {
     res.status(400).json({ message: err.message });

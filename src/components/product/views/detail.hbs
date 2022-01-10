@@ -5,7 +5,7 @@
             <div class="col-lg-6">
                 <div class="owl-carousel owl-theme s_Product_carousel">
                     <div class="single-prd-item">
-                        <img class="img-fluid" src="{{product.image_url}}" alt="">
+                        <img id="img-fluid-1" class="img-fluid" src="{{product.image_url}}" alt="">
                     </div>
                     <div class="single-prd-item">
                         <img class="img-fluid" src="{{product.image_url}}" alt="">
@@ -44,16 +44,21 @@
                             <div>{{this.content}}</div>
                         {{/each}}
                     </div>
+                    <iframe name="temp" style="display:none;"></iframe>
                     <div class="product_count">
-                        <label for="qty">Số lượng:</label>
-                        <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
-                                class="increase items-count" type="button"><i class="ti-angle-left"></i></button>
-                        <input type="number" name="qty" id="sst" size="2" maxlength="12" value="1" title="Quantity:"
-                               class="input-text qty">
-                        <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
-                                class="reduced items-count" type="button"><i class="ti-angle-right"></i></button>
-                        <a class="button primary-btn" href="#">Thêm vào giỏ hàng</a>
+                        <form id="add-to-card" action="/api/cart/{{product._id}}" method="POST" target="temp">
+                            <label for="qty">Số lượng:</label>
+                            <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
+                                    class="increase items-count" type="button"><i class="ti-angle-left"></i></button>
+                            <input type="number" name="qty" id="sst" size="2" maxlength="12" value="1" title="Quantity:"
+                                   class="input-text qty">
+                            <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
+                                    class="reduced items-count" type="button"><i class="ti-angle-right"></i></button>
+                            <a style="color: #222222;" onclick="document.getElementById('add-to-card').submit()"
+                               class="button primary-btn">Thêm vào giỏ hàng</a>
+                        </form>
                     </div>
+
                     <div class="card_area d-flex align-items-center">
                         <a class="icon_btn" href="#"><i class="lnr lnr lnr-diamond"></i></a>
                         <a class="icon_btn" href="#"><i class="lnr lnr lnr-heart"></i></a>
@@ -522,6 +527,9 @@
     	</div>
     	<p>\{{content}}</p>
     </div>
+
+
+
 
 </script>
 

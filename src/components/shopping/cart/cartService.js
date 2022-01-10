@@ -10,10 +10,10 @@ const { ObjectId } = require("mongoose").Types;
 exports.getCartByGuestId = async function (id) {
   try {
     return await cartModel
-    .findOne({
-      guest_id: id,
-    })
-    .lean();
+      .findOne({
+        guest_id: id,
+      })
+      .lean();
   } catch (err) {
     throw err;
   }
@@ -28,10 +28,10 @@ exports.getCartByGuestId = async function (id) {
 exports.getCartByUserId = async function (id) {
   try {
     return await cartModel
-    .findOne({
-      user_id: ObjectId.createFromHexString(id),
-    })
-    .lean();
+      .findOne({
+        user_id: ObjectId.createFromHexString(id),
+      })
+      .lean();
   } catch (err) {
     throw err;
   }
@@ -49,7 +49,7 @@ exports.insertCartGuest = async function (guest_id) {
       user_id: null,
       products: Array,
       quantity_total: null,
-      cost_total: null
+      cost_total: null,
     });
     return await newCart.save();
   } catch (err) {
@@ -69,7 +69,7 @@ exports.insertCartUser = async function (user_id) {
       user_id: ObjectId.createFromHexString(user_id),
       products: Array,
       quantity_total: null,
-      cost_total: null
+      cost_total: null,
     });
     return await newCart.save();
   } catch (err) {
@@ -86,8 +86,13 @@ exports.insertCartUser = async function (user_id) {
 exports.synchronizeCart = async function (user_id, cart) {
   try {
     await cartModel.findOneAndUpdate(
-        { _id: cart._id },
-        { $set: {user_id: ObjectId.createFromHexString(user_id), guest_id: user_id} }
+      { _id: cart._id },
+      {
+        $set: {
+          user_id: ObjectId.createFromHexString(user_id),
+          guest_id: user_id,
+        },
+      }
     );
     return await cartModel.findOne({ _id: cart._id });
   } catch (err) {
@@ -103,8 +108,8 @@ exports.synchronizeCart = async function (user_id, cart) {
 exports.updateCart = async function (cart) {
   try {
     await cartModel.findOneAndUpdate(
-        { _id: cart._id },
-        { $set: {products : Array} }
+      { _id: cart._id },
+      { $set: { products: Array } }
     );
   } catch (err) {
     throw err;
@@ -118,15 +123,31 @@ exports.updateCart = async function (cart) {
  */
 exports.removeCart = async function (cart) {
   try {
-    await cartModel.deleteOne(
-        { _id: cart._id }
-    );
+    await cartModel.deleteOne({ _id: cart._id });
   } catch (err) {
     throw err;
   }
 };
 
-
+/**
+ * xóa sp của user
+ * @param cart
+ * @returns {Promise<Document<any, any, unknown> & Require_id<unknown>>}
+ */
+exports.deleteProduct = async function (cart, product) {
+  try {
+    await cartModel.updateOne(
+      { _id: cart._id },
+      {
+        $pull: {
+          products: product.id,
+        },
+      }
+    );
+  } catch (err) {
+    throw err;
+  }
+};
 
 /**
  * Thêm sp mới vào cart
@@ -134,36 +155,36 @@ exports.removeCart = async function (cart) {
  * @param user_id
  * @returns {Promise<{mess: string}|Query<any, any, {}, any>>}
  */
-exports.addProductToCart = async function (product, cart) {
+exports.addProductToCart = async function (product, cart, qty) {
   try {
-
+    const quantity = qty.qty || 1;
     const small_product = {
       id: product._id,
       name: product.name,
       price: product.price,
-      quantity: 1,
+      quantity: parseInt(quantity),
       image_url: product.image_url,
     };
 
     const exists_product = await cartModel.findOne({
       _id: cart._id,
-      products: {$elemMatch :
-            {id : small_product.id}
-      }
-    })
+      products: {
+        $elemMatch: { id: small_product.id },
+      },
+    });
 
-    if(exists_product){
+    if (exists_product) {
       await cartModel.findOneAndUpdate(
-          { _id: cart._id},
-          { $inc: { "products.$[p].quantity": 1 } },
-          {
-            arrayFilters: [{ "p.id": small_product.id }]
-          }
+        { _id: cart._id },
+        { $inc: { "products.$[p].quantity": parseInt(quantity) } },
+        {
+          arrayFilters: [{ "p.id": small_product.id }],
+        }
       );
     } else {
       await cartModel.findOneAndUpdate(
-          { _id: cart._id },
-          { $push: { products: small_product } }
+        { _id: cart._id },
+        { $push: { products: small_product } }
       );
     }
   } catch (err) {
@@ -178,15 +199,13 @@ exports.addProductToCart = async function (product, cart) {
  */
 exports.getCartSize = async function (cart) {
   try {
-    return await cartModel.aggregate(
-        [
-          {
-            $project: {
-              cartSize: { $size: "$products" }
-            }
-          }
-        ]
-    )
+    return await cartModel.aggregate([
+      {
+        $project: {
+          cartSize: { $size: "$products" },
+        },
+      },
+    ]);
   } catch (err) {
     throw err;
   }

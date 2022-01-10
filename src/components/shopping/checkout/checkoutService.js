@@ -1,8 +1,6 @@
-const checkoutModel = require('./checkoutModel');
-const mongoose = require('mongoose');
+const checkoutModel = require("./checkoutModel");
+const mongoose = require("mongoose");
 const { ObjectId } = require("mongoose").Types;
-
-
 
 /**
  * get checkout by user_id
@@ -11,16 +9,17 @@ const { ObjectId } = require("mongoose").Types;
  */
 exports.getByUserId = async (user_id) => {
   try {
-    const checkout = await checkoutModel.findOne({
-      'customer._id': ObjectId.createFromHexString(user_id),
-    })
-    .lean();
+    const checkout = await checkoutModel
+      .findOne({
+        "customer._id": ObjectId.createFromHexString(user_id),
+      })
+      .lean();
+
     return checkout;
   } catch (err) {
     throw err;
   }
 };
-
 
 /**
  * insert checkout
@@ -36,14 +35,14 @@ exports.insert = async (user_id, cart, customer) => {
       subtotal_price: null,
       payment: null,
       discount: null,
-      note: null
+      note: null,
     });
     await newCheckout.save();
     return newCheckout;
   } catch (err) {
     throw err;
   }
-}
+};
 
 /**
  * Tim checkout bang user id, update cart trong database
@@ -55,16 +54,14 @@ exports.insert = async (user_id, cart, customer) => {
 exports.updateCart = async (cart, checkout) => {
   try {
     await checkoutModel.findOneAndUpdate(
-        { _id: checkout._id },
-        { $set: {cart: cart} }
+      { _id: checkout._id },
+      { $set: { cart: cart } }
     );
-    return await checkoutModel.findOne(
-        { _id: checkout._id }
-    );
+    return await checkoutModel.findOne({ _id: checkout._id });
   } catch (err) {
     throw err;
   }
-}
+};
 
 /**
  * Tim checkout bang id, update thong tin vao trong database
@@ -75,12 +72,13 @@ exports.updateCart = async (cart, checkout) => {
  */
 exports.update = async (id, updateCheckout) => {
   try {
-    return await checkoutModel.findByIdAndUpdate(id, updateCheckout,
-        { new: true });
+    return await checkoutModel.findByIdAndUpdate(id, updateCheckout, {
+      new: true,
+    });
   } catch (err) {
     throw err;
   }
-}
+};
 
 /**
  * Xoa check out dang co trong database bang id
@@ -94,4 +92,4 @@ exports.delete = async (id) => {
   } catch (err) {
     throw err;
   }
-}
+};

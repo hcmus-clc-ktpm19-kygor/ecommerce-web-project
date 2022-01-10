@@ -21,14 +21,14 @@ document.querySelectorAll(".products-filter").forEach((e) => {
                                     <div class="card-product__img">
                                         <a href="products/${product._id}"> <img class="card-img" src="${product.image_url}"
                                                                               alt=""></a>
+                                        <iframe name="tempFrame" style="display:none;"></iframe>
                                         <ul class="card-product__imgOverlay">
                                             <li>
                                                 <button><i class="ti-search"></i></button>
                                             </li>
-                                            <li>
                                             <li class="add-To-Cart-button">
                                                 <form id="add-to-card" action="/api/cart/${product._id}" method="POST"
-                                                      enctype="multipart/form-data" target="temp">
+                                                      enctype="multipart/form-data" target="tempFrame">
                                                     <button type="submit"><i class="ti-shopping-cart"></i></button>
                                                 </form>
                                             </li>
@@ -69,14 +69,14 @@ function searchProductsHandler() {
                                     <div class="card-product__img">
                                         <a href="products/${product._id}"> <img class="card-img" src="${product.image_url}"
                                                                               alt=""></a>
+                                        <iframe name="tempFrame" style="display:none;"></iframe>
                                         <ul class="card-product__imgOverlay">
                                             <li>
                                                 <button><i class="ti-search"></i></button>
                                             </li>
-                                            <li>
                                             <li class="add-To-Cart-button">
                                                 <form id="add-to-card" action="/api/cart/${product._id}" method="POST"
-                                                      enctype="multipart/form-data" target="temp">
+                                                      enctype="multipart/form-data" target="tempFrame">
                                                     <button type="submit"><i class="ti-shopping-cart"></i></button>
                                                 </form>
                                             </li>
@@ -116,14 +116,14 @@ function selectedOption() {
                                     <div class="card-product__img">
                                         <a href="products/${product._id}"> <img class="card-img" src="${product.image_url}"
                                                                               alt=""></a>
+                                        <iframe name="tempFrame" style="display:none;"></iframe>
                                         <ul class="card-product__imgOverlay">
                                             <li>
                                                 <button><i class="ti-search"></i></button>
                                             </li>
-                                            <li>
                                             <li class="add-To-Cart-button">
                                                 <form id="add-to-card" action="/api/cart/${product._id}" method="POST"
-                                                      enctype="multipart/form-data" target="temp">
+                                                      enctype="multipart/form-data" target="tempFrame">
                                                     <button type="submit"><i class="ti-shopping-cart"></i></button>
                                                 </form>
                                             </li>
