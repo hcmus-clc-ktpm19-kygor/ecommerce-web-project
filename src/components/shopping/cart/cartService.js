@@ -131,20 +131,16 @@ exports.removeCart = async function (cart) {
  * @param cart
  * @returns {Promise<Document<any, any, unknown> & Require_id<unknown>>}
  */
-exports.deleteProduct = async function (cart, product) {
+exports.deleteProduct = async function (cart, product_id) {
   try {
-    await  cartModel.updateOne(
-        { _id : cart._id },
-        {
-          $pull: {
-            products: product.id,
-          },
-        });
+    await cartModel.updateOne(
+        { _id: cart._id},
+        { $pull: { products : { id : ObjectId.createFromHexString(product_id) } }}
+    );
   } catch (err) {
     throw err;
   }
 };
-
 
 
 /**
