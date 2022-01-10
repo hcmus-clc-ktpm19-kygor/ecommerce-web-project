@@ -126,6 +126,25 @@ exports.removeCart = async function (cart) {
   }
 };
 
+/**
+ * xóa sp của user
+ * @param cart
+ * @returns {Promise<Document<any, any, unknown> & Require_id<unknown>>}
+ */
+exports.deleteProduct = async function (cart, product) {
+  try {
+    await  cartModel.updateOne(
+        { _id : cart._id },
+        {
+          $pull: {
+            products: product.id,
+          },
+        });
+  } catch (err) {
+    throw err;
+  }
+};
+
 
 
 /**
@@ -134,14 +153,14 @@ exports.removeCart = async function (cart) {
  * @param user_id
  * @returns {Promise<{mess: string}|Query<any, any, {}, any>>}
  */
-exports.addProductToCart = async function (product, cart) {
+exports.addProductToCart = async function (product, cart, qty) {
   try {
-
+    const quantity = qty.qty || 1;
     const small_product = {
       id: product._id,
       name: product.name,
       price: product.price,
-      quantity: 1,
+      quantity: parseInt(quantity),
       image_url: product.image_url,
     };
 
@@ -155,7 +174,7 @@ exports.addProductToCart = async function (product, cart) {
     if(exists_product){
       await cartModel.findOneAndUpdate(
           { _id: cart._id},
-          { $inc: { "products.$[p].quantity": 1 } },
+          { $inc: { "products.$[p].quantity": parseInt(quantity) } },
           {
             arrayFilters: [{ "p.id": small_product.id }]
           }
