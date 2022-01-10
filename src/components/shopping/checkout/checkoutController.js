@@ -8,14 +8,18 @@ exports.insert = async (req, res) => {
       res.redirect('/login');
     } else {
       const cart = await cartService.getCartByUserId(req.user._id)
-      let checkout = await service.getByUserId(req.user._id);
-      if(checkout){
-        checkout = await service.updateCart(cart, checkout);
+      if (cart === null || cart.products.length === 0) {
+        res.redirect('/products');
       } else {
-        const customer = await accountService.getById(req.user._id);
-        checkout = await service.insert(req.user._id, cart, customer);
+        let checkout = await service.getByUserId(req.user._id);
+        if (checkout) {
+          checkout = await service.updateCart(cart, checkout);
+        } else {
+          const customer = await accountService.getById(req.user._id);
+          checkout = await service.insert(req.user._id, cart, customer);
+        }
+        res.render('shopping/checkout/views/checkout', {checkout});
       }
-      res.render('shopping/checkout/views/checkout', {checkout});
     }
   } catch (err) {
     res.stats(400).json({ message: err.message });

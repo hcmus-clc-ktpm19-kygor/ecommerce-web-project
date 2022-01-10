@@ -1,5 +1,6 @@
 const service = require("./orderService");
 const checkoutService = require("../shopping/checkout/checkoutService");
+const cartService = require("../shopping/cart/cartService");
 
 exports.get = async (req, res) => {
   try {
@@ -34,6 +35,7 @@ exports.insert = async (req, res) => {
     if(req.user) {
       const checkout = await checkoutService.getByUserId(req.user._id);
       await service.insert(checkout, req.body);
+      await cartService.updateCart(checkout.cart);
       const path = '/order/user/' + req.user._id;
       res.redirect(path);
     } else {

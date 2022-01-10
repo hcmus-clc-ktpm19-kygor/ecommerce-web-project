@@ -95,6 +95,22 @@ exports.synchronizeCart = async function (user_id, cart) {
 };
 
 /**
+ * update cart
+ * @param cart
+ * @returns {Promise<void>}
+ */
+exports.updateCart = async function (cart) {
+  try {
+    await cartModel.findOneAndUpdate(
+        { _id: cart._id },
+        { $set: {products : Array} }
+    );
+  } catch (err) {
+    throw err;
+  }
+};
+
+/**
  * xóa cart của user
  * @param cart
  * @returns {Promise<Document<any, any, unknown> & Require_id<unknown>>}

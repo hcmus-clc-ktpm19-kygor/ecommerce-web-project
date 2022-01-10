@@ -14,8 +14,9 @@ exports.getCart = async function (req, res) {
       cart = await cartService.getCartByGuestId(req.session.guest_id);
     } else {
       if (req.session.guest_id !== req.user._id){
+
         cart = await cartService.getCartByGuestId(req.session.guest_id);
-        if(cart !== null){
+        if(cart !== null && cart.user_id === null){
           if(await cartService.getCartByUserId(req.user._id)){
             await cartService.removeCart(cart);
             cart = await cartService.getCartByUserId(req.user._id);
