@@ -29,7 +29,7 @@ exports.getCartByUserId = async function (id) {
   try {
     return await cartModel
     .findOne({
-      customer_id: ObjectId.createFromHexString(id),
+      user_id: ObjectId.createFromHexString(id),
     })
     .lean();
   } catch (err) {
@@ -87,8 +87,9 @@ exports.synchronizeCart = async function (user_id, cart) {
   try {
     await cartModel.findOneAndUpdate(
         { _id: cart._id },
-        { $set: {guest_id: user_id, user_id: ObjectId.createFromHexString(user_id)} }
+        { $set: {user_id: ObjectId.createFromHexString(user_id), guest_id: user_id} }
     );
+    return await cartModel.findOne({ _id: cart._id });
   } catch (err) {
     throw err;
   }

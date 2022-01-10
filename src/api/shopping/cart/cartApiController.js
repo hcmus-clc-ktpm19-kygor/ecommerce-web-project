@@ -18,21 +18,24 @@ exports.insertProductToCart = async function (req, res) {
         cart = await cartService.insertCartGuest(req.session.guest_id);
       }
     } else {
+      cart = await cartService.getCartByUserId(req.user._id);
       if (req.session.guest_id !== req.user._id) {
-        cart = await cartService.getCartByGuestId(req.session.guest_id);
+        const guestCart = await cartService.getCartByGuestId(req.session.guest_id);
         if(cart === null) {
-          cart = await cartService.insertCartGuest(req.session.guest_id);
-        }
-        if (await cartService.getCartByUserId(req.user._id)) {
-          await cartService.removeCart(cart);
-          cart = await cartService.getCartByUserId(req.user._id);
-        } else {
-          await cartService.synchronizeCart(req.user._id, cart);
-          req.session.guest_id = req.user._id;
+          if(guestCart !== null) {
+            if(guestCart.user_id === null) {
+              cart = await cartService.synchronizeCart(req.user._id, guestCart);
+              req.session.guest_id = req.user._id;
+            } else {
+              cart = await cartService.insertCartUser(req.user._id);
+            }
+          } else {
+            cart = await cartService.insertCartUser(req.user._id);
+            req.session.guest_id = req.user._id;
+          }
         }
       } else {
-        cart = await cartService.getCartByUserId(req.user._id);
-        if (cart === null) {
+        if(cart === null) {
           cart = await cartService.insertCartUser(req.user._id);
         }
       }

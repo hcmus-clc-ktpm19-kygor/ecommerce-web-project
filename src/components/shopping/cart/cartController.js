@@ -13,23 +13,28 @@ exports.getCart = async function (req, res) {
     if(!req.user){
       cart = await cartService.getCartByGuestId(req.session.guest_id);
     } else {
+      cart = await cartService.getCartByUserId(req.user._id);
       if (req.session.guest_id !== req.user._id){
-
-        cart = await cartService.getCartByGuestId(req.session.guest_id);
-        if(cart !== null && cart.user_id === null){
-          if(await cartService.getCartByUserId(req.user._id)){
-            await cartService.removeCart(cart);
-            cart = await cartService.getCartByUserId(req.user._id);
+        const guestCart = await cartService.getCartByGuestId(req.session.guest_id);
+        if(cart === null) {
+          if(guestCart !== null) {
+            if(guestCart.user_id === null) {
+              cart = await cartService.synchronizeCart(req.user._id, guestCart);
+              req.session.guest_id = req.user._id;
+            }
           } else {
-            await cartService.synchronizeCart(req.user._id, cart);
             req.session.guest_id = req.user._id;
           }
         } else {
-          cart = await cartService.getCartByUserId(req.user._id);
-          req.session.guest_id = req.user._id;
+          if(guestCart !== null) {
+            if(guestCart.user_id === null) {
+              await cartService.removeCart(guestCart);
+              req.session.guest_id = req.user._id;
+            }
+          } else {
+            req.session.guest_id = req.user._id;
+          }
         }
-      } else {
-        cart = await cartService.getCartByUserId(req.user._id);
       }
     }
     res.render('shopping/cart/views/cart', {cart});
