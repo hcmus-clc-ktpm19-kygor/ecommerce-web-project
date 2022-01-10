@@ -26,11 +26,10 @@ document.querySelectorAll(".products-filter").forEach((e) => {
                                                 <button><i class="ti-search"></i></button>
                                             </li>
                                             <li>
-                                                <form id="addToCartForm">
-                                                    <input type="hidden" value="${product._id}" id="product_id"
-                                                           name="productId">
-                                                    <button type="submit" id="addToCart-button"><i
-                                                            class="ti-shopping-cart"></i></button>
+                                            <li class="add-To-Cart-button">
+                                                <form id="add-to-card" action="/api/cart/${product._id}" method="POST"
+                                                      enctype="multipart/form-data" target="temp">
+                                                    <button type="submit"><i class="ti-shopping-cart"></i></button>
                                                 </form>
                                             </li>
                                             <li>
@@ -75,11 +74,10 @@ function searchProductsHandler() {
                                                 <button><i class="ti-search"></i></button>
                                             </li>
                                             <li>
-                                                <form id="addToCartForm">
-                                                    <input type="hidden" value="${product._id}" id="product_id"
-                                                           name="productId">
-                                                    <button type="submit" id="addToCart-button"><i
-                                                            class="ti-shopping-cart"></i></button>
+                                            <li class="add-To-Cart-button">
+                                                <form id="add-to-card" action="/api/cart/${product._id}" method="POST"
+                                                      enctype="multipart/form-data" target="temp">
+                                                    <button type="submit"><i class="ti-shopping-cart"></i></button>
                                                 </form>
                                             </li>
                                             <li>
@@ -124,11 +122,10 @@ function selectedOption() {
                                                 <button><i class="ti-search"></i></button>
                                             </li>
                                             <li>
-                                                <form id="addToCartForm">
-                                                    <input type="hidden" value="${product._id}" id="product_id"
-                                                           name="productId">
-                                                    <button type="submit" id="addToCart-button"><i
-                                                            class="ti-shopping-cart"></i></button>
+                                            <li class="add-To-Cart-button">
+                                                <form id="add-to-card" action="/api/cart/${product._id}" method="POST"
+                                                      enctype="multipart/form-data" target="temp">
+                                                    <button type="submit"><i class="ti-shopping-cart"></i></button>
                                                 </form>
                                             </li>
                                             <li>
