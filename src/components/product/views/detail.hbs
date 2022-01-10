@@ -307,23 +307,24 @@
                                 </div>
                             {{/each}}
                         </div>
-                        <div class="align-content-center">
+                        {{#if results.comments}}
                             <nav aria-label="Page navigation example">
-                                <ul class="pagination">
+                                <ul class="pagination justify-content-center">
                                     <li class="page-item" value="{{results.prev}}"><a id="prev-page-item"
                                                                                       class="page-link"
                                     >{{results.prev}}</a></li>
+
                                     <li class="page-item" value="{{results.curr}}"><a id="curr-page-item"
                                                                                       class="page-link"
 
                                     >{{results.curr}}</a></li>
+
                                     <li class="page-item" value="{{results.next}}"><a id="next-page-item"
                                                                                       class="page-link"
-
                                     >{{results.next}}</a></li>
                                 </ul>
                             </nav>
-                        </div>
+                        {{/if}}
                     </div>
                     <div class="col-lg-6">
                         <div class="review_box">
