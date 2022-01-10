@@ -24,7 +24,7 @@ exports.get = async (id) => {
 
 exports.getAll = async (id) => {
   try {
-    const orders = await orderModel.find({"customer.id":mongoose.Types.ObjectId.createFromHexString(id)}).sort( [['createdAt', 'descending']]).lean();
+    const orders = await orderModel.find({"customer.id":mongoose.Types.ObjectId.createFromHexString(id)}).sort( [['updatedAt', 'descending']]).lean();
     orders.forEach(e => {
       e.total_price = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(e.total_price);
       e.shipping_fee = new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(e.shipping_fee);
@@ -82,17 +82,23 @@ exports.getTop10BestSeller = async () => {
   return soldProducts.slice(0, 10);
 }
 
-exports.insert = async (checkout, address, payment, message) => {
+exports.insert = async (checkout, orderDetail) => {
   try {
+    const customer = {
+      id: checkout.customer._id,
+      customer_name: orderDetail.name,
+      phone: orderDetail.phone,
+      email: orderDetail.email
+    }
     const newOrder = new orderModel ({
       products: checkout.cart.products,
       total_price: checkout.subtotal_price + checkout.shipping_fee,
       status: "Đang chờ",
       shipping_fee: checkout.shipping_fee,
-      address: address,
-      customer: checkout.customer,
-      payment: payment,
-      note: message
+      address: orderDetail.address,
+      customer: customer,
+      payment: orderDetail.payment,
+      note: orderDetail.message
     });
 
     await newOrder.save();

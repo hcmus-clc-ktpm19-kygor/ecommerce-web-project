@@ -1,121 +1,125 @@
 <!-- ================ start banner area ================= -->
 <section class="blog-banner-area" id="category">
-    <div class="container h-100">
-        <div class="blog-banner">
-            <div class="text-center">
-                <h1>Order Confirmation</h1>
-                <nav aria-label="breadcrumb" class="banner-breadcrumb">
-                    <ol class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active" aria-current="page">Shop Category</li>
-                    </ol>
-                </nav>
-            </div>
-        </div>
+  <div class="container h-100">
+    <div class="blog-banner">
+      <div class="text-center">
+        <h1>Order Confirmation</h1>
+        <nav aria-label="breadcrumb" class="banner-breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Shop Category</li>
+          </ol>
+        </nav>
+      </div>
     </div>
+  </div>
 </section>
 <!-- ================ end banner area ================= -->
 
 <!--================Order Details Area =================-->
 <section class="order_details section-margin--small">
-    <div class="container">
-        <p class="text-center billing-alert">Thank you for supporting Aroma.</p>
-        <div class="row mb-5">
-            <div class="col-md-8 col-xl-6 mb-6 mb-xl-2">
-                <div class="confirmation-card">
-                    <h3 class="billing-title">Order Info</h3>
-                    <table class="order-table">
-                        <tr>
-                            <td>Total</td>
-                            <td>: {{order.total_price}}</td>
-                        </tr>
-                        <tr>
-                            <td>Shipping</td>
-                            <td>: {{order.shipping_fee}}</td>
-                        </tr>
-                        <tr>
-                            <td>Payment</td>
-                            <td>: {{order.payment}}</td>
-                        </tr>
-                        <tr>
-                            <td>Status</td>
-                            <td>: <span class="alert-success">{{order.status}}</span></td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-            <div class="col-md-8 col-xl-6 mb-6 mb-xl-2">
-                <div class="confirmation-card">
-                    <h3 class="billing-title">Billing Address</h3>
-                    <table class="order-rable">
-                        <tr>
-                            <td>Customer</td>
-                            <td>: {{order.customer.customer_name}}</td>
-                        </tr>
-                        <tr>
-                            <td>Address</td>
-                            <td>: {{order.address}}</td>
-                        </tr>
-                        <tr>
-                            <td>Phone</td>
-                            <td>: {{order.customer.phone}}</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
+  <div class="container">
+    <p class="text-center billing-alert">Thank you for supporting Aroma.</p>
+    <div class="row mb-5">
+      <div class="col-md-8 col-xl-6 mb-6 mb-xl-2">
+        <div class="confirmation-card">
+          <h3 class="billing-title">Order Info</h3>
+          <table class="order-table">
+            <tr>
+              <td>Total</td>
+              <td>: {{order.total_price}}</td>
+            </tr>
+            <tr>
+              <td>Shipping</td>
+              <td>: {{order.shipping_fee}}</td>
+            </tr>
+            <tr>
+              <td>Payment</td>
+              <td>: {{order.payment}}</td>
+            </tr>
+            <tr>
+              <td>Status</td>
+              <td>: <span class="alert-success">{{order.status}}</span></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      <div class="col-md-8 col-xl-6 mb-6 mb-xl-2">
+        <div class="confirmation-card">
+          <h3 class="billing-title">Billing Address</h3>
+          <table class="order-rable">
+            <tr>
+              <td>Customer</td>
+              <td>: {{order.customer.customer_name}}</td>
+            </tr>
+            <tr>
+              <td>Address</td>
+              <td>: {{order.address}}</td>
+            </tr>
+            <tr>
+              <td>Phone</td>
+              <td>: {{order.customer.phone}}</td>
+            </tr>
+            <tr>
+              <td>Email</td>
+              <td>: {{order.customer.email  }}</td>
+            </tr>
+          </table>
+        </div>
+      </div>
 
-        </div>
-        <div class="order_details_table">
-            <h2>Order Details</h2>
-            <div class="table-responsive">
-                <table class="table">
-                    <thead>
-                    <tr>
-                        <th scope="col">Product</th>
-                        <th scope="col">Quantity</th>
-                        <th scope="col">Price/each</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {{#each order.products}}
-                    <tr>
-                        <td>
-                            <p>{{this.name}}</p>
-                        </td>
-                        <td>
-                            <h5>x {{this.quantity}}</h5>
-                        </td>
-                        <td>
-                            <p>{{this.price}} ₫</p>
-                        </td>
-                    </tr>
-                    {{/each}}
-                    <tr>
-                        <td>
-                            <h4>Shipping</h4>
-                        </td>
-                        <td>
-                            <h5></h5>
-                        </td>
-                        <td>
-                            <p>Flat rate: {{order.shipping_fee}}</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <h4>Total</h4>
-                        </td>
-                        <td>
-                            <h5></h5>
-                        </td>
-                        <td>
-                            <h4>{{order.total_price}}</h4>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
     </div>
+    <div class="order_details_table">
+      <h2>Order Details</h2>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+          <tr>
+            <th scope="col">Product</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Price/each</th>
+          </tr>
+          </thead>
+          <tbody>
+          {{#each order.products}}
+            <tr>
+              <td>
+                <p>{{this.name}}</p>
+              </td>
+              <td>
+                <h5>x {{this.quantity}}</h5>
+              </td>
+              <td>
+                <h5>{{this.price}} ₫</h5>
+              </td>
+            </tr>
+          {{/each}}
+          <tr>
+            <td>
+              <h4>Shipping</h4>
+            </td>
+            <td>
+              <h5></h5>
+            </td>
+            <td>
+              <p>Flat rate: {{order.shipping_fee}}</p>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <h4>Total</h4>
+            </td>
+            <td>
+              <h5></h5>
+            </td>
+            <td>
+              <h4>{{order.total_price}}</h4>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
 </section>
 <!--================End Order Details Area =================-->

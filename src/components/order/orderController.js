@@ -32,11 +32,10 @@ exports.getTop10BestSeller = async (req, res) => {
 exports.insert = async (req, res) => {
   try {
     if(req.user) {
-      // const checkout = await checkoutService.getByUserId(req.user._id);
-      // await service.insert(checkout, req.body.address, req.body.payment, req.body.message);
-      // const path = '/order/user/' + req.user._id;
-      // res.redirect(path);
-      res.json(req.body);
+      const checkout = await checkoutService.getByUserId(req.user._id);
+      await service.insert(checkout, req.body);
+      const path = '/order/user/' + req.user._id;
+      res.redirect(path);
     } else {
       res.redirect('login')
     }
