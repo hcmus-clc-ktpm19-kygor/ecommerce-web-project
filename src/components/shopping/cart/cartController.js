@@ -42,3 +42,49 @@ exports.getCart = async function (req, res) {
     res.status(500).json({ message: err.message });
   }
 };
+
+/**
+ * delete one product
+ * @param req
+ * @param res
+ * @returns {Promise<void>}
+ */
+exports.deleteProduct = async function (req, res) {
+  try {
+    let cart;
+    if(!req.user){
+      cart = await cartService.getCartByGuestId(req.session.guest_id);
+    } else {
+      cart = await cartService.getCartByUserId(req.user._id);
+    }
+    await cartService.deleteProduct(cart, req.params.id)
+    res.redirect('/cart');
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
+/**
+ * delete all product
+ * @param req
+ * @param res
+ * @returns {Promise<void>}
+ */
+exports.deleteAllProduct = async function (req, res) {
+  try {
+    let cart;
+    if(!req.user){
+      cart = await cartService.getCartByGuestId(req.session.guest_id);
+    } else {
+      cart = await cartService.getCartByUserId(req.user._id);
+    }
+    if(cart === null){
+      res.redirect('/products')
+    } else {
+      await cartService.updateCart(cart)
+    }
+    res.redirect('/cart');
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};

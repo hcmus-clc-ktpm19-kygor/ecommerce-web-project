@@ -40,14 +40,18 @@
                   </script></h5>
                 </td>
                 <td>
-                  <i class="bi bi-trash-fill"></i>
+                  <form id="delete-product" action="/cart/{{this.id}}" method="POST" enctype="multipart/form-data">
+                    <button type="submit" ><i class="bi bi-trash-fill"></i></button>
+                  </form>
                 </td>
               </tr>
             {{/each}}
           {{/if}}
           <tr class="bottom_button">
             <td>
-              <a class="button" href="#">Xóa tất cả</a>
+              <form id="delete-all-product" action="/cart" method="POST" enctype="multipart/form-data">
+                <a onclick="document.getElementById('delete-all-product').submit()" class="button" >Xóa tất cả</a>
+              </form>
             </td>
             <td>
 
