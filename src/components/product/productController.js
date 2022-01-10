@@ -19,8 +19,28 @@ exports.getProductById = async (req, res) => {
       4
     );
 
+    const results = {};
+    results.curr = page;
+    const startIdx = (page - 1) * 5;
+    if (comments.length >= 5) {
+      results.next = page + 1;
+    } else {
+      results.curr = page;
+      results.next = results.curr + 1;
+      results.prev = results.curr - 1;
+    }
+
+    if (startIdx > 0) {
+      results.prev = page - 1;
+    } else {
+      results.prev = 1;
+      results.curr = 2;
+      results.next = 3;
+    }
+    results.comments = comments;
+
     // res.json(product);
-    res.render("product/views/detail", { product, comments, relatedProduct });
+    res.render("product/views/detail", { product, results, relatedProduct });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

@@ -283,7 +283,7 @@
                 <div class="row">
                     <div class="col-lg-6">
                         <div id="comment-list" class="comment_list">
-                            {{#each comments}}
+                            {{#each results.comments}}
                                 <div class="review_item">
                                     <div class="media">
                                         <div class="d-flex">
@@ -301,6 +301,20 @@
                                     <p>{{this.content}}</p>
                                 </div>
                             {{/each}}
+                            <div class="align-content-center">
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination">
+                                    <li class="page-item" value="{{results.prev}}"><a id="prev-page-item" class="page-link"
+                                        >{{results.prev}}</a></li>
+                                    <li class="page-item" value="{{results.curr}}"><a id="curr-page-item" class="page-link"
+
+                                        >{{results.curr}}</a></li>
+                                    <li class="page-item" value="{{results.next}}"><a id="next-page-item" class="page-link"
+
+                                        >{{results.next}}</a></li>
+                                </ul>
+                            </nav>
+                            </div>
                         </div>
                     </div>
                     <div class="col-lg-6">
@@ -505,6 +519,36 @@
     	</div>
     	<p>\{{content}}</p>
     </div>
-
-
+</script>
+<script>
+    document.querySelector(".pagination").addEventListener("click", event => {
+        const id = document.getElementById("product_id").id;
+        console.log("Hello");
+        $.ajax({
+            url: `http://localhost:8080/api/products/${id}/comments`,
+            type: "GET",
+            dateType: "JSON",
+            success: function (data) {
+                console.log(data);
+                const $comment = $("#pagination");
+                $comment.empty();
+                data.forEach(($comment) => {
+                    const str= <div className="review_item">
+                        <div className="media">
+                            <div className="d-flex">
+                                <img className="avatar" src="${comment.user_avatar_url}" alt="/img/male_avatar.svg"/>
+                            </div>
+                            <div class="media-body">
+                                <h4>${comment.user_name}</h4>
+                                <h5>${comment.createdAt}</h5>
+                            </div>
+                        </div>
+                        <p>${comment.content}</p>
+                    </div>
+                    const html = $.parseHTML(str);
+                    $comment.append(html);
+                });
+            }
+        });
+    });
 </script>
