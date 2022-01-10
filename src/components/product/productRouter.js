@@ -7,6 +7,8 @@ const productController = require("./productController");
 // Paging
 router.get("/related-product", productController.getAll);
 router.get("/api/related-product", productController.getRelatedProducts);
+//Comment
+
 router.get("/", productController.paging);
 // Get 1 product
 router.get("/:id", productController.getProductById);
