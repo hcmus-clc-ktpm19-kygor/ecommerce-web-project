@@ -31,8 +31,8 @@ exports.insert = async (user_id, cart, customer) => {
     const newCheckout = new checkoutModel({
       cart: cart,
       customer: customer,
-      shipping_fee: null,
-      subtotal_price: null,
+      shipping_fee: 500000,
+      subtotal_price: cart.cost_total + 500000,
       payment: null,
       discount: null,
       note: null,
@@ -55,9 +55,9 @@ exports.updateCart = async (cart, checkout) => {
   try {
     await checkoutModel.findOneAndUpdate(
       { _id: checkout._id },
-      { $set: { cart: cart } }
+      { $set: { cart: cart , shipping_fee : 500000, subtotal_price : cart.cost_total + 500000} }
     );
-    return await checkoutModel.findOne({ _id: checkout._id });
+    return await checkoutModel.findOne({ _id: checkout._id }).lean();
   } catch (err) {
     throw err;
   }

@@ -3,9 +3,7 @@ const mongoose = require("mongoose");
 const orderModel = require("./orderModel");
 const soldProductModel = require("../SoldProduct/SoldProduct");
 const productModel = require("../product/productModel");
-
 const util = require("./orderUtil");
-
 const dateFns = require("date-fns");
 
 exports.get = async (id) => {
@@ -32,9 +30,9 @@ exports.get = async (id) => {
 exports.getAll = async (id) => {
   try {
     const orders = await orderModel
-      .find({ "customer.id": mongoose.Types.ObjectId.createFromHexString(id) })
-      .sort([["updatedAt", "descending"]])
-      .lean();
+    .find({ "customer.id": mongoose.Types.ObjectId.createFromHexString(id) })
+    .sort([["updatedAt", "descending"]])
+    .lean();
     orders.forEach((e) => {
       e.total_price = new Intl.NumberFormat("vi-VN", {
         style: "currency",
@@ -71,7 +69,7 @@ exports.getSalesInLast10Days = async () => {
     d.setDate(d.getDate() - i);
 
     const orders = await orderModel
-      .find(
+    .find(
         {
           createdAt: {
             $gte: dateFns.startOfDay(new Date(d)),
@@ -79,8 +77,8 @@ exports.getSalesInLast10Days = async () => {
           },
         },
         { _id: true }
-      )
-      .lean();
+    )
+    .lean();
 
     result.push({
       sales: orders.length,
@@ -94,7 +92,7 @@ exports.getSalesInLast10Days = async () => {
 exports.getTop10BestSeller = async () => {
   const soldProducts = await soldProductModel.find().lean();
   soldProducts.sort(
-    (a, b) => b.quantity * b.total_price - a.quantity * a.total_price
+      (a, b) => b.quantity * b.total_price - a.quantity * a.total_price
   );
   return soldProducts.slice(0, 10);
 };
@@ -110,48 +108,23 @@ exports.insert = async (checkout, orderDetail) => {
 
     const { products } = checkout.cart;
 
-    const calculateTotalPrice = (prev, curr) =>
-      prev.price * prev.quantity + curr.price * curr.quantity;
-    const subtotal_price =
-      products.length === 1
-        ? products[0].price
-        : products.reduce(calculateTotalPrice);
 
-    const newOrder = new orderModel({
-      products: checkout.cart.products,
-      total_price: subtotal_price + checkout.shipping_fee,
-      status: "Đang chờ",
-      shipping_fee: checkout.shipping_fee,
-      address: orderDetail.address,
-      customer: customer,
-      payment: orderDetail.payment,
-      note: orderDetail.message,
-    });
 
     for (let i = 0; i < products.length; i++) {
       const product = products[i];
 
+      await productModel.findOneAndUpdate(
+          { _id: product.id },
+          { $inc: { stock: -product.quantity } }
+      );
+
       const soldProduct = await soldProductModel
-        .findOne({ product_id: product._id })
-        .lean();
-
-      const updatedProduct = await productModel.findById(product.id).lean();
-      if (updatedProduct.stock) {
-        await productModel
-          .findByIdAndUpdate(
-            product._id,
-            {
-              stock: (updatedProduct.stock -= 1),
-            },
-            { new: true }
-          )
-          .lean();
-      }
-
+      .findOne({ product_id: product.id })
+      .lean();
       // Sản phẩm chưa được bán lần nào
       if (!soldProduct) {
         await soldProductModel.create({
-          product_id: product._id,
+          product_id: product.id,
           name: product.name,
           producer: product.producer,
           quantity: product.quantity,
@@ -162,11 +135,22 @@ exports.insert = async (checkout, orderDetail) => {
         soldProduct.total_price += product.price * product.quantity;
         soldProduct.quantity += product.quantity;
         await soldProductModel.findOneAndUpdate(
-          { product_id: product._id },
-          soldProduct
+            { product_id: soldProduct.product_id },
+            {$set : { total_price : soldProduct.total_price, quantity : soldProduct.quantity}}
         );
       }
     }
+
+    const newOrder = new orderModel({
+      products: checkout.cart.products,
+      total_price: checkout.subtotal_price,
+      status: "Đang chờ",
+      shipping_fee: checkout.shipping_fee,
+      address: orderDetail.address,
+      customer: customer,
+      payment: orderDetail.payment,
+      note: orderDetail.message,
+    });
 
     await newOrder.save();
   } catch (err) {

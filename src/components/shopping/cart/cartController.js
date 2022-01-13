@@ -57,7 +57,8 @@ exports.deleteProduct = async function (req, res) {
     } else {
       cart = await cartService.getCartByUserId(req.user._id);
     }
-    await cartService.deleteProduct(cart, req.params.id)
+    const newCart = await cartService.deleteProduct(cart, req.params.id)
+    await cartService.updateToTalCost(newCart);
     res.redirect('/cart');
   } catch (err) {
     res.status(500).json({ message: err.message });

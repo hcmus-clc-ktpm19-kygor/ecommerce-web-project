@@ -27,6 +27,7 @@ const orderRouter = require('./components/order/orderRouter');
 
 const loggedInUserGuard = require('./middlewares/loggedInUserGuard');
 const userIdMiddleware = require('./middlewares/userIdMiddleware');
+const cartSizeMiddleware = require('./middlewares/cartSizeMiddleware')
 
 // try to connect to database
 const db = require('./config/database.config');
@@ -58,6 +59,7 @@ app.use(function (req, res, next) {
 })
 
 app.use(userIdMiddleware);
+app.use(cartSizeMiddleware)
 
 // Router middleware
 app.use('/', indexRouter);
@@ -70,6 +72,7 @@ app.use('/cart', cartRouter);
 app.use('/checkout', checkoutRouter);
 app.use('/api', apiRouter);
 app.use('/order',orderRouter);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

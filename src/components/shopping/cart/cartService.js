@@ -109,7 +109,7 @@ exports.updateCart = async function (cart) {
   try {
     await cartModel.findOneAndUpdate(
       { _id: cart._id },
-      { $set: { products: Array } }
+      { $set: { products: Array, cost_total : 0 }}
     );
   } catch (err) {
     throw err;
@@ -140,6 +140,7 @@ exports.deleteProduct = async function (cart, product_id) {
         { _id: cart._id},
         { $pull: { products : { id : ObjectId.createFromHexString(product_id) } }}
     );
+    return cartModel.findById(cart._id);
   } catch (err) {
     throw err;
   }
@@ -183,6 +184,52 @@ exports.addProductToCart = async function (product, cart, qty) {
         { $push: { products: small_product } }
       );
     }
+
+    return await cartModel.findById(cart._id).lean();
+  } catch (err) {
+    throw err;
+  }
+}
+
+
+/**
+ * lấy số lượng giỏ hàng
+ * @param cart
+ * @returns {Promise<Document<any, any, unknown> & Require_id<unknown>>}
+ */
+exports.updateToTalCost = async function (cart) {
+  try {
+    let cost_total = 0;
+    for(let i=0; i< cart.products.length ; i++){
+      cost_total += cart.products[i].price * cart.products[i].quantity
+    }
+
+    await cartModel.findOneAndUpdate(
+        { _id: cart._id },
+        { $set: { cost_total: cost_total } }
+    );
+  } catch (err) {
+    throw err;
+  }
+};
+
+
+/**
+ * lấy số lượng giỏ hàng
+ * @param guest_id
+ * @returns {number}
+ */
+exports.getGuestCartSize = async function (guest_id) {
+  try {
+    const cart = await cartModel
+    .findOne({
+      guest_id: guest_id,
+    })
+    .lean();
+    if(cart === null)
+      return 0;
+    else
+      return cart.products.length;
   } catch (err) {
     throw err;
   }
@@ -190,18 +237,20 @@ exports.addProductToCart = async function (product, cart, qty) {
 
 /**
  * lấy số lượng giỏ hàng
- * @param cart
- * @returns {Promise<Document<any, any, unknown> & Require_id<unknown>>}
+ * @param user_id
+ * @returns {number}
  */
-exports.getCartSize = async function (cart) {
+exports.getUserCartSize = async function (user_id) {
   try {
-    return await cartModel.aggregate([
-      {
-        $project: {
-          cartSize: { $size: "$products" },
-        },
-      },
-    ]);
+    const cart = await cartModel
+    .findOne({
+      user_id: ObjectId.createFromHexString(user_id),
+    })
+    .lean();
+    if(cart === null)
+      return 0;
+    else
+      return cart.products.length;
   } catch (err) {
     throw err;
   }

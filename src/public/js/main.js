@@ -180,7 +180,8 @@ $(".add-To-Cart-button").on('click', function () {
   }
 });
 
-$(".button.primary-btn").on('click', function () {
+$("#button-primary-btn").on('click', function () {
+
   const cart = $('#top-ti-shopping-cart');
   const imgtodrag = $("#img-fluid-1");
   if (imgtodrag) {
@@ -218,3 +219,59 @@ $(".button.primary-btn").on('click', function () {
     });
   }
 });
+
+// $("#button-primary-btn").on('click', function () {
+//   $.post(
+//       `/api/cart/${$("#product_id").val()}`,
+//       {
+//         content: $("#product_stock").val(),
+//       },
+//       function (data) {
+//         if(data > $("#product_stock").val()) {
+//           const message = Handlebars.compile(
+//               document.getElementById("message-error").innerHTML
+//           );
+//           const messageHtml = message(data);
+//           $("#messageError").prepend(messageHtml);
+//           console.log(messageHtml);
+//         } else {
+//           const cart = $('#top-ti-shopping-cart');
+//           const imgtodrag = $("#img-fluid-1");
+//           if (imgtodrag) {
+//             const imgclone = imgtodrag.clone()
+//             .offset({
+//               top: imgtodrag.offset().top,
+//               left: imgtodrag.offset().left
+//             })
+//             .css({
+//               'opacity': '0.8',
+//               'position': 'absolute',
+//               'height': '150px',
+//               'width': '150px',
+//               'z-index': '100'
+//             })
+//             .appendTo($('body'))
+//             .animate({
+//               'top': cart.offset().top,
+//               'left': cart.offset().left,
+//               'width': 60,
+//               'height': 60
+//             }, 1000, 'easeInOutExpo');
+//
+//             setTimeout(function () {
+//               cart.effect("shake", {
+//                 times: 1.5
+//               }, 100);
+//             }, 1000);
+//
+//             imgclone.animate({
+//               'width': 0,
+//               'height': 0
+//             }, function () {
+//               $(this).detach()
+//             });
+//           }
+//         }
+//       }
+//   );
+// });
