@@ -18,6 +18,24 @@ document.querySelectorAll(".products-filter").forEach((e) => {
 
         const { curr, next, prev, products } = data;
         products.forEach((product) => {
+          let orderStatus;
+          let outOfStockMess = "";
+          if (product.stock === 0) {
+            // orderStatus = `<span class="alert-success">${order.status}</span>
+            //                                     <li>
+            //                                         <button><i class="ti-shopping-cart"></i></button>
+            //                                     </li>`;
+            outOfStockMess = `<p class="card-product__price"><span class="alert-success">Hết hàng</span>
+                                            </p>`;
+          } else {
+            orderStatus = `<li class="add-To-Cart-button">
+                                                    <form id="add-to-card" action="/api/cart/${product._id}" method="POST"
+                                                          enctype="multipart/form-data" target="tempFrame">
+                                                        <button type="submit"><i class="ti-shopping-cart"></i></button>
+                                                    </form>
+                                                </li>`
+          }
+
           const str = `<div class="col-md-6 col-lg-4">
                                 <div class="card text-center card-product">
                                     <div class="card-product__img">
@@ -28,12 +46,7 @@ document.querySelectorAll(".products-filter").forEach((e) => {
                                             <li>
                                                 <button><i class="ti-search"></i></button>
                                             </li>
-                                            <li class="add-To-Cart-button">
-                                                <form id="add-to-card" action="/api/cart/${product._id}" method="POST"
-                                                      enctype="multipart/form-data" target="tempFrame">
-                                                    <button type="submit"><i class="ti-shopping-cart"></i></button>
-                                                </form>
-                                            </li>
+                                            ${orderStatus}
                                             <li>
                                                 <button><i class="ti-heart"></i></button>
                                             </li>
@@ -44,6 +57,7 @@ document.querySelectorAll(".products-filter").forEach((e) => {
                                         <h4 class="card-product__title"><a
                                                 href="products/${product._id}">${product.name}</a></h4>
                                         <p class="card-product__price">${product.price}₫</p>
+                                        ${outOfStockMess}
                                     </div>
                                 </div>
                             </div>`;

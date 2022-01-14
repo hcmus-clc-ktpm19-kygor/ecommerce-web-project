@@ -24,6 +24,8 @@ exports.getByUserId = async (user_id) => {
 /**
  * insert checkout
  * @param user_id
+ * @param cart
+ * @param customer
  * @returns {Promise<Document<any, any, unknown> & Require_id<unknown>>}
  */
 exports.insert = async (user_id, cart, customer) => {

@@ -1,204 +1,208 @@
 <!-- ================ start banner area ================= -->
 <section class="blog-banner-area" id="category">
-  <div class="container h-100">
-    <div class="blog-banner">
-      <div class="text-center">
-        <h1>Danh mục sản phẩm</h1>
-        <nav aria-label="breadcrumb" class="banner-breadcrumb">
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/">Home</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Category</li>
-          </ol>
-        </nav>
-      </div>
+    <div class="container h-100">
+        <div class="blog-banner">
+            <div class="text-center">
+                <h1>Danh mục sản phẩm</h1>
+                <nav aria-label="breadcrumb" class="banner-breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/">Home</a></li>
+                        <li class="breadcrumb-item active" aria-current="page">Category</li>
+                    </ol>
+                </nav>
+            </div>
+        </div>
     </div>
-  </div>
 </section>
 <!-- ================ end banner area ================= -->
 
 
 <!-- ================ category section start ================= -->
 <section class="section-margin--small mb-5">
-  <div class="container">
-    <div class="row">
-      <div class="col-xl-3 col-lg-4 col-md-5">
-        <div class="sidebar-categories">
-          <div class="head text-center">Danh mục sản phẩm</div>
-          <ul class="main-categories">
-            <li class="common-filter">
-              <form class="products-filter" id="category-filter">
-                <ul>
-                  <li class="filter-list"><input value="Laptop Gaming" class="pixel-radio"
-                                                 type="radio" id="gaming-laptop"
-                                                 name="category"><label for="gaming-laptop">Laptop
-                    Gaming</label>
-                  </li>
-                  <li class="filter-list"><input value="Laptop văn phòng" class="pixel-radio"
-                                                 type="radio"
-                                                 id="office-laptop"
-                                                 name="category"><label for="office-laptop">Laptop Văn
-                    phòng</label></li>
-                </ul>
-              </form>
-            </li>
-          </ul>
-        </div>
-        <div class="sidebar-filter">
-          <div class="top-filter-head text-center">Laptop theo thương hiệu</div>
-          <div class="common-filter">
-            <div class="head text-center">Thương hiệu</div>
-            <form class="products-filter" id="producer-filter">
-              <ul>
-                <li class="filter-list"><input value="Asus" class="pixel-radio" type="radio" id="asus"
-                                               name="brand"><label
-                  for="asus">Asus</label></li>
-
-                <li class="filter-list"><input value="Dell" class="pixel-radio" type="radio" id="dell"
-                                               name="brand"><label
-                  for="dell">Dell</label></li>
-
-                <li class="filter-list"><input value="Acer" class="pixel-radio" type="radio" id="acer"
-                                               name="brand"><label
-                  for="acer">Acer</label></li>
-
-                <li class="filter-list"><input value="MSI" class="pixel-radio" type="radio" id="msi"
-                                               name="brand"><label
-                  for="msi">MSI</label></li>
-
-                <li class="filter-list"><input value="Lenovo" class="pixel-radio" type="radio"
-                                               id="lenovo"
-                                               name="brand"><label for="lenovo">Lenovo<span>(19)</span></label>
-                </li>
-              </ul>
-            </form>
-          </div>
-          <div class="common-filter">
-            <div class="head">Giá</div>
-            <div class="price-range-area">
-              <div id="price-range"></div>
-              <div class="value-wrapper d-flex">
-                <div class="price">Giá:</div>
-                <span>$</span>
-                <div id="lower-value"></div>
-                <div class="to">đến</div>
-                <span>$</span>
-                <div id="upper-value"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-xl-9 col-lg-8 col-md-7">
-        <!-- Start Filter Bar -->
-        <div class="filter-bar d-flex flex-wrap align-items-center">
-          <div class="sorting">
-            <select onchange="selectedOption()" id="sorting-selected">
-              <option value="price">Sắp xếp theo giá</option>
-              <option value="name">Sắp xếp theo tên</option>
-              <option value="category">Sắp xếp theo danh mục</option>
-            </select>
-          </div>
-          <div class="ml-auto">
-            <div class="input-group filter-bar-search">
-              <input onkeyup="searchProductsHandler()" id="search-text-bar" type="text"
-                     placeholder="Search">
-              <div class="input-group-append">
-                <button onclick="searchProductsHandler()" type="button"><i class="ti-search"></i>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- End Filter Bar -->
-        <!-- Start Best Seller -->
-        <section class="lattest-product-area pb-40 category-list">
-          <div id="products-table" class="row">
-            {{#each results.products}}
-              <div class="col-md-6 col-lg-4">
-                <div class="card text-center card-product">
-                  <div class="card-product__img">
-                    <a href="products/{{this._id}}"> <img class="card-img" src="{{this.image_url}}"
-                                                          alt=""></a>
-                    <iframe name="tempFrame" style="display:none;"></iframe>
-                    <ul class="card-product__imgOverlay">
-                      <li>
-                        <button><i class="ti-search"></i></button>
-                      </li>
-                      {{#if (is_equals this.stock 0)}}<span class="alert-success">{{order.status}}</span>
-                        <li>
-                          <button><i class="ti-shopping-cart"></i></button>
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-3 col-lg-4 col-md-5">
+                <div class="sidebar-categories">
+                    <div class="head text-center">Danh mục sản phẩm</div>
+                    <ul class="main-categories">
+                        <li class="common-filter">
+                            <form class="products-filter" id="category-filter">
+                                <ul>
+                                    <li class="filter-list"><input value="Laptop Gaming" class="pixel-radio"
+                                                                   type="radio" id="gaming-laptop"
+                                                                   name="category"><label for="gaming-laptop">Laptop
+                                        Gaming</label>
+                                    </li>
+                                    <li class="filter-list"><input value="Laptop văn phòng" class="pixel-radio"
+                                                                   type="radio"
+                                                                   id="office-laptop"
+                                                                   name="category"><label for="office-laptop">Laptop Văn
+                                        phòng</label></li>
+                                </ul>
+                            </form>
                         </li>
-                      {{else}}
-                        <li class="add-To-Cart-button">
-                          <form id="add-to-card" action="/api/cart/{{this._id}}" method="POST"
-                                enctype="multipart/form-data" target="tempFrame">
-                            <button type="submit"><i class="ti-shopping-cart"></i></button>
-                          </form>
-                        </li>
-                      {{/if}}
-                      <li>
-                        <button><i class="ti-heart"></i></button>
-                      </li>
                     </ul>
-                  </div>
-                  <div class="card-body">
-                    <p>{{this.category}}</p>
-                    <h4 class="card-product__title"><a
-                      href="products/{{this._id}}">{{this.name}}</a></h4>
-                    <p class="card-product__price">{{this.price}}₫</p>
-                    {{#if (is_equals this.stock 0)}}
-                      <p class="card-product__price"><span class="alert-success">Hết hàng</span></p>
-                    {{/if}}
-                  </div>
                 </div>
-              </div>
-            {{/each}}
-          </div>
-          <nav aria-label="Page navigation example">
-            <ul class="pagination justify-content-center" id="product-pagination">
-              <li class="page-item"><a id="prev-page-item" class="page-link" href="?page={{results.prev.page}}
-                &{{results.prev.filter}}
-                ">{{results.prev.page}}</a></li>
-              <li class="page-item"><a id="curr-page-item" class="page-link"
-                                       href="?page={{results.curr.page}}&{{results.curr.filter}}
-                ">{{results.curr.page}}</a></li>
-              <li class="page-item"><a id="next-page-item" class="page-link" href="?page={{results.next.page}}
-                &{{results.next.filter}}
-                ">{{results.next.page}}</a></li>
-            </ul>
-          </nav>
-        </section>
-        <!-- End Best Seller -->
-      </div>
+                <div class="sidebar-filter">
+                    <div class="top-filter-head text-center">Laptop theo thương hiệu</div>
+                    <div class="common-filter">
+                        <div class="head text-center">Thương hiệu</div>
+                        <form class="products-filter" id="producer-filter">
+                            <ul>
+                                <li class="filter-list"><input value="Asus" class="pixel-radio" type="radio" id="asus"
+                                                               name="brand"><label
+                                        for="asus">Asus</label></li>
+
+                                <li class="filter-list"><input value="Dell" class="pixel-radio" type="radio" id="dell"
+                                                               name="brand"><label
+                                        for="dell">Dell</label></li>
+
+                                <li class="filter-list"><input value="Acer" class="pixel-radio" type="radio" id="acer"
+                                                               name="brand"><label
+                                        for="acer">Acer</label></li>
+
+                                <li class="filter-list"><input value="MSI" class="pixel-radio" type="radio" id="msi"
+                                                               name="brand"><label
+                                        for="msi">MSI</label></li>
+
+                                <li class="filter-list"><input value="Lenovo" class="pixel-radio" type="radio"
+                                                               id="lenovo"
+                                                               name="brand"><label for="lenovo">Lenovo<span>(19)</span></label>
+                                </li>
+                            </ul>
+                        </form>
+                    </div>
+                    <div class="common-filter">
+                        <div class="head">Giá</div>
+                        <div class="price-range-area">
+                            <div id="price-range"></div>
+                            <div class="value-wrapper d-flex">
+                                <div class="price">Giá:</div>
+                                <span>$</span>
+                                <div id="lower-value"></div>
+                                <div class="to">đến</div>
+                                <span>$</span>
+                                <div id="upper-value"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-9 col-lg-8 col-md-7">
+                <!-- Start Filter Bar -->
+                <div class="filter-bar d-flex flex-wrap align-items-center">
+                    <div class="sorting">
+                        <select onchange="selectedOption()" id="sorting-selected">
+                            <option value="price">Sắp xếp theo giá</option>
+                            <option value="name">Sắp xếp theo tên</option>
+                            <option value="category">Sắp xếp theo danh mục</option>
+                        </select>
+                    </div>
+                    <div class="ml-auto">
+                        <div class="input-group filter-bar-search">
+                            <input onkeyup="searchProductsHandler()" id="search-text-bar" type="text"
+                                   placeholder="Search">
+                            <div class="input-group-append">
+                                <button onclick="searchProductsHandler()" type="button"><i class="ti-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End Filter Bar -->
+                <!-- Start Best Seller -->
+                <section class="lattest-product-area pb-40 category-list">
+                    <div id="products-table" class="row">
+                        {{#each results.products}}
+                            <div class="col-md-6 col-lg-4">
+                                <div class="card text-center card-product">
+                                    <div class="card-product__img">
+                                        <a href="products/{{this._id}}"> <img class="card-img" src="{{this.image_url}}"
+                                                                              alt=""></a>
+                                        <iframe name="tempFrame" style="display:none;"></iframe>
+                                        <ul class="card-product__imgOverlay">
+                                            <li>
+                                                <button><i class="ti-search"></i></button>
+                                            </li>
+                                            {{#if (is_equals this.stock 0)}}
+                                                <span class="alert-success">{{order.status}}</span>
+                                                <li>
+                                                    <button><i class="ti-shopping-cart"></i></button>
+                                                </li>
+                                            {{else}}
+                                                <li class="add-To-Cart-button">
+                                                    <form id="add-to-card" action="/api/cart/{{this._id}}" method="POST"
+                                                          enctype="multipart/form-data" target="tempFrame">
+                                                        <button type="submit"><i class="ti-shopping-cart"></i></button>
+                                                    </form>
+                                                </li>
+                                            {{/if}}
+                                            <li>
+                                                <button><i class="ti-heart"></i></button>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="card-body">
+                                        <p>{{this.category}}</p>
+                                        <h4 class="card-product__title"><a
+                                                href="products/{{this._id}}">{{this.name}}</a></h4>
+                                        <p class="card-product__price">{{this.price}}₫</p>
+                                        {{#if (is_equals this.stock 0)}}
+                                            <p class="card-product__price"><span class="alert-success">Hết hàng</span>
+                                            </p>
+                                        {{/if}}
+                                    </div>
+                                </div>
+                            </div>
+                        {{/each}}
+                    </div>
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination justify-content-center" id="product-pagination">
+                            <li class="page-item"><a id="prev-page-item" class="page-link"
+                                                     href="?page={{results.prev.page}}
+                                &{{results.prev.filter}}
+                                ">{{results.prev.page}}</a></li>
+                            <li class="page-item"><a id="curr-page-item" class="page-link"
+                                                     href="?page={{results.curr.page}}&{{results.curr.filter}}
+                                ">{{results.curr.page}}</a></li>
+                            <li class="page-item"><a id="next-page-item" class="page-link"
+                                                     href="?page={{results.next.page}}
+                                &{{results.next.filter}}
+                                ">{{results.next.page}}</a></li>
+                        </ul>
+                    </nav>
+                </section>
+                <!-- End Best Seller -->
+            </div>
+        </div>
     </div>
-  </div>
 </section>
 
 <!-- ================ Subscribe section start ================= -->
 <section class="subscribe-position">
-  <div class="container">
-    <div class="subscribe text-center">
-      <h3 class="subscribe__title">Get Update From Anywhere</h3>
-      <p>Bearing Void gathering light light his eavening unto dont afraid</p>
-      <div id="mc_embed_signup">
-        <form target="_blank"
-              action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
-              method="get" class="subscribe-form form-inline mt-5 pt-1">
-          <div class="form-group ml-sm-auto">
-            <input class="form-control mb-1" type="email" name="EMAIL" placeholder="Enter your email"
-                   onfocus="this.placeholder = ''" onblur="this.placeholder = 'Your Email Address '">
-            <div class="info"></div>
-          </div>
-          <button class="button button-subscribe mr-auto mb-1" type="submit">Subscribe Now</button>
-          <div style="position: absolute; left: -5000px;">
-            <input name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1" value="" type="text">
-          </div>
+    <div class="container">
+        <div class="subscribe text-center">
+            <h3 class="subscribe__title">Get Update From Anywhere</h3>
+            <p>Bearing Void gathering light light his eavening unto dont afraid</p>
+            <div id="mc_embed_signup">
+                <form target="_blank"
+                      action="https://spondonit.us12.list-manage.com/subscribe/post?u=1462626880ade1ac87bd9c93a&amp;id=92a4423d01"
+                      method="get" class="subscribe-form form-inline mt-5 pt-1">
+                    <div class="form-group ml-sm-auto">
+                        <input class="form-control mb-1" type="email" name="EMAIL" placeholder="Enter your email"
+                               onfocus="this.placeholder = ''" onblur="this.placeholder = 'Your Email Address '">
+                        <div class="info"></div>
+                    </div>
+                    <button class="button button-subscribe mr-auto mb-1" type="submit">Subscribe Now</button>
+                    <div style="position: absolute; left: -5000px;">
+                        <input name="b_36c4fd991d266f23781ded980_aefe40901a" tabindex="-1" value="" type="text">
+                    </div>
 
-        </form>
-      </div>
+                </form>
+            </div>
 
+        </div>
     </div>
-  </div>
 </section>
 <!-- ================ Subscribe section end ================= -->
 <script src="/vendors/jquery/jquery-3.2.1.min.js"></script>
