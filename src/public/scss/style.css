@@ -2649,7 +2649,7 @@ a {
 }
 .single-search-product img {
   max-width: 70px;
-  height: auto;
+  height: 60px;
 }
 .single-search-product .desc {
   margin-left: 15px;
