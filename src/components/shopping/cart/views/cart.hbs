@@ -28,7 +28,11 @@
                   </div>
                 </td>
                 <td>
-                  <h5>{{this.price}}₫</h5>
+                  <h5><script>
+                    var price = {{this.price}}
+                    price = price.toLocaleString('vi', {style : 'currency', currency : 'VND'});
+                    document.write(price);
+                  </script></h5>
                 </td>
                 <td>
                   <h5>x {{this.quantity}}</h5>
@@ -36,8 +40,9 @@
                 <td>
                   <h5><script>
                     var total = {{this.price}} * {{this.quantity}}
+                    total = total.toLocaleString('vi', {style : 'currency', currency : 'VND'});
                     document.write(total);
-                  </script>₫</h5>
+                  </script></h5>
                 </td>
                 <td>
                   <form id="delete-product" action="/cart/{{this.id}}" method="POST" enctype="multipart/form-data">
@@ -61,7 +66,11 @@
             </td>
             <td>
               {{#if cart}}
-                <h5>{{cart.cost_total}}₫</h5>
+                <h5><script>
+                  var cost_total = {{cart.cost_total}}
+                      cost_total = cost_total.toLocaleString('vi', {style : 'currency', currency : 'VND'});
+                  document.write(cost_total);
+                </script></h5>
               {{else}}
                 <h5>0</h5>
               {{/if}}

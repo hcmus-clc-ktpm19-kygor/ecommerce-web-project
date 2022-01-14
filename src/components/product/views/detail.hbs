@@ -18,7 +18,11 @@
       <div class="col-lg-5 offset-lg-1">
         <div class="s_product_text">
           <h3>{{product.name}}</h3>
-          <h2>{{product.price}}₫</h2>
+          <h2><script>
+            var price = {{product.price}}
+                price = price.toLocaleString('vi', {style : 'currency', currency : 'VND'});
+            document.write(price);
+          </script></h2>
           <ul class="list">
             <li>
               <div><span>Loại sản phẩm</span> : {{product.category}}</div>
@@ -37,12 +41,14 @@
             </li>
           </ul>
           <div class="list1">Khuyến mãi:
-            <div>Giảm giá chỉ còn : {{product.price}}₫</div>
+            <div>Giảm giá chỉ còn : <script>
+              var price = {{product.price}}
+                  price = price.toLocaleString('vi', {style : 'currency', currency : 'VND'});
+              document.write(price);
+            </script></div>
           </div>
           <div class="list1">Ưu đãi đặc biệt khi mua kèm LAPTOP:
-            {{#each product.offer}}
-              <div>{{this.content}}</div>
-            {{/each}}
+            <div>{{product.offer.content}}</div>
           </div>
           <iframe name="temp" style="display:none;"></iframe>
           <div class="product_count">
@@ -340,20 +346,20 @@
                   <h3>Based on 3 Reviews</h3>
                   <ul class="list">
                     <li><a href="#">5 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                      class="fa fa-star"></i><i
-                      class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
+                        class="fa fa-star"></i><i
+                        class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
                     <li><a href="#">4 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                      class="fa fa-star"></i><i
-                      class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
+                        class="fa fa-star"></i><i
+                        class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
                     <li><a href="#">3 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                      class="fa fa-star"></i><i
-                      class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
+                        class="fa fa-star"></i><i
+                        class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
                     <li><a href="#">2 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                      class="fa fa-star"></i><i
-                      class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
+                        class="fa fa-star"></i><i
+                        class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
                     <li><a href="#">1 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                      class="fa fa-star"></i><i
-                      class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
+                        class="fa fa-star"></i><i
+                        class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
                   </ul>
                 </div>
               </div>
@@ -478,7 +484,7 @@
               <a href="/products/{{this._id}}"><img src="{{this.image_url}}" alt=""></a>
               <div class="desc">
                 <a href="/products/{{this._id}}" class="title">{{this.name}}</a>
-                <div id="{{this._id}}" class="price">{{this.price}}</div>
+                <div id="{{this._id}}" class="price">{{this.price}} ₫</div>
               </div>
             </div>
           </div>
@@ -506,17 +512,6 @@
     	</div>
     	<p>\{{content}}</p>
     </div>
-
-
-
-
-
-
-
-
-
-
-
 </script>
 
 <script id="message-error" type="text/x-handlebars">

@@ -140,7 +140,8 @@ $("#contactForm input[type=submit]").on("click", function (event) {
 });
 
 
-$(".add-To-Cart-button").on('click', function () {
+$(".add-To-Cart-button").on('click', function (event) {
+  event.preventDefault();
   const cart = $('#top-ti-shopping-cart');
   const imgtodrag = $(this).parent(".card-product__imgOverlay").parent(".card-product__img").find("img").eq(0);
   if (imgtodrag) {
@@ -177,6 +178,18 @@ $(".add-To-Cart-button").on('click', function () {
       $(this).detach()
     });
   }
+
+  const productId = $(this).parent(".card-product__imgOverlay").find("div").eq(0).text();
+
+  $.post(
+      `/api/cart/${productId}`,
+      function (data) {
+        if(data === 'Product not exists'){
+          let size = parseInt($("#cart-size").text());
+          size +=1 ;
+          $("#cart-size").text(size);
+        }
+      })
 });
 
 $("#add-to-card a").on('click', function () {
@@ -186,7 +199,7 @@ $("#add-to-card a").on('click', function () {
         content: $("#qty").val(),
       },
       function (data) {
-        if(data === 'Added successfully'){
+        if(data === 'Product exists'){
           const cart = $('#top-ti-shopping-cart');
           const imgtodrag = $("#img-fluid-1");
           if (imgtodrag) {
@@ -223,14 +236,57 @@ $("#add-to-card a").on('click', function () {
               $(this).detach()
             })
           }
-          document.getElementById("messageError").remove();
+          $("#messageError").html("");
         } else {
-          const message = Handlebars.compile(
-              document.getElementById("message-error").innerHTML
-          );
-          const messageHtml = message(data);
-          $("#messageError").prepend(messageHtml);
-          console.log(messageHtml);
+          if(data === 'Product not exists'){
+            const cart = $('#top-ti-shopping-cart');
+            const imgtodrag = $("#img-fluid-1");
+            if (imgtodrag) {
+              const imgclone = imgtodrag.clone()
+              .offset({
+                top: imgtodrag.offset().top,
+                left: imgtodrag.offset().left
+              })
+              .css({
+                'opacity': '0.8',
+                'position': 'absolute',
+                'height': '150px',
+                'width': '150px',
+                'z-index': '100'
+              })
+              .appendTo($('body'))
+              .animate({
+                'top': cart.offset().top,
+                'left': cart.offset().left,
+                'width': 60,
+                'height': 60
+              }, 1000, 'easeInOutExpo');
+
+              setTimeout(function () {
+                cart.effect("shake", {
+                  times: 1.5
+                }, 100);
+              }, 1000);
+
+              imgclone.animate({
+                'width': 0,
+                'height': 0
+              }, function () {
+                $(this).detach()
+              })
+            }
+            let size = parseInt($("#cart-size").text());
+            size +=1 ;
+            $("#cart-size").text(size);
+            $("#messageError").html("");
+          } else {
+            $("#messageError").html("");
+            const message = Handlebars.compile(
+                document.getElementById("message-error").innerHTML
+            );
+            const messageHtml = message(data);
+            $("#messageError").prepend(messageHtml);
+          }
         }
       }
   )

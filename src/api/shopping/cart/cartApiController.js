@@ -48,9 +48,15 @@ exports.insertProductToCart = async function (req, res) {
           }
         }
       }
-      const newCart = await cartService.addProductToCart(product, cart,quantity);
+
+      const existsProduct = await cartService.findExistsProduct(cart, product);
+      const newCart = await cartService.addProductToCart(product,cart,quantity,existsProduct);
       await cartService.updateToTalCost(newCart);
-      res.status(201).json('Added successfully');
+      if(existsProduct){
+        res.status(201).json('Product exists');
+      } else {
+        res.status(201).json('Product not exists');
+      }
     } else {
       res.status(201).json({stock: product.stock});
     }

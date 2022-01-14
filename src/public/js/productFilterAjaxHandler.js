@@ -14,26 +14,25 @@ document.querySelectorAll(".products-filter").forEach((e) => {
       dateType: "JSON",
       success: function (data) {
         const $productsTable = $("#products-table");
-        $productsTable.empty();
+        $productsTable.html("");
 
         const { curr, next, prev, products } = data;
         products.forEach((product) => {
-          let orderStatus;
+          let productStatus;
           let outOfStockMess = "";
           if (product.stock === 0) {
-            // orderStatus = `<span class="alert-success">${order.status}</span>
-            //                                     <li>
-            //                                         <button><i class="ti-shopping-cart"></i></button>
-            //                                     </li>`;
+            productStatus = `<li>
+                               <button><i class="ti-shopping-cart"></i></button>
+                           </li>`;
             outOfStockMess = `<p class="card-product__price"><span class="alert-success">Hết hàng</span>
                                             </p>`;
           } else {
-            orderStatus = `<li class="add-To-Cart-button">
-                                                    <form id="add-to-card" action="/api/cart/${product._id}" method="POST"
-                                                          enctype="multipart/form-data" target="tempFrame">
-                                                        <button type="submit"><i class="ti-shopping-cart"></i></button>
-                                                    </form>
-                                                </li>`
+            productStatus = `<li class="add-To-Cart-button">
+                          <form id="add-to-card" action="/api/cart/${product._id}" method="POST"
+                                enctype="multipart/form-data" target="tempFrame">
+                            <button type="submit"><i class="ti-shopping-cart"></i></button>
+                          </form>
+                        </li>`
           }
 
           const str = `<div class="col-md-6 col-lg-4">
@@ -43,10 +42,13 @@ document.querySelectorAll(".products-filter").forEach((e) => {
                                                                               alt=""></a>
                                         <iframe name="tempFrame" style="display:none;"></iframe>
                                         <ul class="card-product__imgOverlay">
+                                        <li>
+                        <div style="display: none;" id="product_id">{{this._id}}</div>
+                      </li>
                                             <li>
                                                 <button><i class="ti-search"></i></button>
                                             </li>
-                                            ${orderStatus}
+                                            ${productStatus}
                                             <li>
                                                 <button><i class="ti-heart"></i></button>
                                             </li>
@@ -66,7 +68,7 @@ document.querySelectorAll(".products-filter").forEach((e) => {
         });
 
         const $pagination = $(".pagination");
-        $pagination.empty();
+        $pagination.html("");
         const str = `<li class="page-item"><a id="prev-page-item" class="page-link" href="/products?page=${prev.page}&${prev.filter}
                                 ">${prev.page}</a></li>
                      <li class="page-item"><a id="curr-page-item" class="page-link"

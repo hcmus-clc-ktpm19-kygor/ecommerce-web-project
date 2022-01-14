@@ -132,7 +132,8 @@ exports.removeCart = async function (cart) {
 /**
  * xóa sp của user
  * @param cart
- * @returns {Promise<Document<any, any, unknown> & Require_id<unknown>>}
+ * @param product_id
+ * @returns {Promise<Query<any, any, {}, any>>}
  */
 exports.deleteProduct = async function (cart, product_id) {
   try {
@@ -147,12 +148,31 @@ exports.deleteProduct = async function (cart, product_id) {
 };
 
 /**
+ * tìm sản phẩm trong giỏ hàng
+ * @param cart
+ * @returns {Promise<Document<any, any, unknown> & Require_id<unknown>>}
+ */
+exports.findExistsProduct = async function (cart, product) {
+  try {
+    const exists_product = await cartModel.findOne({
+      _id: cart._id,
+      products: {
+        $elemMatch: { id: product._id },
+      },
+    });
+    return exists_product;
+  } catch (err) {
+    throw err;
+  }
+};
+
+/**
  * Thêm sp mới vào cart
  * @param product_id
  * @param user_id
  * @returns {Promise<{mess: string}|Query<any, any, {}, any>>}
  */
-exports.addProductToCart = async function (product, cart, quantity) {
+exports.addProductToCart = async function (product, cart, quantity, exists_product) {
   try {
     const small_product = {
       id: product._id,
@@ -160,14 +180,8 @@ exports.addProductToCart = async function (product, cart, quantity) {
       price: product.price,
       quantity: quantity,
       image_url: product.image_url,
+      producer: product.producer
     };
-
-    const exists_product = await cartModel.findOne({
-      _id: cart._id,
-      products: {
-        $elemMatch: { id: small_product.id },
-      },
-    });
 
     if (exists_product) {
       await cartModel.findOneAndUpdate(
