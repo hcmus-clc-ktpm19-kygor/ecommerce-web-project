@@ -108,37 +108,42 @@ exports.insert = async (checkout, orderDetail) => {
 
     const { products } = checkout.cart;
 
-
-
     for (let i = 0; i < products.length; i++) {
       const product = products[i];
 
-      await productModel.findOneAndUpdate(
-          { _id: product.id },
-          { $inc: { stock: -product.quantity } }
-      );
+      const oldProduct = await productModel.findById(product.id).lean();
 
-      const soldProduct = await soldProductModel
-      .findOne({ product_id: product.id })
-      .lean();
-      // Sản phẩm chưa được bán lần nào
-      if (!soldProduct) {
-        await soldProductModel.create({
-          product_id: product.id,
-          name: product.name,
-          producer: product.producer,
-          quantity: product.quantity,
-          total_price: product.price,
-        });
-      } else {
-        // Sản phẩm đã từng bán
-        soldProduct.total_price += product.price * product.quantity;
-        soldProduct.quantity += product.quantity;
-        await soldProductModel.findOneAndUpdate(
-            { product_id: soldProduct.product_id },
-            {$set : { total_price : soldProduct.total_price, quantity : soldProduct.quantity}}
+      if(oldProduct.stock >= product.quantity){
+        await productModel.findOneAndUpdate(
+            { _id: product.id },
+            { $inc: { stock: -product.quantity } }
         );
+
+        const soldProduct = await soldProductModel
+        .findOne({ product_id: product.id })
+        .lean();
+        // Sản phẩm chưa được bán lần nào
+        if (!soldProduct) {
+          await soldProductModel.create({
+            product_id: product.id,
+            name: product.name,
+            producer: product.producer,
+            quantity: product.quantity,
+            total_price: product.price,
+          });
+        } else {
+          // Sản phẩm đã từng bán
+          soldProduct.total_price += product.price * product.quantity;
+          soldProduct.quantity += product.quantity;
+          await soldProductModel.findOneAndUpdate(
+              { product_id: soldProduct.product_id },
+              {$set : { total_price : soldProduct.total_price, quantity : soldProduct.quantity}}
+          );
+        }
+      } else {
+        return null;
       }
+
     }
 
     const newOrder = new orderModel({
@@ -153,6 +158,8 @@ exports.insert = async (checkout, orderDetail) => {
     });
 
     await newOrder.save();
+
+    return newOrder;
   } catch (err) {
     throw err;
   }

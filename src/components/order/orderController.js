@@ -34,10 +34,16 @@ exports.insert = async (req, res) => {
   try {
     if(req.user) {
       const checkout = await checkoutService.getByUserId(req.user._id);
-      await service.insert(checkout, req.body);
-      await cartService.updateCart(checkout.cart);
-      const path = '/order/user/' + req.user._id;
-      res.redirect(path);
+      const newOrder = await service.insert(checkout, req.body);
+      if(newOrder !== null){
+        await cartService.updateCart(checkout.cart);
+        const path = '/order/user/' + req.user._id;
+        res.redirect(path);
+      } else {
+        const message = "Số lượng sản phẩm vượt quá số lượng tồn";
+        res.render("shopping/checkout/views/checkout", {message, checkout});
+      }
+
     } else {
       res.redirect('login')
     }

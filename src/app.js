@@ -15,7 +15,6 @@ const methodOverride = require('method-override');
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
-const confirmationRouter = require('./routes/confirmation');
 const productRouter = require('./components/product/productRouter');
 const authRouter = require('./components/auth/authRouter');
 const accountRouter = require('./components/account/accountRouter');
@@ -23,6 +22,7 @@ const cartRouter = require('./components/shopping/cart/cartRouter');
 const checkoutRouter = require('./components/shopping/checkout/checkoutRouter')
 const apiRouter = require('./api/apiRouter');
 const orderRouter = require('./components/order/orderRouter');
+const contactRouter = require('./routes/contact')
 
 
 const loggedInUserGuard = require('./middlewares/loggedInUserGuard');
@@ -66,12 +66,12 @@ app.use('/', indexRouter);
 app.use('/', authRouter);
 app.use('/account', loggedInUserGuard ,accountRouter);
 app.use('/products', productRouter);
-app.use('/confirmation', loggedInUserGuard, confirmationRouter);
 app.use('/users', usersRouter);
 app.use('/cart', cartRouter);
 app.use('/checkout', checkoutRouter);
 app.use('/api', apiRouter);
 app.use('/order',orderRouter);
+app.use('/contact', contactRouter);
 
 
 // catch 404 and forward to error handler
