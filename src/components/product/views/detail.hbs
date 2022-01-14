@@ -48,25 +48,18 @@
           <div class="product_count">
             <form id="add-to-card" action="/api/cart/{{product._id}}" method="POST" target="temp">
               <label for="qty">Số lượng:</label>
-              <!--              <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"-->
-              <!--                      class="increase items-count" type="button"><i class="ti-angle-left"></i></button>-->
               <input type="hidden" value="{{product._id}}" id="product_id" name="productId">
-              <input type="hidden" value="{{product.stock}}" id="product_stock" name="productStock">
-              <input type="number" name="qty" id="sst" size="2" maxlength="12" value="1" title="Quantity:"
+              <input type="number" name="qty" id="qty" size="2" maxlength="12" value="1" title="Quantity:"
                      class="input-text qty">
-              <!--              <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"-->
-              <!--                      class="reduced items-count" type="button"><i class="ti-angle-right"></i></button>-->
               {{#if (is_equals product.stock 0)}}
                 <a style="color: #222222;" class="button primary-btn">Hết hàng</a>
               {{else}}
-                <a style="color: #222222;" onclick="document.getElementById('add-to-card').submit()"
-                   id="button-primary-btn" class="button primary-btn">Thêm vào giỏ hàng</a>
-<!--                <a style="color: #222222;" id="button-primary-btn" class="button primary-btn">Thêm vào giỏ hàng</a>-->
+                <a style="color: #222222;" id="button-primary-btn" class="button primary-btn">Thêm vào giỏ hàng</a>
               {{/if}}
             </form>
           </div>
 
-<!--          <div style="color: red" id="messageError"></div>-->
+          <div style="color: red" id="messageError"></div>
 
           <div class="card_area d-flex align-items-center">
             <a class="icon_btn" href="#"><i class="lnr lnr lnr-diamond"></i></a>
@@ -104,34 +97,10 @@
     </ul>
     <div class="tab-content" id="myTabContent">
       <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
-        <p>Beryl Cook is one of Britain’s most talented and amusing artists .Beryl’s pictures feature women of
-          all shapes
-          and sizes enjoying themselves .Born between the two world wars, Beryl Cook eventually left Kendrick
-          School in
-          Reading at the age of 15, where she went to secretarial school and then into an insurance office.
-          After moving to
-          London and then Hampton, she eventually married her next door neighbour from Reading, John Cook. He
-          was an
-          officer in the Merchant Navy and after he left the sea in 1956, they bought a pub for a year before
-          John took a
-          job in Southern Rhodesia with a motor company. Beryl bought their young son a box of watercolours,
-          and when
-          showing him how to use it, she decided that she herself quite enjoyed painting. John subsequently
-          bought her a
-          child’s painting set for her birthday and it was with this that she produced her first significant
-          work, a
-          half-length portrait of a dark-skinned lady with a vacant expression and large drooping breasts. It
-          was aptly
-          named ‘Hangover’ by Beryl’s husband and</p>
-        <p>It is often frustrating to attempt to plan meals that are designed for one. Despite this fact, we are
-          seeing
-          more and more recipe books and Internet websites that are dedicated to the act of cooking for one.
-          Divorce and
-          the death of spouses or grown children leaving for college are all reasons that someone accustomed
-          to cooking for
-          more than one would suddenly need to learn how to adjust all the cooking practices utilized before
-          into a
-          streamlined plan of cooking that is more efficient for one person creating less</p>
+        <p>Laptop cao cấp vượt trội với CPU Intel Core i5-10300H và GPU GeForce GTX™ 1650 mạnh mẽ, các tựa game hành động sẽ chạy nhanh,
+          mượt mà và khai thác tối đa màn hình IPS tần số quét 144Hz. Mặc dù có khung máy di động và nhỏ hơn so với thế hệ tiền nhiệm,
+          chiếc laptop này vẫn có dung lượng pin (48Wh/90Wh) cho thời lượng pin dài. Hệ thống tản nhiệt tự làm sạch hiệu quả kết hợp với
+          độ bền đạt chuẩn quân đội của TUF giúp chiếc máy trở thành chiến binh bền bỉ đáng tin cậy cho các game thủ.</p>
       </div>
       <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
         <div class="table-responsive">
@@ -539,9 +508,9 @@
     </div>
 </script>
 
-<!--<script id="message-error" type="text/x-handlebars">-->
-<!--	 <div style="color: red">Bạn đã đặt quá số lượng tồn, vui lòng đặt lại</div>-->
-<!--   <div>\{{content}}</div>-->
-<!--</script>-->
+<script id="message-error" type="text/x-handlebars">
+	 <div style="color: red">Bạn đã đặt quá số lượng tồn, vui lòng đặt lại</div>
+   <div>Số lượng tồn: \{{stock}}</div>
+</script>
 
 <script src="/js/ajaxHandler.js"></script>

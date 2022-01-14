@@ -79,7 +79,7 @@ $(function () {
   //------- fixed navbar --------//
   $(window).scroll(function () {
     const sticky = $(".header_area"),
-      scroll = $(window).scrollTop();
+        scroll = $(window).scrollTop();
 
     if (scroll >= 100) sticky.addClass("fixed");
     else sticky.removeClass("fixed");
@@ -110,10 +110,10 @@ $(function () {
     // Display the slider value and how far the handle moved
     // from the left edge of the slider.
     nonLinearSlider.noUiSlider.on(
-      "update",
-      function (values, handle, unencoded, isTap, positions) {
-        nodes[handle].innerHTML = values[handle];
-      }
+        "update",
+        function (values, handle, unencoded, isTap, positions) {
+          nodes[handle].innerHTML = values[handle];
+        }
     );
   }
 });
@@ -121,19 +121,18 @@ $(function () {
 $("#contactForm input[type=submit]").on("click", function (event) {
   event.preventDefault();
   $.post(
-    `/api/products/${$("#product_id").val()}/comments`,
-    {
-      content: $("#message").val(),
-    },
-    function (data) {
-      const commentTemplate = Handlebars.compile(
-        document.getElementById("comment-template").innerHTML
-      );
-      const commentHtml = commentTemplate(data);
-      $("#comment-list").prepend(commentHtml);
-      document.getElementById("message").value = "";
-      console.log(commentHtml);
-    }
+      `/api/products/${$("#product_id").val()}/comments`,
+      {
+        content: $("#message").val(),
+      },
+      function (data) {
+        const commentTemplate = Handlebars.compile(
+            document.getElementById("comment-template").innerHTML
+        );
+        const commentHtml = commentTemplate(data);
+        $("#comment-list").prepend(commentHtml);
+        document.getElementById("message").value = "";
+      }
   ).fail(function (data) {
     if(data.status === 401)
       window.location.href = `/login?page=/products/${$('#product_id').val()}`;
@@ -180,98 +179,58 @@ $(".add-To-Cart-button").on('click', function () {
   }
 });
 
-$("#button-primary-btn").on('click', function () {
+$("#add-to-card a").on('click', function () {
+  $.post(
+      `/api/cart/${$("#product_id").val()}`,
+      {
+        content: $("#qty").val(),
+      },
+      function (data) {
+        if(data === 'Added successfully'){
+          const cart = $('#top-ti-shopping-cart');
+          const imgtodrag = $("#img-fluid-1");
+          if (imgtodrag) {
+            const imgclone = imgtodrag.clone()
+            .offset({
+              top: imgtodrag.offset().top,
+              left: imgtodrag.offset().left
+            })
+            .css({
+              'opacity': '0.8',
+              'position': 'absolute',
+              'height': '150px',
+              'width': '150px',
+              'z-index': '100'
+            })
+            .appendTo($('body'))
+            .animate({
+              'top': cart.offset().top,
+              'left': cart.offset().left,
+              'width': 60,
+              'height': 60
+            }, 1000, 'easeInOutExpo');
 
-  const cart = $('#top-ti-shopping-cart');
-  const imgtodrag = $("#img-fluid-1");
-  if (imgtodrag) {
-    const imgclone = imgtodrag.clone()
-    .offset({
-      top: imgtodrag.offset().top,
-      left: imgtodrag.offset().left
-    })
-    .css({
-      'opacity': '0.8',
-      'position': 'absolute',
-      'height': '150px',
-      'width': '150px',
-      'z-index': '100'
-    })
-    .appendTo($('body'))
-    .animate({
-      'top': cart.offset().top,
-      'left': cart.offset().left,
-      'width': 60,
-      'height': 60
-    }, 1000, 'easeInOutExpo');
+            setTimeout(function () {
+              cart.effect("shake", {
+                times: 1.5
+              }, 100);
+            }, 1000);
 
-    setTimeout(function () {
-      cart.effect("shake", {
-        times: 1.5
-      }, 100);
-    }, 1000);
-
-    imgclone.animate({
-      'width': 0,
-      'height': 0
-    }, function () {
-      $(this).detach()
-    });
-  }
+            imgclone.animate({
+              'width': 0,
+              'height': 0
+            }, function () {
+              $(this).detach()
+            })
+          }
+        } else {
+          const message = Handlebars.compile(
+              document.getElementById("message-error").innerHTML
+          );
+          const messageHtml = message(data);
+          $("#messageError").prepend(messageHtml);
+          console.log(messageHtml);
+        }
+      }
+  )
 });
-
-// $("#button-primary-btn").on('click', function () {
-//   $.post(
-//       `/api/cart/${$("#product_id").val()}`,
-//       {
-//         content: $("#product_stock").val(),
-//       },
-//       function (data) {
-//         if(data > $("#product_stock").val()) {
-//           const message = Handlebars.compile(
-//               document.getElementById("message-error").innerHTML
-//           );
-//           const messageHtml = message(data);
-//           $("#messageError").prepend(messageHtml);
-//           console.log(messageHtml);
-//         } else {
-//           const cart = $('#top-ti-shopping-cart');
-//           const imgtodrag = $("#img-fluid-1");
-//           if (imgtodrag) {
-//             const imgclone = imgtodrag.clone()
-//             .offset({
-//               top: imgtodrag.offset().top,
-//               left: imgtodrag.offset().left
-//             })
-//             .css({
-//               'opacity': '0.8',
-//               'position': 'absolute',
-//               'height': '150px',
-//               'width': '150px',
-//               'z-index': '100'
-//             })
-//             .appendTo($('body'))
-//             .animate({
-//               'top': cart.offset().top,
-//               'left': cart.offset().left,
-//               'width': 60,
-//               'height': 60
-//             }, 1000, 'easeInOutExpo');
-//
-//             setTimeout(function () {
-//               cart.effect("shake", {
-//                 times: 1.5
-//               }, 100);
-//             }, 1000);
-//
-//             imgclone.animate({
-//               'width': 0,
-//               'height': 0
-//             }, function () {
-//               $(this).detach()
-//             });
-//           }
-//         }
-//       }
-//   );
-// });

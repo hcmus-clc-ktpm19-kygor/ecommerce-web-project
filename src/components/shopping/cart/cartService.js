@@ -152,14 +152,13 @@ exports.deleteProduct = async function (cart, product_id) {
  * @param user_id
  * @returns {Promise<{mess: string}|Query<any, any, {}, any>>}
  */
-exports.addProductToCart = async function (product, cart, qty) {
+exports.addProductToCart = async function (product, cart, quantity) {
   try {
-    const quantity = qty.qty || 1;
     const small_product = {
       id: product._id,
       name: product.name,
       price: product.price,
-      quantity: parseInt(quantity),
+      quantity: quantity,
       image_url: product.image_url,
     };
 
@@ -173,7 +172,7 @@ exports.addProductToCart = async function (product, cart, qty) {
     if (exists_product) {
       await cartModel.findOneAndUpdate(
         { _id: cart._id },
-        { $inc: { "products.$[p].quantity": parseInt(quantity) } },
+        { $inc: { "products.$[p].quantity": quantity } },
         {
           arrayFilters: [{ "p.id": small_product.id }],
         }
