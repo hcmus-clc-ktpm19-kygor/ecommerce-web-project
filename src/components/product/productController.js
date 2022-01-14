@@ -49,26 +49,49 @@ exports.getProductById = async (req, res) => {
 exports.paging = async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1; // trang thu n
-    const products = await productService.paging(page, req.query.sort_by);
+    const category = req.query.category || "";
+    const producer = req.query.producer || "";
+
+    const products = await productService.filterProducts(
+      page,
+      category,
+      producer
+    );
 
     const results = {};
-    results.curr = page;
+    const filter = `category=${category}&producer=${producer}`;
+    results.curr = { page, filter };
     // Paginated
     const startIdx = (page - 1) * 9;
     if (products.length >= 9) {
-      results.next = page + 1;
+      results.next = { page: page + 1, filter };
     } else {
-      results.curr = page;
-      results.next = results.curr + 1;
-      results.prev = results.curr - 1;
+      results.curr = { page, filter };
+      results.next = {
+        page: results.curr.page + 1,
+        filter,
+      };
+      results.prev = {
+        page: results.curr.page - 1,
+        filter,
+      };
     }
 
     if (startIdx > 0) {
-      results.prev = page - 1;
+      results.prev = { page: page - 1, filter };
     } else {
-      results.prev = 1;
-      results.curr = 2;
-      results.next = 3;
+      results.prev = {
+        page: 1,
+        filter,
+      };
+      results.curr = {
+        page: 2,
+        filter,
+      };
+      results.next = {
+        page: 3,
+        filter,
+      };
     }
     results.products = products;
 

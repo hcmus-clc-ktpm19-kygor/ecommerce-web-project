@@ -124,12 +124,18 @@
                       <li>
                         <button><i class="ti-search"></i></button>
                       </li>
-                      <li class="add-To-Cart-button">
-                        <form id="add-to-card" action="/api/cart/{{this._id}}" method="POST"
-                              enctype="multipart/form-data" target="tempFrame">
-                          <button type="submit"><i class="ti-shopping-cart"></i></button>
-                        </form>
-                      </li>
+                      {{#if (is_equals this.stock 0)}}<span class="alert-success">{{order.status}}</span>
+                        <li>
+                          <button><i class="ti-shopping-cart"></i></button>
+                        </li>
+                      {{else}}
+                        <li class="add-To-Cart-button">
+                          <form id="add-to-card" action="/api/cart/{{this._id}}" method="POST"
+                                enctype="multipart/form-data" target="tempFrame">
+                            <button type="submit"><i class="ti-shopping-cart"></i></button>
+                          </form>
+                        </li>
+                      {{/if}}
                       <li>
                         <button><i class="ti-heart"></i></button>
                       </li>
@@ -140,20 +146,25 @@
                     <h4 class="card-product__title"><a
                       href="products/{{this._id}}">{{this.name}}</a></h4>
                     <p class="card-product__price">{{this.price}}₫</p>
+                    {{#if (is_equals this.stock 0)}}
+                      <p class="card-product__price"><span class="alert-success">Hết hàng</span></p>
+                    {{/if}}
                   </div>
                 </div>
               </div>
             {{/each}}
           </div>
           <nav aria-label="Page navigation example">
-            <ul class="pagination" id="product-pagination">
-              <li class="page-item"><a id="prev-page-item" class="page-link" href="?page={{results.prev}}
-                ">{{results.prev}}</a></li>
+            <ul class="pagination justify-content-center" id="product-pagination">
+              <li class="page-item"><a id="prev-page-item" class="page-link" href="?page={{results.prev.page}}
+                &{{results.prev.filter}}
+                ">{{results.prev.page}}</a></li>
               <li class="page-item"><a id="curr-page-item" class="page-link"
-                                       href="?page={{results.curr}}
-                ">{{results.curr}}</a></li>
-              <li class="page-item"><a id="next-page-item" class="page-link" href="?page={{results.next}}
-                ">{{results.next}}</a></li>
+                                       href="?page={{results.curr.page}}&{{results.curr.filter}}
+                ">{{results.curr.page}}</a></li>
+              <li class="page-item"><a id="next-page-item" class="page-link" href="?page={{results.next.page}}
+                &{{results.next.filter}}
+                ">{{results.next.page}}</a></li>
             </ul>
           </nav>
         </section>
@@ -191,5 +202,8 @@
 </section>
 <!-- ================ Subscribe section end ================= -->
 <script src="/vendors/jquery/jquery-3.2.1.min.js"></script>
+<script src="/vendors/bootstrap/bootstrap.min.css"></script>
+<script src="/vendors/bootstrap/bootstrap.bundle.min.js"></script>
 <script src="/js/ajaxHandler.js"></script>
+<script src="/js/productFilterAjaxHandler.js"></script>
 <script src="/js/eventHandler.js"></script>

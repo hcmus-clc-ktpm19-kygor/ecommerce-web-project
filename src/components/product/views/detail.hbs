@@ -37,7 +37,7 @@
             </li>
           </ul>
           <div class="list1">Khuyến mãi:
-            <div>Giảm giá chỉ còn 21,490,000</div>
+            <div>Giảm giá chỉ còn : {{product.price}}₫</div>
           </div>
           <div class="list1">Ưu đãi đặc biệt khi mua kèm LAPTOP:
             {{#each product.offer}}
@@ -48,18 +48,25 @@
           <div class="product_count">
             <form id="add-to-card" action="/api/cart/{{product._id}}" method="POST" target="temp">
               <label for="qty">Số lượng:</label>
-              <button
-                onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"
-                class="increase items-count" type="button"><i class="ti-angle-left"></i></button>
+              <!--              <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst )) result.value++;return false;"-->
+              <!--                      class="increase items-count" type="button"><i class="ti-angle-left"></i></button>-->
+              <input type="hidden" value="{{product._id}}" id="product_id" name="productId">
+              <input type="hidden" value="{{product.stock}}" id="product_stock" name="productStock">
               <input type="number" name="qty" id="sst" size="2" maxlength="12" value="1" title="Quantity:"
                      class="input-text qty">
-              <button
-                onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"
-                class="reduced items-count" type="button"><i class="ti-angle-right"></i></button>
-              <a style="color: #222222;" onclick="document.getElementById('add-to-card').submit()"
-                 class="button primary-btn">Thêm vào giỏ hàng</a>
+              <!--              <button onclick="var result = document.getElementById('sst'); var sst = result.value; if( !isNaN( sst ) &amp;&amp; sst > 0 ) result.value--;return false;"-->
+              <!--                      class="reduced items-count" type="button"><i class="ti-angle-right"></i></button>-->
+              {{#if (is_equals product.stock 0)}}
+                <a style="color: #222222;" class="button primary-btn">Hết hàng</a>
+              {{else}}
+                <a style="color: #222222;" onclick="document.getElementById('add-to-card').submit()"
+                   id="button-primary-btn" class="button primary-btn">Thêm vào giỏ hàng</a>
+                <!--                <a style="color: #222222;" id="button-primary-btn" class="button primary-btn">Thêm vào giỏ hàng</a>-->
+              {{/if}}
             </form>
           </div>
+
+          <!--          <div style="color: red" id="messageError"></div>-->
 
           <div class="card_area d-flex align-items-center">
             <a class="icon_btn" href="#"><i class="lnr lnr lnr-diamond"></i></a>
@@ -309,23 +316,24 @@
                 </div>
               {{/each}}
             </div>
-            <div class="align-content-center">
+            {{#if results.comments}}
               <nav aria-label="Page navigation example">
-                <ul class="pagination" id="comment-pagination">
+                <ul class="pagination justify-content-center" id="comment-pagination">
                   <li class="page-item" value="{{results.prev}}"><a id="prev-page-item"
                                                                     class="page-link"
                   >{{results.prev}}</a></li>
+
                   <li class="page-item" value="{{results.curr}}"><a id="curr-page-item"
                                                                     class="page-link"
 
                   >{{results.curr}}</a></li>
+
                   <li class="page-item" value="{{results.next}}"><a id="next-page-item"
                                                                     class="page-link"
-
                   >{{results.next}}</a></li>
                 </ul>
               </nav>
-            </div>
+            {{/if}}
           </div>
           <div class="col-lg-6">
             <div class="review_box">
@@ -495,7 +503,7 @@
     </div>
     <div id="related-product" class="row mt-30">
       {{#each relatedProduct}}
-        <div class="col-sm-6 col-xl-3 mb-4 mb-xl-0">
+        <div class="col-sm-6 col-xl-auto mb-4 mb-xl-0">
           <div class="single-search-product-wrapper">
             <div class="single-search-product d-flex">
               <a href="/products/{{this._id}}"><img src="{{this.image_url}}" alt=""></a>
@@ -536,6 +544,15 @@
 
 
 
+
+
+
+
 </script>
 
-<script src="/js/ajaxHandler.js"></script>
+<!--<script id="message-error" type="text/x-handlebars">-->
+<!--	 <div style="color: red">Bạn đã đặt quá số lượng tồn, vui lòng đặt lại</div>-->
+<!--   <div>\{{content}}</div>-->
+<!--</script>-->
+
+<script src="/js/commentAjaxHandler.js"></script>

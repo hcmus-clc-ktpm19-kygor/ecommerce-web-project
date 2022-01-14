@@ -33,7 +33,7 @@ exports.paging = async (req, res) => {
   }
 };
 
-exports.getByName = async function(req, res) {
+exports.getByName = async function (req, res) {
   try {
     const page = parseInt(req.query.page) || 1; // trang thu n
     const products = await service.getByName(req.query.name, page);
@@ -65,16 +65,12 @@ exports.getByName = async function(req, res) {
   }
 };
 
-exports.filterProducts = async function(req, res) {
+exports.filterProducts = async function (req, res) {
   try {
     const page = parseInt(req.query.page) || 1; // trang thu n
-    const category = req.query.category;
-    const producer = req.query.producer;
-    const products = await service.filterProducts(
-      page,
-      category,
-      producer
-    );
+    const category = req.query.category || "";
+    const producer = req.query.producer || "";
+    const products = await service.filterProducts(page, category, producer);
 
     const results = {};
     results.curr = page;
@@ -83,17 +79,32 @@ exports.filterProducts = async function(req, res) {
     if (products.length >= 9) {
       results.next = page + 1;
     } else {
-      results.curr = { page, filter: `category=${category}&producer=${producer}` };
-      results.next = { page: results.curr + 1, filter: `category=${category}&producer=${producer}` };
-      results.prev = { page: results.curr - 1, filter: `category=${category}&producer=${producer}` };
+      results.curr = page;
+      results.next = {
+        page: results.curr + 1,
+        filter: `category=${category}&producer=${producer}`,
+      };
+      results.prev = {
+        page: results.curr - 1,
+        filter: `category=${category}&producer=${producer}`,
+      };
     }
 
     if (startIdx > 0) {
       results.prev = page - 1;
     } else {
-      results.prev = { page: 1, filter: `category=${category}&producer=${producer}` };
-      results.curr = { page: 2, filter: `category=${category}&producer=${producer}` };
-      results.next = { page: 3, filter: `category=${category}&producer=${producer}` };
+      results.prev = {
+        page: 1,
+        filter: `category=${category}&producer=${producer}`,
+      };
+      results.curr = {
+        page: 2,
+        filter: `category=${category}&producer=${producer}`,
+      };
+      results.next = {
+        page: 3,
+        filter: `category=${category}&producer=${producer}`,
+      };
     }
     results.products = products;
 
@@ -103,7 +114,7 @@ exports.filterProducts = async function(req, res) {
   }
 };
 
-exports.sortingProducts = async function(req, res) {
+exports.sortingProducts = async function (req, res) {
   try {
     const page = parseInt(req.query.page) || 1; // trang thu n
     const products = await service.sortingProducts(page, req.query["sort-by"]);

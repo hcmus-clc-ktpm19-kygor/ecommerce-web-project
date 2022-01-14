@@ -20,7 +20,7 @@ exports.get = async (id) => {
   }
 };
 
-exports.getByName = async function(searchStr, page) {
+exports.getByName = async function (searchStr, page) {
   try {
     let perPage = 9; // số lượng sản phẩm xuất hiện trên 1 page
     page = page || 1;
@@ -89,7 +89,7 @@ exports.getRelatedProducts = async (exceptProduct, producer, limit) => {
 
     relatedProducts.forEach((e) => {
       e.price = new Intl.NumberFormat("vn-VN", {
-        currency: "VND"
+        currency: "VND",
       }).format(e.price);
     });
 
@@ -99,7 +99,7 @@ exports.getRelatedProducts = async (exceptProduct, producer, limit) => {
   }
 };
 
-exports.filterProducts = async function(page, category, producer) {
+exports.filterProducts = async function (page, category, producer) {
   try {
     let perPage = 9; // số lượng sản phẩm xuất hiện trên 1 page
     page = page || 1;
@@ -107,7 +107,7 @@ exports.filterProducts = async function(page, category, producer) {
     if (category && producer) {
       return await model
         .find({
-          $and: [{ category: category }, { producer: producer }]
+          $and: [{ category: category }, { producer: producer }],
         })
         .skip(perPage * page - perPage) // Trong page đầu tiên sẽ bỏ qua giá trị là 0
         .limit(perPage)
@@ -125,9 +125,9 @@ exports.filterProducts = async function(page, category, producer) {
         .limit(perPage)
         .lean();
     }
-    
+
     return await model
-      .find({ category })
+      .find()
       .skip(perPage * page - perPage) // Trong page đầu tiên sẽ bỏ qua giá trị là 0
       .limit(perPage)
       .lean();
@@ -136,7 +136,7 @@ exports.filterProducts = async function(page, category, producer) {
   }
 };
 
-exports.sortingProducts = async function(page, sortBy) {
+exports.sortingProducts = async function (page, sortBy) {
   try {
     let perPage = 9; // số lượng sản phẩm xuất hiện trên 1 page
     page = page || 1;

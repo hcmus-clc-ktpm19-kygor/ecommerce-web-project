@@ -28,7 +28,7 @@
                   </div>
                 </td>
                 <td>
-                  <h5>{{this.price}}</h5>
+                  <h5>{{this.price}}₫</h5>
                 </td>
                 <td>
                   <h5>x {{this.quantity}}</h5>
@@ -37,7 +37,7 @@
                   <h5><script>
                     var total = {{this.price}} * {{this.quantity}}
                     document.write(total);
-                  </script></h5>
+                  </script>₫</h5>
                 </td>
                 <td>
                   <form id="delete-product" action="/cart/{{this.id}}" method="POST" enctype="multipart/form-data">
@@ -61,7 +61,7 @@
             </td>
             <td>
               {{#if cart}}
-                <h5>{{cart.cost_total}}</h5>
+                <h5>{{cart.cost_total}}₫</h5>
               {{else}}
                 <h5>0</h5>
               {{/if}}

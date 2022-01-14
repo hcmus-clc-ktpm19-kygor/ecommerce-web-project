@@ -83,13 +83,13 @@
                             {{#each checkout.cart.products}}
                                 <li><a href="/products/{{this.id}}">{{this.name}}<span
                                         class="last"> (x {{this.quantity}})</span> <span
-                                        class="last">{{this.price}}</span></a></li>
+                                        class="last">{{this.price}}₫</span></a></li>
                             {{/each}}
                         </ul>
                         <ul class="list list_2">
-                            <li><a href="#">Subtotal <span>$2160.00</span></a></li>
-                            <li><a href="#">Shipping <span>Flat rate: $50.00</span></a></li>
-                            <li><a href="#">Total <span>$2210.00</span></a></li>
+                            <li><a href="#">Subtotal <span>{{checkout.cart.cost_total}}₫</span></a></li>
+                            <li><a href="#">Shipping <span>Flat rate: {{checkout.shipping_fee}}₫</span></a></li>
+                            <li><a href="#">Total <span>{{checkout.subtotal_price}}₫</span></a></li>
                         </ul>
                     </div>
                 </div>

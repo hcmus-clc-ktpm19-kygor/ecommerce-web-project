@@ -8,7 +8,6 @@ const cartSchema = new Schema(
     guest_id: String,
     user_id: ObjectId,
     products: Array,
-    quantity_total: Number,
     cost_total: Number
   },
   { timestamps: true, versionKey: false }
