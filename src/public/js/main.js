@@ -223,6 +223,7 @@ $("#add-to-card a").on('click', function () {
               $(this).detach()
             })
           }
+          document.getElementById("messageError").remove();
         } else {
           const message = Handlebars.compile(
               document.getElementById("message-error").innerHTML
