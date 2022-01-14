@@ -8,14 +8,18 @@ document.querySelectorAll(".products-filter").forEach((e) => {
     }
 
     $.ajax({
-      url: "https://obscure-spire-28614.herokuapp.com/api/products",
+      url: "http://localhost:8080/api/products",
       type: "GET",
       data: filter,
       dateType: "JSON",
       success: function (data) {
+        console.log(data);
+
         const $productsTable = $("#products-table");
         $productsTable.empty();
-        data.forEach((product) => {
+
+        const { curr, next, prev, products } = data;
+        products.forEach((product) => {
           const str = `<div class="col-md-6 col-lg-4">
                                 <div class="card text-center card-product">
                                     <div class="card-product__img">
@@ -48,6 +52,18 @@ document.querySelectorAll(".products-filter").forEach((e) => {
           const html = $.parseHTML(str);
           $productsTable.append(html);
         });
+
+        const $pagination = $(".pagination");
+        $pagination.empty();
+        const str = `<li class="page-item"><a id="prev-page-item" class="page-link" href="/api/products?page=${prev.page}&${prev.filter}
+                                ">${prev.page}</a></li>
+                     <li class="page-item"><a id="curr-page-item" class="page-link"
+                                                     href="/api/products?page=${curr.page}&${curr.filter}
+                                ">${curr.page}</a></li>
+                     <li class="page-item"><a id="next-page-item" class="page-link" href="/api/products?page=${next.page}&${next.filter}
+                                ">${next.page}</a></li>`;
+        const html = $.parseHTML(str);
+        $pagination.append(html);
       },
     });
   });
@@ -56,7 +72,7 @@ document.querySelectorAll(".products-filter").forEach((e) => {
 function searchProductsHandler() {
   const searchValue = document.getElementById("search-text-bar").value;
   $.ajax({
-    url: "https://obscure-spire-28614.herokuapp.com/api/products/search-by-name",
+    url: "http://localhost:8080/api/products/search-by-name",
     type: "GET",
     data: { name: searchValue },
     dateType: "JSON",
@@ -103,7 +119,7 @@ function searchProductsHandler() {
 function selectedOption() {
   const selectedValue = document.getElementById("sorting-selected").value;
   $.ajax({
-    url: "https://obscure-spire-28614.herokuapp.com/api/products/sorting",
+    url: "http://localhost:8080/api/products/sorting",
     type: "GET",
     data: { ["sort-by"]: selectedValue },
     dateType: "JSON",
@@ -147,33 +163,36 @@ function selectedOption() {
   });
 }
 
-document.querySelector(".pagination").addEventListener("click", (event) => {
-  const id = document.getElementById("product_id").value;
-  console.log(event.target.innerText);
-  $.ajax({
-    url: `https://obscure-spire-28614.herokuapp.com/api/products/${id}/comments?page=${event.target.innerText}`,
-    type: "GET",
-    dateType: "JSON",
-    success: function (data) {
-      const $comment = $("#comment-list");
-      $comment.empty();
+document
+  .querySelector("#product-pagination")
+  .addEventListener("click", (event) => {
+    const page = event.target.innerText;
 
-      console.log(data);
-      const { comments, prev, next, curr } = data;
-      const prevItem = document.getElementById("prev-page-item");
-      prevItem.innerText = prev;
-      prevItem.value = prev;
+    $.ajax({
+      url: "http://localhost:8080/api/products",
+      type: "GET",
+      data: page,
+      dateType: "JSON",
+      success: function (data) {
+        const $products = $("#products-table");
+        $products.empty();
 
-      const nextItem = document.getElementById("next-page-item");
-      nextItem.innerText = next;
-      nextItem.value = next;
+        console.log(data);
+        const { products, prev, next, curr } = data;
+        const prevItem = document.getElementById("prev-page-item");
+        prevItem.innerText = prev;
+        prevItem.value = prev;
 
-      const currItem = document.getElementById("curr-page-item");
-      currItem.innerText = curr;
-      currItem.value = curr;
+        const nextItem = document.getElementById("next-page-item");
+        nextItem.innerText = next;
+        nextItem.value = next;
 
-      comments.forEach((comment) => {
-        const str = `<div class="review_item">
+        const currItem = document.getElementById("curr-page-item");
+        currItem.innerText = curr;
+        currItem.value = curr;
+
+        products.forEach((comment) => {
+          const str = `<div class="review_item">
                         <div class="media">
                             <div class="d-flex">
                                 <img class="avatar" src="${comment.user_avatar_url}" alt="/img/male_avatar.svg"/>
@@ -186,9 +205,57 @@ document.querySelector(".pagination").addEventListener("click", (event) => {
                         <p>${comment.content}</p>
                     </div>`;
 
-        const html = $.parseHTML(str);
-        $comment.append(html);
-      });
-    },
+          const html = $.parseHTML(str);
+          $products.append(html);
+        });
+      },
+    });
   });
-});
+
+document
+  .querySelector("#comment-pagination")
+  .addEventListener("click", (event) => {
+    const id = document.getElementById("product_id").value;
+    console.log(event.target.innerText);
+    $.ajax({
+      url: `http://localhost:8080/api/products/${id}/comments?page=${event.target.innerText}`,
+      type: "GET",
+      dateType: "JSON",
+      success: function (data) {
+        const $comment = $("#comment-list");
+        $comment.empty();
+
+        console.log(data);
+        const { comments, prev, next, curr } = data;
+        const prevItem = document.getElementById("prev-page-item");
+        prevItem.innerText = prev;
+        prevItem.value = prev;
+
+        const nextItem = document.getElementById("next-page-item");
+        nextItem.innerText = next;
+        nextItem.value = next;
+
+        const currItem = document.getElementById("curr-page-item");
+        currItem.innerText = curr;
+        currItem.value = curr;
+
+        comments.forEach((comment) => {
+          const str = `<div class="review_item">
+                        <div class="media">
+                            <div class="d-flex">
+                                <img class="avatar" src="${comment.user_avatar_url}" alt="/img/male_avatar.svg"/>
+                            </div>
+                            <div class="media-body">
+                                <h4>${comment.user_name}</h4>
+                                <h5>${comment.createdAt}</h5>
+                            </div>
+                        </div>
+                        <p>${comment.content}</p>
+                    </div>`;
+
+          const html = $.parseHTML(str);
+          $comment.append(html);
+        });
+      },
+    });
+  });
