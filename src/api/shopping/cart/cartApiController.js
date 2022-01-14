@@ -12,7 +12,11 @@ exports.insertProductToCart = async function (req, res) {
   try {
     const product = await model.findById(req.params.id).lean();
 
-    if(req.body.qty <= product.stock){
+    const {content} = req.body;
+
+    const quantity = parseInt(content) || 1;
+
+    if(quantity <= product.stock){
       let cart;
       if (!req.user) {
         cart = await cartService.getCartByGuestId(req.session.guest_id);
@@ -44,10 +48,11 @@ exports.insertProductToCart = async function (req, res) {
           }
         }
       }
-      const newCart = await cartService.addProductToCart(product, cart,
-          req.body);
+      const newCart = await cartService.addProductToCart(product, cart,quantity);
       await cartService.updateToTalCost(newCart);
-      res.status(201);
+      res.status(201).json('Added successfully');
+    } else {
+      res.status(201).json({stock: product.stock});
     }
   } catch (err) {
     res.status(400).json({ message: err.message });
