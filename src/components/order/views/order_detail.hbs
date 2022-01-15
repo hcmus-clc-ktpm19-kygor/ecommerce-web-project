@@ -120,6 +120,14 @@
         </table>
       </div>
     </div>
+    {{#if order.note}}
+      <div class="order_details_table">
+        <h2>Note</h2>
+        <div class="table-responsive">
+          {{order.note}}
+        </div>
+      </div>
+    {{/if}}
   </div>
 </section>
 <!--================End Order Details Area =================-->
