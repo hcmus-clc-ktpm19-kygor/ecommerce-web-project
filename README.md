@@ -113,6 +113,7 @@ Nguyễn Đức Nam - [@Facebook](https://www.facebook.com/DucNamHCMUS) - namwor
 Nguyễn Ngọc Phương Anh - [@Facebook](https://www.facebook.com/zlou.lulu) - yuuhizaka194@gmail.com<br>
 Lê Ngọc Minh Nhật - [@Facebook](https://www.facebook.com/profile.php?id=100050103259038) - lengocminhnhatntp@gmail.com
 
+Template used: [Aroma – Free Bootstrap 4 HTML5 Online Shopping Website Template](https://themewagon.com/themes/free-bootstrap-4-html5-online-shopping-website-template-aroma/) <br>
 Project
 Link: [https://github.com/hcmus-clc-ktpm19-kygor/ecommerce-web-project.git](https://github.com/hcmus-clc-ktpm19-kygor/ecommerce-web-project.git)
 
