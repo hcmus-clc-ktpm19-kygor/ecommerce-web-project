@@ -47,7 +47,7 @@
 
 ## About The Project
 
-[![Product Name Screen Shot][product-screenshot]](https://github.com/namworkmc/Java-Dictionary-Application/blob/main/images/img.png?raw=true)
+[![Product Name Screen Shot][product-screenshot]](https://github.com/hcmus-clc-ktpm19-kygor/ecommerce-web-project/blob/New_Layout/images/img.png?raw=true)
 
 Laptop ecommerce web application project. The project was built with HTML, CSS, JavaScript, Bootstrap, JQuery, Express,
 MongoDB.
