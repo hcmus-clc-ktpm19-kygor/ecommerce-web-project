@@ -18,6 +18,7 @@ document.querySelectorAll(".products-filter").forEach((e) => {
 
         const { curr, next, prev, products } = data;
         products.forEach((product) => {
+          let price = product.price.toLocaleString('vi', {style : 'currency', currency : 'VND'});
           let productStatus;
           let outOfStockMess = "";
           if (product.stock === 0) {
@@ -58,7 +59,7 @@ document.querySelectorAll(".products-filter").forEach((e) => {
                                         <p>${product.category}</p>
                                         <h4 class="card-product__title"><a
                                                 href="products/${product._id}">${product.name}</a></h4>
-                                        <p class="card-product__price">${product.price}₫</p>
+                                        <p class="card-product__price">${price}</p>
                                         ${outOfStockMess}
                                     </div>
                                 </div>
