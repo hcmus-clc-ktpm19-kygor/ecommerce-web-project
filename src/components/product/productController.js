@@ -94,7 +94,7 @@ exports.paging = async (req, res) => {
       };
     }
     results.products = products;
-
+    req.app.locals.products = await productService.filterProductsAll(category, producer);
     res.render("product/views/products", { results });
   } catch (err) {
     res.status(500).json({ message: err.message });

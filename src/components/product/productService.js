@@ -1,5 +1,5 @@
 const model = require("./productModel");
-const { paging } = require("./productService");
+const { paging, getAllProduct} = require("./productService");
 
 /**
  * Lay 1 product bang id <br>
@@ -20,12 +20,12 @@ exports.get = async (id) => {
   }
 };
 
-exports.getByName = async function (searchStr, page) {
+exports.getByName = async function (searchStr, page, products) {
   try {
     let perPage = 9; // số lượng sản phẩm xuất hiện trên 1 page
     page = page || 1;
 
-    const products = await model.find().lean();
+    // const products = await model.find().lean();
     return products
       .filter((product) => product.name.toLowerCase().includes(searchStr))
       .slice(perPage * page - perPage, perPage);
@@ -49,6 +49,16 @@ exports.paging = async (page) => {
       .skip(perPage * page - perPage) // Trong page đầu tiên sẽ bỏ qua giá trị là 0
       .limit(perPage)
       .lean();
+  } catch (err) {
+    throw err;
+  }
+};
+
+exports.getAllProduct = async () => {
+  try {
+    return await model
+    .find()
+    .lean();
   } catch (err) {
     throw err;
   }
@@ -136,6 +146,33 @@ exports.filterProducts = async function (page, category, producer) {
   }
 };
 
+exports.filterProductsAll = async function (category, producer) {
+  try {
+    if (category && producer) {
+      return await model
+      .find({
+        $and: [{ category: category }, { producer: producer }],
+      })
+      .lean();
+    } else if (producer) {
+      return await model
+      .find({ producer })
+      .lean();
+    } else if (category) {
+      return await model
+      .find({ category })
+      .lean();
+    }
+
+    return await model
+    .find()
+    .lean();
+  } catch (err) {
+    throw err;
+  }
+};
+
+
 exports.sortingProducts = async function (page, sortBy) {
   try {
     let perPage = 9; // số lượng sản phẩm xuất hiện trên 1 page
@@ -172,6 +209,38 @@ exports.sortingProducts = async function (page, sortBy) {
     }
 
     return await paging(page);
+  } catch (err) {
+    throw err;
+  }
+};
+
+exports.sortingProductsAll = async function (sortBy) {
+  try {
+    if (sortBy) {
+      switch (sortBy) {
+        case "price": {
+          return await model
+          .find() // find tất cả các data
+          .sort({ price: "asc" })
+          .lean();
+        }
+        case "name": {
+          return await model
+          .find() // find tất cả các data
+          .sort({ name: "asc" })
+          .lean();
+        }
+
+        case "category": {
+          return await model
+          .find() // find tất cả các data
+          .sort({ category: "asc" })
+          .lean();
+        }
+      }
+    }
+
+    return await getAllProduct();
   } catch (err) {
     throw err;
   }

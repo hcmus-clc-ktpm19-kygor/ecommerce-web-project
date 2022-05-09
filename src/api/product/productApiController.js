@@ -4,7 +4,7 @@ const productService = require("../../components/product/productService");
 exports.paging = async (req, res) => {
   try {
     const page = parseInt(req.query.page) || 1; // trang thu n
-    const products = await productService.paging(page, req.query.sort_by);
+    const products = await productService.paging(page);
 
     const results = {};
     results.curr = page;
@@ -26,6 +26,7 @@ exports.paging = async (req, res) => {
       results.next = 3;
     }
     results.products = products;
+    req.app.locals.products = await productService.getAllProduct();
 
     res.status(200).json(results);
   } catch (err) {
@@ -36,7 +37,7 @@ exports.paging = async (req, res) => {
 exports.getByName = async function (req, res) {
   try {
     const page = parseInt(req.query.page) || 1; // trang thu n
-    const products = await service.getByName(req.query.name, page);
+    const products = await service.getByName(req.query.name, page, req.app.locals.products);
 
     const results = {};
     results.curr = page;
@@ -58,7 +59,6 @@ exports.getByName = async function (req, res) {
       results.next = 3;
     }
     results.products = products;
-
     res.status(200).json(products);
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -107,6 +107,7 @@ exports.filterProducts = async function (req, res) {
       };
     }
     results.products = products;
+    req.app.locals.products = await service.filterProductsAll(category, producer);
 
     res.status(200).json(results);
   } catch (err) {
@@ -139,6 +140,7 @@ exports.sortingProducts = async function (req, res) {
       results.next = 3;
     }
     results.products = products;
+    req.app.locals.products = await service.sortingProductsAll(req.query["sort-by"]);
 
     res.status(200).json(products);
   } catch (err) {

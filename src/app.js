@@ -61,6 +61,8 @@ app.use(function (req, res, next) {
 app.use(userIdMiddleware);
 app.use(cartSizeMiddleware)
 
+app.locals.products = [];
+
 // Router middleware
 app.use('/', indexRouter);
 app.use('/', authRouter);
