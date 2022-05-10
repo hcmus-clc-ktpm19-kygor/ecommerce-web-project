@@ -1,5 +1,5 @@
 FROM node:lts-alpine
-WORKDIR /app
+WORKDIR /app/user
 ADD package*.json /.
 RUN npm install
 ADD . .
