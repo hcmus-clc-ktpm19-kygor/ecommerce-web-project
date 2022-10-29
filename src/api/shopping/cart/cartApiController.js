@@ -12,7 +12,7 @@ exports.insertProductToCart = async function (req, res) {
   try {
     const product = await model.findById(req.params.id).lean();
 
-    const {content} = req.body;
+    const {content, size} = req.body;
 
     const quantity = parseInt(content) || 1;
 

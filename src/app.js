@@ -73,7 +73,7 @@ app.use('/cart', cartRouter);
 app.use('/checkout', checkoutRouter);
 app.use('/api', apiRouter);
 app.use('/order',orderRouter);
-app.use('/contact', contactRouter);
+app.use('/blog', contactRouter);
 
 
 // catch 404 and forward to error handler

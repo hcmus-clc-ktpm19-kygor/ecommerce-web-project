@@ -28,29 +28,28 @@
               <div><span>Loại sản phẩm</span> : {{product.category}}</div>
             </li>
             <li>
-              <div><span>Nhà sản xuất</span> : {{product.producer}}</div>
-            </li>
-            <li>
               <div><span>Xuất xứ</span> : {{product.origin}}</div>
             </li>
             <li>
-              <div><span>Bảo hành</span> : 12 tháng</div>
+              <div><span>Chất liệu</span> : {{product.keyboard}}</div>
             </li>
             <li>
-              <div><span>Tình trạng</span> : Mới 100%</div>
+              <div><span>Mẫu</span> : {{product.disk}}</div>
             </li>
           </ul>
-          <div class="list1">Khuyến mãi:
-            <div>Giảm giá chỉ còn : <script>
-              var price = {{product.price}}
-                  price = price.toLocaleString('vi', {style : 'currency', currency : 'VND'});
-              document.write(price);
-            </script></div>
-          </div>
-          <div class="list1">Ưu đãi đặc biệt khi mua kèm LAPTOP:
-            <div>{{product.offer.content}}</div>
+          <div class="list1">Size:
+            <div class="container">
+              <div class="button-wrap"><input class="hidden radio-label" type="radio" value="s" name="size" id="yes-button" checked="checked" /><label class="button-label" for="yes-button">
+                <h1>S</h1>
+              </label><input class="hidden radio-label" type="radio" value="m" name="size" id="no-button" /><label class="button-label" for="no-button">
+                <h1>M</h1>
+              </label><input class="hidden radio-label" type="radio" value="l" name="size" id="maybe-button" /><label class="button-label" for="maybe-button">
+                <h1>L</h1>
+              </label></div>
+            </div>
           </div>
           <iframe name="temp" style="display:none;"></iframe>
+
           <div class="product_count">
             <form id="add-to-card" action="/api/cart/{{product._id}}" method="POST" target="temp">
               <label for="qty">Số lượng:</label>
@@ -64,7 +63,6 @@
               {{/if}}
             </form>
           </div>
-
           <div style="color: red" id="messageError"></div>
 
           <div class="card_area d-flex align-items-center">
@@ -83,190 +81,31 @@
   <div class="container">
     <ul class="nav nav-tabs" id="myTab" role="tablist">
       <li class="nav-item">
-        <a class="nav-link" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
+        <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home"
            aria-selected="true">Mô tả</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link active" id="profile-tab" data-toggle="tab" href="#profile" role="tab"
-           aria-controls="profile"
-           aria-selected="false">Chi tiết cấu hình</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" id="contact-tab" data-toggle="tab" href="#contact" role="tab"
            aria-controls="contact"
            aria-selected="false">Đánh giá</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" id="review-tab" data-toggle="tab" href="#review" role="tab" aria-controls="review"
-           aria-selected="false">Reviews</a>
-      </li>
     </ul>
     <div class="tab-content" id="myTabContent">
-      <div class="tab-pane fade" id="home" role="tabpanel" aria-labelledby="home-tab">
-        <p>Laptop cao cấp vượt trội với CPU Intel Core i5-10300H và GPU GeForce GTX™ 1650 mạnh mẽ, các tựa game hành động sẽ chạy nhanh,
-          mượt mà và khai thác tối đa màn hình IPS tần số quét 144Hz. Mặc dù có khung máy di động và nhỏ hơn so với thế hệ tiền nhiệm,
-          chiếc laptop này vẫn có dung lượng pin (48Wh/90Wh) cho thời lượng pin dài. Hệ thống tản nhiệt tự làm sạch hiệu quả kết hợp với
-          độ bền đạt chuẩn quân đội của TUF giúp chiếc máy trở thành chiến binh bền bỉ đáng tin cậy cho các game thủ.</p>
-      </div>
-      <div class="tab-pane fade show active" id="profile" role="tabpanel" aria-labelledby="profile-tab">
-        <div class="table-responsive">
-          <table class="table">
-            <tbody>
-            <tr>
-              <td>
-                <h5>CPU</h5>
-              </td>
-              <td>
-                <h5>{{product.CPU}}</h5>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <h5>RAM</h5>
-              </td>
-              <td>
-                <h5>{{product.RAM}}</h5>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <h5>Ổ cứng</h5>
-              </td>
-              <td>
-                <h5>{{product.disk}}</h5>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <h5>Card đồ họa</h5>
-              </td>
-              <td>
-                <h5>{{product.graphic_card}}</h5>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <h5>Màn hình</h5>
-              </td>
-              <td>
-                <h5>{{product.screen}}</h5>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <h5>Cổng giao tiếp</h5>
-              </td>
-              <td>
-                <h5>{{product.port}}</h5>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <h5>Ổ quang</h5>
-              </td>
-              <td>
-                <h5>{{product.optical_disk}}</h5>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <h5>Audio</h5>
-              </td>
-              <td>
-                <h5>{{product.audio}}</h5>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <h5>Bàn phím</h5>
-              </td>
-              <td>
-                <h5>{{product.keyboard}}</h5>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <h5>Đọc thẻ nhớ</h5>
-              </td>
-              <td>
-                <h5>{{product.read_mem_card}}</h5>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <h5>Chuẩn LAN</h5>
-              </td>
-              <td>
-                <h5>{{product.LAN}}</h5>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <h5>Chuẩn WIFI</h5>
-              </td>
-              <td>
-                <h5>{{product.WIFI}}</h5>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <h5>Bluetooth</h5>
-              </td>
-              <td>
-                <h5>{{product.bluetooth}}</h5>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <h5>Webcam</h5>
-              </td>
-              <td>
-                <h5>{{product.webcam}}</h5>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <h5>Hệ điều hành</h5>
-              </td>
-              <td>
-                <h5>{{product.os}}</h5>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <h5>Pin</h5>
-              </td>
-              <td>
-                <h5>{{product.pin}}</h5>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <h5>Trọng lượng</h5>
-              </td>
-              <td>
-                <h5>{{product.weight}}</h5>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <h5>Màu sắc</h5>
-              </td>
-              <td>
-                <h5>{{product.color}}</h5>
-              </td>
-            </tr>
-            <tr>
-              <td>
-                <h5>Kích thước</h5>
-              </td>
-              <td>
-                <h5>{{product.size}}</h5>
-              </td>
-            </tr>
-            </tbody>
-          </table>
-        </div>
+      <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+        <p>❗Lưu ý áo cần được giặt tay và treo vắt ngang như hướng dẫn để giữ dáng áo (các bạn kéo đến hình cuối để xem hướng dẫn treo ạ)</p>
+        <p> Size: S, M, L</p>
+        <p style="padding-bottom: 20px; border-bottom: 1px dotted #eeeeee;"> Số đo: vui lòng kéo để hình cuối để xem số đo cụ thể</p>
+        <p>📋 HƯỚNG DẪN GIẶT ỦI:</p>
+        <p>Với sp vải mỏng / vải co giãn nhiều : giặt bằng tay với bột giặt dịu nhẹ, vắt khô trước khi phơi và phơi vắt ngang trên móc để sp không bị giãn</p>
+        <p>Với sp có in hình: giặt mặt trái với bột giặt dịu nhẹ, không dùng chất tẩy</p>
+        <p>Giặt đồ sáng màu và tối màu riêng để tránh bị vây màu</p>
+        <p style="padding-bottom: 20px; border-bottom: 1px dotted #eeeeee;">Không sử dụng bột giặt và chất tẩy mạnh</p>
+        <p>🛒 CHÍNH SÁCH ĐỔI TRẢ:</p>
+        <p>Hỗ trợ đổi sp cùng kiểu khi sp bị lỗi kỹ thuật trong vòng 3 ngày từ khi nhận hàng </p>
+        <p>Nhận đổi size (trừ sản phẩm giảm giá)</p>
+        <p>Không hỗ trợ trả hàng hoặc đổi sang kiểu khác</p>
+        <p>Xin vui lòng liên hệ trước qua inbox hoặc hotline trước khi đổi hàng</p>
+
       </div>
       <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
         <div class="row">
@@ -324,140 +163,6 @@
                 </div>
                 <div class="col-md-12 text-right">
                   <input type="submit" value="Bình luận" class="btn primary-btn" id="submit-button">
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab">
-        <div class="row">
-          <div class="col-lg-6">
-            <div class="row total_rate">
-              <div class="col-6">
-                <div class="box_total">
-                  <h5>Overall</h5>
-                  <h4>4.0</h4>
-                  <h6>(03 Reviews)</h6>
-                </div>
-              </div>
-              <div class="col-6">
-                <div class="rating_list">
-                  <h3>Based on 3 Reviews</h3>
-                  <ul class="list">
-                    <li><a href="#">5 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                        class="fa fa-star"></i><i
-                        class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
-                    <li><a href="#">4 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                        class="fa fa-star"></i><i
-                        class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
-                    <li><a href="#">3 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                        class="fa fa-star"></i><i
-                        class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
-                    <li><a href="#">2 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                        class="fa fa-star"></i><i
-                        class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
-                    <li><a href="#">1 Star <i class="fa fa-star"></i><i class="fa fa-star"></i><i
-                        class="fa fa-star"></i><i
-                        class="fa fa-star"></i><i class="fa fa-star"></i> 01</a></li>
-                  </ul>
-                </div>
-              </div>
-            </div>
-            <div class="review_list">
-              <div class="review_item">
-                <div class="media">
-                  <div class="d-flex">
-                    <img src="img/product/review-1.png" alt="">
-                  </div>
-                  <div class="media-body">
-                    <h4>Blake Ruiz</h4>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                  </div>
-                </div>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                  incididunt ut labore et
-                  dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea
-                  commodo</p>
-              </div>
-              <div class="review_item">
-                <div class="media">
-                  <div class="d-flex">
-                    <img src="img/product/review-2.png" alt="">
-                  </div>
-                  <div class="media-body">
-                    <h4>Blake Ruiz</h4>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                  </div>
-                </div>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                  incididunt ut labore et
-                  dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea
-                  commodo</p>
-              </div>
-              <div class="review_item">
-                <div class="media">
-                  <div class="d-flex">
-                    <img src="img/product/review-3.png" alt="">
-                  </div>
-                  <div class="media-body">
-                    <h4>Blake Ruiz</h4>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                    <i class="fa fa-star"></i>
-                  </div>
-                </div>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
-                  incididunt ut labore et
-                  dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                  laboris nisi ut aliquip ex ea
-                  commodo</p>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-6">
-            <div class="review_box">
-              <h4>Add a Review</h4>
-              <p>Your Rating:</p>
-              <ul class="list">
-                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                <li><a href="#"><i class="fa fa-star"></i></a></li>
-                <li><a href="#"><i class="fa fa-star"></i></a></li>
-              </ul>
-              <p>Outstanding</p>
-              <form action="#/" class="form-contact form-review mt-3">
-                <div class="form-group">
-                  <input class="form-control" name="name" type="text" placeholder="Enter your name"
-                         required>
-                </div>
-                <div class="form-group">
-                  <input class="form-control" name="email" type="email"
-                         placeholder="Enter email address" required>
-                </div>
-                <div class="form-group">
-                  <input class="form-control" name="subject" type="text" placeholder="Enter Subject">
-                </div>
-                <div class="form-group">
-                                    <textarea class="form-control different-control w-100" name="textarea" id="textarea"
-                                              cols="30" rows="5" placeholder="Enter Message"></textarea>
-                </div>
-                <div class="form-group text-center text-md-right mt-3">
-                  <button type="submit" class="button button--active button-review">Submit Now
-                  </button>
                 </div>
               </form>
             </div>

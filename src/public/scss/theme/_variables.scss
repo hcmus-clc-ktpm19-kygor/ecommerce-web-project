@@ -6,13 +6,13 @@ $text-font: 'Roboto', sans-serif;
 /*=================== color variations ====================*/
 $title-color: #222222;
 $text-color: #777777;
-$primary-color: #384aeb;
-$primary-color-blurry: #8894ff;
+$primary-color: #ffb3b3;
+$primary-color-blurry: #ff8080;
 $white: #fff;
 $link-color: #7b838a;
 
-$primary-color2	: #ff6c00;
-$primary-color3	: #828bb3;
+$primary-color2	: #ff8080;
+$primary-color3	: #ffe6e6;
 $title-color	: #222222;
 $text-color		: #777777;
 $baseColor: #c5322d; 
@@ -21,12 +21,17 @@ $pfont: #777777;
 $white			: #fff;
 $black			: #000;
 $offwhite: #fcfcfc;
-
+$dark: #292929;
+$light: #efefef;
+$red: #D91E18;
+$green: #2ECC71;
+$blue: #4183D7;
+$font-stack: "Lato", sans-serif;
+$small: 40em;
 
 /*=================== fonts ====================*/
 @import url('https://fonts.googleapis.com/css?family=Oswald:400,500,600');
 @import url('https://fonts.googleapis.com/css?family=Roboto:400,500');
-
 
 
 

@@ -197,6 +197,7 @@ $("#add-to-card a").on('click', function () {
       `/api/cart/${$("#product_id").val()}`,
       {
         content: $("#qty").val(),
+        size: document.querySelector('input[name="size"]:checked').value,
       },
       function (data) {
         if(data === 'Product exists'){
