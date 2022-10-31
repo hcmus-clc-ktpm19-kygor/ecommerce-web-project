@@ -18,8 +18,13 @@
       <div class="col-lg-5 offset-lg-1">
         <div class="s_product_text">
           <h3>{{product.name}}</h3>
+          <del><h2><script>
+            var price = {{product.price}} / 0.75;
+                price = price.toLocaleString('vi', {style : 'currency', currency : 'VND'});
+            document.write(price);
+          </script></h2></del>
           <h2><script>
-            var price = {{product.price}}
+            var price = {{product.price}};
                 price = price.toLocaleString('vi', {style : 'currency', currency : 'VND'});
             document.write(price);
           </script></h2>

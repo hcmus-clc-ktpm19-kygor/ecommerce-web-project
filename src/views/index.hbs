@@ -60,12 +60,14 @@
               <div class="card-body">
                 <p>{{this.category}}</p>
                 <a href="products/{{this._id}}"><h4 class="card-product__title">{{this.name}}</h4></a>
-                {{#if this.promotional}}
-                  <del><p class="card-product__price">{{this.price}} VND</p></del>
-                  <p class="card-product__price">{{this.promotional}} VND</p>
-                {{else}}
-                  <p class="card-product__price">{{this.price}} VND</p>
-                {{/if}}
+                <del><p class="card-product__price"><script>
+                  var price = {{this.price}} / 0.75;
+                  price = price.toLocaleString('vi', {style : 'currency', currency : 'VND'});
+                  document.write(price);</script></p></del>
+                  <p class="card-product__price"><script>
+                    var price = {{this.price}};
+                    price = price.toLocaleString('vi', {style : 'currency', currency : 'VND'});
+                    document.write(price);</script></p>
               </div>
             </div>
           </div>

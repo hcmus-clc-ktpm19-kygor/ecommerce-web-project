@@ -113,11 +113,14 @@
                   <div class="card-body">
                     <h4 class="card-product__title"><a
                         href="products/{{this._id}}">{{this.name}}</a></h4>
+                    <del><p class="card-product__price"><script>
+                      var price = {{this.price}} / 0.75;
+                      price = price.toLocaleString('vi', {style : 'currency', currency : 'VND'});
+                      document.write(price);</script></p></del>
                     <p class="card-product__price"><script>
-                      var price = {{this.price}}
-                          price = price.toLocaleString('vi', {style : 'currency', currency : 'VND'});
-                      document.write(price);
-                    </script></p>
+                      var price = {{this.price}};
+                      price = price.toLocaleString('vi', {style : 'currency', currency : 'VND'});
+                      document.write(price);</script></p>
                     {{#if (is_equals this.stock 0)}}
                       <p class="card-product__price"><span class="alert-success">Hết hàng</span>
                       </p>
