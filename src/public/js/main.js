@@ -216,19 +216,19 @@ $("#add-to-card a").on('click', function () {
               'width': '150px',
               'z-index': '100'
             })
-            .appendTo($('body'))
+            .appendTo($('body1'))
             .animate({
               'top': cart.offset().top,
               'left': cart.offset().left,
               'width': 60,
               'height': 60
-            }, 100, 'easeInSine');
+            }, 1000, 'easeInOutExpo');
 
             setTimeout(function () {
               cart.effect("shake", {
                 times: 1.5
               }, 100);
-            }, 150);
+            }, 1000);
 
             imgclone.animate({
               'width': 0,
@@ -255,19 +255,19 @@ $("#add-to-card a").on('click', function () {
                 'width': '150px',
                 'z-index': '100'
               })
-              .appendTo($('body'))
+              .appendTo($('body1'))
               .animate({
                 'top': cart.offset().top,
                 'left': cart.offset().left,
                 'width': 60,
                 'height': 60
-              }, 100, 'easeInSine');
+              }, 1000, 'easeInOutExpo');
 
               setTimeout(function () {
                 cart.effect("shake", {
                   times: 1.5
                 }, 100);
-              }, 150);
+              }, 1000);
 
               imgclone.animate({
                 'width': 0,
