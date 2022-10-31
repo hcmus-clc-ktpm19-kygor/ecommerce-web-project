@@ -216,7 +216,7 @@ $("#add-to-card a").on('click', function () {
               'width': '150px',
               'z-index': '100'
             })
-            .appendTo($('body1'))
+            .appendTo($(''))
             .animate({
               'top': cart.offset().top,
               'left': cart.offset().left,
