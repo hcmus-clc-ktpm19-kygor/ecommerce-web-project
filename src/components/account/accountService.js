@@ -112,7 +112,7 @@ module.exports.insert = async ({ username, email, password }) => {
       const msg = {
         to: email, // Change to your recipient
         from: process.env.EMAIL_SENDER, // Change to your verified sender
-        subject: "Aroma account activation",
+        subject: "Kandi Closet account activation",
         html: compiledTemplate({
           domain_name: process.env.DOMAIN_NAME,
           email,

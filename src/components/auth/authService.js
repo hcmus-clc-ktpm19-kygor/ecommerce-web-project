@@ -51,7 +51,7 @@ exports.forgetPassword = async function ({ email }) {
   const msg = {
     to: email, // Change to your recipient
     from: process.env.EMAIL_SENDER, // Change to your verified sender
-    subject: "Aroma reset password",
+    subject: "Kandi Closet reset password",
     html: compiledTemplate({
       domain_name: process.env.DOMAIN_NAME,
       email,
