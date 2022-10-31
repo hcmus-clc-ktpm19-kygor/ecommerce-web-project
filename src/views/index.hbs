@@ -38,6 +38,59 @@
     </section>
     <!--================ Hero Carousel end =================-->
 
+  <!-- ================ trending product section start ================= -->
+  <section class="section-margin calc-60px">
+    <div class="container">
+      <div class="section-intro pb-60px">
+        <p>Popular Item in the market</p>
+        <h2>Trending <span class="section-intro__style">Product</span></h2>
+      </div>
+      <div class="row">
+        {{#each products}}
+          <div class="col-md-6 col-lg-4 col-xl-3">
+            <div class="card text-center card-product">
+              <div class="card-product__img">
+                <a href="products/{{this._id}}"><img class="card-img" src="{{this.image_url}}" alt=""></a>
+                <ul class="card-product__imgOverlay">
+                  <li><button><i class="ti-search"></i></button></li>
+                  <li><button><i class="ti-shopping-cart"></i></button></li>
+                  <li><button><i class="ti-heart"></i></button></li>
+                </ul>
+              </div>
+              <div class="card-body">
+                <p>{{this.category}}</p>
+                <a href="products/{{this._id}}"><h4 class="card-product__title">{{this.name}}</h4></a>
+                {{#if this.promotional}}
+                  <del><p class="card-product__price">{{this.price}} VND</p></del>
+                  <p class="card-product__price">{{this.promotional}} VND</p>
+                {{else}}
+                  <p class="card-product__price">{{this.price}} VND</p>
+                {{/if}}
+              </div>
+            </div>
+          </div>
+        {{/each}}
+      </div>
+    </div>
+  </section>
+  <!-- ================ trending product section end ================= -->
+
+  <!-- ================ offer section start ================= -->
+  <section class="offer" id="parallax-1" data-anchor-target="#parallax-1"
+           data-300-top="background-position: 20px 30px" data-top-bottom="background-position: 0 20px">
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-5">
+          <div class="offer__content text-center">
+            <h3>Special Sale To 25% Off</h3>
+            <a class="button button--active mt-3 mt-xl-4" href="#">Shop Now</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ================ offer section end ================= -->
+
     <!-- ================ Subscribe section start ================= -->
     <section class="subscribe-position">
         <div class="container">
