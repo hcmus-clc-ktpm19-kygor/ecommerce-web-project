@@ -222,7 +222,7 @@ $("#add-to-card a").on('click', function () {
               'left': cart.offset().left,
               'width': 60,
               'height': 60
-            }, 100, 'easeInOutExpo');
+            }, 100, 'easeInSine');
 
             setTimeout(function () {
               cart.effect("shake", {
@@ -261,13 +261,13 @@ $("#add-to-card a").on('click', function () {
                 'left': cart.offset().left,
                 'width': 60,
                 'height': 60
-              }, 1000, 'easeInOutExpo');
+              }, 100, 'easeInSine');
 
               setTimeout(function () {
                 cart.effect("shake", {
                   times: 1.5
                 }, 100);
-              }, 1000);
+              }, 150);
 
               imgclone.animate({
                 'width': 0,
